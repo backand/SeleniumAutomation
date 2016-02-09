@@ -9,7 +9,7 @@ namespace Tests
     public class SignIn : BackandTestClassBase
     {
         [TestMethod]
-        public void TestMethod1()
+        public void SignInFromFacebook()
         {
             //Page.SignIn(SignInFormType.GitHub, Utilities.LoginEmail, Utilities.LoginPassword);
             SignInForm form = Page.SignIn().SignIn(SignInFormType.Facebook);

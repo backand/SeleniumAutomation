@@ -1,5 +1,5 @@
 ﻿using Core;
-using Infrastructure.EntryPages;
+using Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 

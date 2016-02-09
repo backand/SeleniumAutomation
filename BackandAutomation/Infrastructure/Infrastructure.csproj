@@ -53,7 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntryPages\BackandPage.cs" />
+    <Compile Include="BackandPage.cs" />
     <Compile Include="BasePage.cs" />
     <Compile Include="EntryPages\EntryPage.cs" />
     <Compile Include="EntryPages\LoginPage.cs" />
