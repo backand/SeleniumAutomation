@@ -210,14 +210,3 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-
-# Backand Solution
-Core/bin/*
-Core/obj/*
-Infrastructure/bin/*
-Infrastructure/obj/*
-packages/*
-Tests/bin/*
-Tests/obj/*
-BackandAutomation.sln*
-.localhistory/*
