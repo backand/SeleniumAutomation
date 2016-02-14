@@ -12,5 +12,16 @@ namespace Infrastructure.EntryPages.SignIn.Types
         protected override By EmailFindBy => By.Name("login");
         protected override By PasswordFindBy => By.Name("password");
         protected override By SubmitFindBy => By.Name("commit");
+
+        protected override void CompleteFormLogic()
+        {
+            try
+            {
+                WaitUntil.UntilElementExists(By.CssSelector("[type=submit]"), 3, typeof(NoSuchWindowException)).Click();
+            }
+            catch (WebDriverTimeoutException)
+            {
+            }
+        }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using Core;
 using Infrastructure.EntryPages.SignIn.Types;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 
 namespace Infrastructure.EntryPages.SignIn
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 using OpenQA.Selenium;
-using Protractor;
+using OpenQA.Selenium.Interactions;
 
 namespace Core
 {
@@ -45,6 +45,23 @@ namespace Core
             var elements = searcher.FindElements(findBy);
             element = elements.FirstOrDefault();
             return element != null;
+        }
+
+        public static IWebElement Hover(this IWebDriver driver, IWebElement element)
+        {
+            Actions builder = new Actions(driver);
+            builder.MoveToElement(element).Perform();
+            return element;
+        }
+
+        public static IWebElement GetParent(this ISearchContext element)
+        {
+            return element.FindElement(By.XPath(".."));
+        }
+
+        public static ReadOnlyCollection<IWebElement> GetChildren(this ISearchContext element)
+        {
+            return element.FindElements(By.XPath("*"));
         }
     }
 }

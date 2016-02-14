@@ -28,7 +28,7 @@ namespace Tests.Base
         [TestCleanup]
         public void ClassCleanup()
         {
-            Driver.Dispose();
+            Driver.Close();
         }
 
         protected IWebDriver GetDriver()

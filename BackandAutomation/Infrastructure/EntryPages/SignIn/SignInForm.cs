@@ -19,29 +19,31 @@ namespace Infrastructure.EntryPages.SignIn
         protected abstract By PasswordFindBy { get; }
         protected abstract By SubmitFindBy { get; }
 
-        private IWebElement EmailElement => Driver.FindElement(EmailFindBy);
-        private IWebElement PasswordElement => Driver.FindElement(PasswordFindBy);
-        private IWebElement SubmitElement => Driver.FindElement(SubmitFindBy);
+        protected IWebElement EmailElement => Driver.FindElement(EmailFindBy);
+        protected IWebElement PasswordElement => Driver.FindElement(PasswordFindBy);
+        protected IWebElement SubmitElement => Driver.FindElement(SubmitFindBy);
 
-        public string Email
+        public virtual string Email
         {
             get { return EmailElement.Text; }
             set { EmailElement.SendKeys(value); }
         }
 
-        public string Password
+        public virtual string Password
         {
             get { return PasswordElement.Text; }
             set { PasswordElement.SendKeys(value); }
         }
 
-        public void Submit()
+        public UserMainPage Submit()
         {
             SubmitElement.Click();
             CompleteFormLogic();
             if(!string.IsNullOrEmpty(OriginalWindowHandle))
                 SwitchToOriginalWindow();
-        }
+            WaitUntil.UntilElementDoesntExist(By.ClassName("spinner"));
+            return new UserMainPage(Driver);
+        }   
 
         protected virtual void CompleteFormLogic()
         {

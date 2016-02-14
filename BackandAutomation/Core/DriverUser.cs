@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
 namespace Core
 {

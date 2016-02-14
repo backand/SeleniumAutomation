@@ -21,6 +21,7 @@ namespace Core
             PrepareDriver(driver);
             driver = new NgWebDriver(driver);
             driver.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(Configuration.Instance.Selenium.ProtractorTimeOut));
+            driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(Configuration.Instance.Selenium.ProtractorTimeOut));
             return driver;
         }
 
