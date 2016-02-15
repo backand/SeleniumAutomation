@@ -221,3 +221,4 @@ Tests/bin/*
 Tests/obj/*
 BackandAutomation.sln*
 .localhistory/*
+/BackandAutomation/.localhistory
