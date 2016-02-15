@@ -14,20 +14,31 @@ namespace Core
             Driver = driver;
         }
 
-        public IWebElement UntilElementExists(By findBy, int timeOut = TimeOut)
+        public IWebElement UntilElementExists(By findBy, int timeOut = TimeOut, params Type[] exceptionTypes)
         {
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOut));
             IWebElement element = null;
-            wait.Until(driver => driver.TryFindElement(findBy, out element));
+            UntilActionFinishes(driver => driver.TryFindElement(findBy, out element), timeOut, exceptionTypes);
+            return element;
+        }
+        
+        public IWebElement UntilElementDoesntExist(By findBy, int timeOut = TimeOut, params Type[] exceptionTypes)
+        {
+            IWebElement element = null;
+            UntilActionFinishes(driver => !driver.TryFindElement(findBy, out element), timeOut, exceptionTypes);
             return element;
         }
 
         public IAlert UntilAlertPoppesUp(int timeOut = TimeOut)
         {
+            return UntilActionFinishes(driver => driver.SwitchTo().Alert(), timeOut, typeof (NoAlertPresentException));
+        }
+
+        public T UntilActionFinishes<T>(Func<IWebDriver, T> funcToWait, int timeOut = TimeOut, params Type[] exceptionTypes)
+        {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOut));
-            wait.IgnoreExceptionTypes(typeof(NoAlertPresentException));
-            IAlert alert = wait.Until(driver => driver.SwitchTo().Alert());
-            return alert;
+            wait.IgnoreExceptionTypes(exceptionTypes);
+            T result = wait.Until(funcToWait);
+            return result;
         }
     }
 }

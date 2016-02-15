@@ -27,19 +27,7 @@ namespace Core
             IEnumerable<T> array = Enum.GetValues(typeof(T)).Cast<T>();
             return array.FirstOrDefault(value => (value as Enum).ToText() == stringValue);
         }
-
-        public static By GetFindBy(this Enum enumValue)
-        {
-            EnumFindByAttribute enumTextAttribute = enumValue.GetAttribute<EnumFindByAttribute>();
-            return enumTextAttribute?.FindBy;
-        }
-
-        //public static T ToEnum<T>(this By findBy) where T : struct
-        //{
-        //    IEnumerable<T> array = Enum.GetValues(typeof(T)).Cast<T>();
-        //    return array.FirstOrDefault(value => (value as Enum).GetFindBy() == findBy);
-        //}
-
+        
         public static bool TryFindElement(this ISearchContext searcher, By findBy, out IWebElement element)
         {
             var elements = searcher.FindElements(findBy);

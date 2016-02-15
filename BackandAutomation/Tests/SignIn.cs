@@ -1,4 +1,6 @@
 ﻿using Core;
+using Infrastructure;
+using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests.Base;
@@ -11,11 +13,34 @@ namespace Tests
         [TestMethod]
         public void SignInFromFacebook()
         {
-            //Page.SignIn(SignInFormType.GitHub, Utilities.LoginEmail, Utilities.LoginPassword);
-            SignInForm form = Page.SignIn().SignIn(SignInFormType.Facebook);
-            form.Email = Configuration.Instance.LoginCredentials.Email;
-            form.Password = Configuration.Instance.LoginCredentials.Password;
-            form.Submit();
+            SignInFromExternalAccount(SignInFormType.Facebook);
+        }
+
+        [TestMethod]
+        public void SignInFromGitHub()
+        {
+            SignInFromExternalAccount(SignInFormType.GitHub);
+        }
+
+        [TestMethod]
+        public void SignInFromGoogle()
+        {
+            SignInFromExternalAccount(SignInFormType.Google);
+        }
+
+        private void SignInFromExternalAccount(SignInFormType facebook)
+        {
+            string email = Configuration.Instance.LoginCredentials.Email;
+            string password = Configuration.Instance.LoginCredentials.Password;
+
+            UserMainPage mainPage = Page.QuickSignIn(facebook, email, password);
+            UserSettings settings = mainPage.Settings;
+            Assert.AreEqual(email, settings.LoginEmail);
+
+            SignInPage signInPage = settings.LogOut();
+            mainPage = signInPage.QuickSignIn(facebook, email, password);
+            settings = mainPage.Settings;
+            Assert.AreEqual(email, settings.LoginEmail);
         }
     }
 }

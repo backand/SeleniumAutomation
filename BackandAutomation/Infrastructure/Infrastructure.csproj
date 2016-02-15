@@ -64,7 +64,7 @@
     <Compile Include="EntryPages\SignIn\SignInFormsFactory.cs" />
     <Compile Include="EntryPages\SignIn\SignInFormTypeAttribute.cs" />
     <Compile Include="EntryPages\SignIn\Types\GoogleSignInForm.cs" />
-    <Compile Include="MainPage.cs" />
+    <Compile Include="UserMainPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntryPages\SignIn\SignInFormType.cs" />
     <Compile Include="UserSettings.cs" />

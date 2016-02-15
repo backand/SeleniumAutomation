@@ -20,7 +20,7 @@ namespace Infrastructure.EntryPages
             IWebElement signInElement = Driver.FindElement(By.ClassName(className));
 
             // Get the current window handle so you can switch back later
-            string currentHandle = Driver.CurrentWindowHandle;
+            OriginalHandle = Driver.CurrentWindowHandle;
 
             // Displayed by the popup window
             PopupWindowFinder finder = new PopupWindowFinder(Driver);
@@ -29,8 +29,10 @@ namespace Infrastructure.EntryPages
 
             Driver.SwitchTo().Window(popupWindowHandle);
 
-            return SignInFormsFactory.Create(signInFormType, currentHandle);
+            return SignInFormsFactory.Create(signInFormType, OriginalHandle);
         }
+
+        public string OriginalHandle { get; set; }
 
         private SignInFormsFactory SignInFormsFactory => new SignInFormsFactory(Driver);
     }

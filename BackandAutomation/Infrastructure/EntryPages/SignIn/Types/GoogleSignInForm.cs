@@ -9,8 +9,21 @@ namespace Infrastructure.EntryPages.SignIn.Types
         {
         }
 
-        protected override By EmailFindBy => By.Name("Email");
-        protected override By PasswordFindBy => By.Name("password");
-        protected override By SubmitFindBy => By.Name("commit");
+        protected override By EmailFindBy => By.Id("Email");
+        protected override By PasswordFindBy => By.Id("Passwd");
+        protected override By SubmitFindBy => By.Id("signIn");
+
+        public override string Email
+        {
+            get
+            {
+                return EmailElement.Text;
+            }
+            set
+            {
+                EmailElement.SendKeys(value);
+                Driver.FindElement(By.Id("next"))?.Click();
+            }
+        }
     }
 }
