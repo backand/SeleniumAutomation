@@ -2,7 +2,7 @@ using Core;
 using Infrastructure.EntryPages;
 using OpenQA.Selenium;
 
-namespace Infrastructure
+namespace Infrastructure.Base
 {
     public class UserSettings : DriverUser
     {

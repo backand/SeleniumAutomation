@@ -2,7 +2,7 @@ using Core;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 
-namespace Infrastructure
+namespace Infrastructure.Base
 {
     public class BasePage : DriverUser
     {

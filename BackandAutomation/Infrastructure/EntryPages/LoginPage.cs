@@ -1,5 +1,6 @@
 using System;
 using Core;
+using Infrastructure.Base;
 using Infrastructure.EntryPages.SignIn;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;

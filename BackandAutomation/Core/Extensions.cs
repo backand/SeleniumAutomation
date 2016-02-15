@@ -51,5 +51,25 @@ namespace Core
         {
             return element.FindElements(By.XPath("*"));
         }
+
+        public static string GetClass(this IWebElement element)
+        {
+            return element.GetAttribute("class");
+        }
+
+        public static string GetId(this IWebElement element)
+        {
+            return element.GetAttribute("id");
+        }
+
+        public static string GetLink(this IWebElement element)
+        {
+            return element.GetAttribute("href");
+        }
+
+        public static string[] GetClasses(this IWebElement element)
+        {
+            return element.GetClass().Split(' ');
+        }
     }
 }

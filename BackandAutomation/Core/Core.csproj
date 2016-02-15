@@ -64,7 +64,10 @@
     <Compile Include="EnumFindByAttribute.cs" />
     <Compile Include="EnumTextAttribute.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="ModalDialog.cs" />
+    <Compile Include="OrCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Selectors.cs" />
     <Compile Include="WaitUntil.cs" />
   </ItemGroup>
   <ItemGroup>

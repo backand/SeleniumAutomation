@@ -1,16 +1,17 @@
-﻿using Core;
+﻿using Infrastructure.Apps;
+using Infrastructure.Base;
 using OpenQA.Selenium;
 
 namespace Infrastructure
 {
-    public class UserMainPage : DriverUser
+    public class UserMainPage : BackandApplicationsBasePage
     {
         public UserMainPage(IWebDriver driver) : base(driver)
         {
         }
 
-        private IWebElement SettingsElement => Driver.FindElement(By.ClassName("nav-profile"));
+        public AppsFeed AppsFeed => new AppsFeed(Driver, AppsFeedElement);
 
-        public UserSettings Settings => new UserSettings(Driver, SettingsElement);
+        private IWebElement AppsFeedElement => Driver.FindElement(By.Id("apps-page"));
     }
 }

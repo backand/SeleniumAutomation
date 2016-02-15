@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -39,6 +40,14 @@ namespace Core
             wait.IgnoreExceptionTypes(exceptionTypes);
             T result = wait.Until(funcToWait);
             return result;
+        }
+
+        public ModalDialog UntilDialogPopUp()
+        {
+            IWebElement dialogElement = UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
+                exceptionTypes: typeof (NoSuchWindowException));
+            return new ModalDialog(Driver, dialogElement);
+
         }
     }
 }
