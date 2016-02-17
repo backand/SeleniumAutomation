@@ -12,18 +12,18 @@ namespace Infrastructure.Base
             ToggleDropDown();
         }
 
-        public void ToggleDropDown()
-        {
-            ToggleElement.Click();
-        }
-
-        private IWebElement MainElement { get; set; }
+        private IWebElement MainElement { get; }
         private IWebElement ToggleElement => MainElement.FindElement(By.ClassName("dropdown-toggle"));
         private IWebElement EmailElement => MainElement.FindElement(By.ClassName("bknd-username"));
         private IWebElement LogOutElement => MainElement.FindElement(By.ClassName("ti-export"));
         private IWebElement ChangePasswordElement => MainElement.FindElement(By.ClassName("ti-lock")).GetParent();
 
         public string LoginEmail => EmailElement?.Text;
+
+        public void ToggleDropDown()
+        {
+            ToggleElement.Click();
+        }
 
         public SignInPage LogOut()
         {

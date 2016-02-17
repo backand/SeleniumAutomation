@@ -1,3 +1,4 @@
+using System;
 using Core;
 using OpenQA.Selenium;
 
@@ -31,7 +32,7 @@ namespace Infrastructure.Apps
     {
         public ManageAppPage(IWebDriver driver)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 

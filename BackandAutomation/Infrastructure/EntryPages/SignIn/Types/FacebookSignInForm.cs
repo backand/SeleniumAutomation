@@ -22,7 +22,6 @@ namespace Infrastructure.EntryPages.SignIn.Types
             }
             catch (WebDriverTimeoutException)
             {
-
             }
         }
     }

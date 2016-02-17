@@ -1,5 +1,4 @@
 ﻿using Core;
-using Infrastructure;
 using Infrastructure.Base;
 using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
@@ -11,6 +10,12 @@ namespace Tests
     [TestClass]
     public class SignIn : BackandTestClassBase
     {
+        [TestMethod]
+        public void SignInRegular()
+        {
+            SignInFromExternalAccount(SignInFormType.None);
+        }
+
         [TestMethod]
         public void SignInFromFacebook()
         {
@@ -29,18 +34,18 @@ namespace Tests
             SignInFromExternalAccount(SignInFormType.Google);
         }
 
-        private void SignInFromExternalAccount(SignInFormType facebook)
+        private void SignInFromExternalAccount(SignInFormType signInFormType)
         {
             string email = Configuration.Instance.LoginCredentials.Email;
             string password = Configuration.Instance.LoginCredentials.Password;
 
-            UserMainPage mainPage = Page.QuickSignIn(facebook, email, password);
-            UserSettings settings = mainPage.Settings;
+            Page = EnterancePage.QuickSignIn(signInFormType, email, password);
+            UserSettings settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
 
             SignInPage signInPage = settings.LogOut();
-            mainPage = signInPage.QuickSignIn(facebook, email, password);
-            settings = mainPage.Settings;
+            Page = signInPage.QuickSignIn(signInFormType, email, password);
+            settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
         }
     }

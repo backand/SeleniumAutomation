@@ -15,26 +15,48 @@ namespace Infrastructure.EntryPages
             Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
         }
 
+        public string OriginalHandle { get; set; }
+
+        private SignInFormsFactory SignInFormsFactory => new SignInFormsFactory(Driver);
+
+        public string Email
+        {
+            get { return EmailElement.Text; }
+            set { EmailElement.SendKeys(value); }
+        }
+
+        public string Password
+        {
+            get { return PasswordElement.Text; }
+            set { PasswordElement.SendKeys(value); }
+        }
+
+        private IWebElement EmailElement => Driver.FindElement(By.Name("uEmail"));
+        private IWebElement PasswordElement => Driver.FindElement(By.Name("uPassword"));
+        private IWebElement SubmitElement => Driver.FindElement(By.CssSelector("[type=submit]"));
+
         public SignInForm SignIn(SignInFormType signInFormType)
         {
             string className = $"btn-{signInFormType.ToText()}";
-            IWebElement signInElement = Driver.FindElement(By.ClassName(className));
+            var signInElement = Driver.FindElement(By.ClassName(className));
 
             // Get the current window handle so you can switch back later
             OriginalHandle = Driver.CurrentWindowHandle;
 
             // Displayed by the popup window
-            PopupWindowFinder finder = new PopupWindowFinder(Driver);
+            var finder = new PopupWindowFinder(Driver);
             Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
-            string popupWindowHandle = finder.Click(signInElement);
+            var popupWindowHandle = finder.Click(signInElement);
 
             Driver.SwitchTo().Window(popupWindowHandle);
 
             return SignInFormsFactory.Create(signInFormType, OriginalHandle);
         }
 
-        public string OriginalHandle { get; set; }
-
-        private SignInFormsFactory SignInFormsFactory => new SignInFormsFactory(Driver);
+        public UserMainPage Submit()
+        {
+            SubmitElement.Click();
+            return new UserMainPage(Driver);
+        }
     }
 }

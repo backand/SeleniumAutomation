@@ -15,10 +15,7 @@ namespace Infrastructure.EntryPages.SignIn.Types
 
         public override string Email
         {
-            get
-            {
-                return EmailElement.Text;
-            }
+            get { return EmailElement.Text; }
             set
             {
                 EmailElement.SendKeys(value);

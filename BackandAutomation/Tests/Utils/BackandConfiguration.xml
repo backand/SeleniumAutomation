@@ -8,7 +8,7 @@
     <protractorTimeOut>20</protractorTimeOut>
   </selenium>
   <loginCredentials>
-    <email>backandauto@gmail.com</email>
+    <email>backandautouser@gmail.com</email>
     <password>backand123</password>
   </loginCredentials>
 </backandConfiguration>

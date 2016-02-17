@@ -17,7 +17,7 @@ namespace Infrastructure.EntryPages.SignIn.Types
         {
             try
             {
-                WaitUntil.UntilElementExists(By.CssSelector("[type=submit]"), 3, typeof(NoSuchWindowException)).Click();
+                WaitUntil.UntilElementExists(By.CssSelector("[type=submit]"), 3, typeof (NoSuchWindowException)).Click();
             }
             catch (WebDriverTimeoutException)
             {

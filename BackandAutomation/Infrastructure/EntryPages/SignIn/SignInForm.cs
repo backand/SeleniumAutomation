@@ -40,11 +40,11 @@ namespace Infrastructure.EntryPages.SignIn
         {
             SubmitElement.Click();
             CompleteFormLogic();
-            if(!string.IsNullOrEmpty(OriginalWindowHandle))
+            if (!string.IsNullOrEmpty(OriginalWindowHandle))
                 SwitchToOriginalWindow();
             WaitUntil.UntilElementDoesntExist(By.ClassName("spinner"));
             return new UserMainPage(Driver);
-        }   
+        }
 
         protected virtual void CompleteFormLogic()
         {

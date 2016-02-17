@@ -9,19 +9,19 @@ namespace Infrastructure.EntryPages.SignIn
 {
     public class SignInFormsFactory : DriverUser
     {
-        private ArrayList RegisteredImplementations { get; }
-
         public SignInFormsFactory(IWebDriver driver) : base(driver)
         {
             RegisteredImplementations = new ArrayList();
-            RegisterClass(typeof(GitHubForm));
-            RegisterClass(typeof(GoogleSignInForm));
-            RegisterClass(typeof(FacebookSignInForm));
+            RegisterClass(typeof (GitHubForm));
+            RegisterClass(typeof (GoogleSignInForm));
+            RegisterClass(typeof (FacebookSignInForm));
         }
+
+        private ArrayList RegisteredImplementations { get; }
 
         private void RegisterClass(Type requestStrategyImpl)
         {
-            if (!requestStrategyImpl.IsSubclassOf(typeof(SignInForm)))
+            if (!requestStrategyImpl.IsSubclassOf(typeof (SignInForm)))
                 throw new Exception("LoginPage must inherit from class AbstractLoginPage");
 
             RegisteredImplementations.Add(requestStrategyImpl);
@@ -29,7 +29,7 @@ namespace Infrastructure.EntryPages.SignIn
 
         public SignInForm Create(SignInFormType signInFormType, string originalWindowHandle)
         {
-            foreach (Type impl in from Type impl in RegisteredImplementations
+            foreach (var impl in from Type impl in RegisteredImplementations
                 let attrlist = impl.GetCustomAttributes(true)
                 where attrlist.OfType<SignInFormTypeAttribute>().Any(attr => attr.SignInFormType.Equals(signInFormType))
                 select impl)

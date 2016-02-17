@@ -7,9 +7,9 @@ namespace Core
         public class AppForm
         {
             public static By Name
-                => new OrCondition(By.CssSelector("[placeholder~=title]"), By.ClassName("panel-body"));
+                => new OrCondition(By.CssSelector("panel-heading"), By.ClassName("panel-body"));
             public static By Title
-                => new OrCondition(By.Name("appName"), By.ClassName("panel-heading"));
+                => new OrCondition(By.Name("appName"), By.ClassName("[placeholder~=title]"));
             public static string RibbonElementSelector => "ui-ribbon-container";
             public static By SubmitNew => By.CssSelector("[type=submit]");
             public static By Settings => By.ClassName("ti-settings");

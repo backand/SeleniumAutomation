@@ -1,27 +1,25 @@
-﻿using Core;
+﻿using System;
+using System.Reflection;
+using Core;
 using Infrastructure;
+using Infrastructure.EntryPages.SignIn;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 
 namespace Tests.Base
 {
     [TestClass]
-    public abstract class BackandTestClassBase
+    public class BackandTestClassBase
     {
-        protected BackandPage Page { get; set; }
+        protected BackandPage EnterancePage { get; set; }
+        protected UserMainPage Page { get; set; }
 
-        protected static TestContext TestContext { get; set; }
-
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
-        {
-            TestContext = testContext;
-        }
+        public static TestContext TestContext { get; set; }
 
         [TestInitialize]
         public void TestInitialize()
         {
-            Page = new BackandPage(GetDriver());
+            EnterancePage = new BackandPage(GetDriver());
             TestInitializeExtension();
         }
 
@@ -41,6 +39,12 @@ namespace Tests.Base
 
         public void TestInitializeExtension()
         {
+            Attribute fastLoginAttribute = GetType().GetCustomAttribute(typeof(InstantLoginAttribute));
+            if (fastLoginAttribute != null)
+            {
+                Page = EnterancePage.QuickSignIn(SignInFormType.None, Configuration.Instance.LoginCredentials.Email,
+                    Configuration.Instance.LoginCredentials.Password);
+            }
         }
 
         public void TestCleanupExtension()

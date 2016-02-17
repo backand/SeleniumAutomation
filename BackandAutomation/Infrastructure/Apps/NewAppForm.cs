@@ -24,7 +24,7 @@ namespace Infrastructure.Apps
         public void Submit()
         {
             MainElement.FindElement(Selectors.AppForm.SubmitNew).Click();
-            ModalDialog dialog = WaitUntil.UntilDialogPopUp();
+            var dialog = WaitUntil.UntilDialogPopUp();
             dialog.Ok();
         }
     }

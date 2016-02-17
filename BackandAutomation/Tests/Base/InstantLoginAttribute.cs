@@ -2,7 +2,7 @@
 
 namespace Tests.Base
 {
-    public class FastLoginAttribute : Attribute
+    public class InstantLoginAttribute : Attribute
     {
     }
 }
