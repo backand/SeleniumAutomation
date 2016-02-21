@@ -1,4 +1,6 @@
-﻿namespace Playground
+﻿using System;
+
+namespace Playground
 {
     internal class Program
     {

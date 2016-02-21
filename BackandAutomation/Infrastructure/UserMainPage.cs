@@ -1,4 +1,5 @@
-﻿using Infrastructure.Apps;
+﻿using Core;
+using Infrastructure.Apps;
 using Infrastructure.Base;
 using OpenQA.Selenium;
 
@@ -8,10 +9,11 @@ namespace Infrastructure
     {
         public UserMainPage(IWebDriver driver) : base(driver)
         {
+            IWebElement intercomElement;
+            if(Driver.TryFindElement(By.ClassName("intercom-launcher-preview-close"),out intercomElement));
+                intercomElement.TryClick();
         }
 
-        public AppsFeed AppsFeed => new AppsFeed(Driver, AppsFeedElement);
-
-        private IWebElement AppsFeedElement => Driver.FindElement(By.Id("apps-page"));
+        public AppsFeed AppsFeed => new AppsFeed(Driver, PageElement);
     }
 }

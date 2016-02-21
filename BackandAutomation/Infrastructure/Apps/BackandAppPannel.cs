@@ -1,4 +1,3 @@
-using System;
 using Core;
 using OpenQA.Selenium;
 
@@ -25,21 +24,6 @@ namespace Infrastructure.Apps
         {
             ManageAppElement.Click();
             return new ManageAppPage(Driver);
-        }
-    }
-
-    public class ManageAppPage
-    {
-        public ManageAppPage(IWebDriver driver)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class AppSettingsPage : DriverUser
-    {
-        public AppSettingsPage(IWebDriver driver) : base(driver)
-        {
         }
     }
 }

@@ -53,7 +53,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apps\AppSettingsPage.cs" />
     <Compile Include="Apps\BackandAppPannelBase.cs" />
+    <Compile Include="Apps\ManageAppPage.cs" />
     <Compile Include="Apps\NewAppForm.cs" />
     <Compile Include="Base\BackandApplicationsBasePage.cs" />
     <Compile Include="Apps\AppsFeed.cs" />

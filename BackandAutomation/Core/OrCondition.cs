@@ -14,9 +14,15 @@ namespace Core
         public By[] FindBys { get; set; }
 
         public override IWebElement FindElement(ISearchContext context)
-            =>
-                FindBys.Select(findBy => context.FindElements(findBy).FirstOrDefault())
-                    .FirstOrDefault(element => element != null);
+        {
+            foreach (By findBy in FindBys)
+            {
+                IWebElement element;
+                if (context.TryFindElement(findBy, out element))
+                    return element;
+            }
+            return null;
+        }
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
             => new ReadOnlyCollection<IWebElement>(FindBys.SelectMany(context.FindElements).ToList());

@@ -7,13 +7,16 @@ namespace Core
         public class AppForm
         {
             public static By Name
-                => new OrCondition(By.CssSelector("panel-heading"), By.ClassName("panel-body"));
-            public static By Title
-                => new OrCondition(By.Name("appName"), By.ClassName("[placeholder~=title]"));
+                => new OrCondition(By.Name("appName"), By.CssSelector(".panel-heading.text-center"));
+
+            public static By Title=>
+                    new OrCondition(By.CssSelector("[placeholder='app title']"),
+                        By.CssSelector(".app-panel-body .body-height"));
+
             public static string RibbonElementSelector => "ui-ribbon-container";
-            public static By SubmitNew => By.CssSelector("[type=submit]");
+            public static By SubmitNew => Common.SubmitType;
             public static By Settings => By.ClassName("ti-settings");
-            public static By ManageApp => By.CssSelector("[type=submit]");
+            public static By ManageApp => Common.SubmitType;
         }
 
         public class ModalDialog
@@ -28,6 +31,19 @@ namespace Core
             public static By Page => By.ClassName("page");
             public static By Settings => By.ClassName("nav-profile");
             public static By LeftMenu => By.TagName("aside");
+            public static By TopNav => By.ClassName("top-nav");
+        }
+
+        public static class Common
+        {
+            public static By SubmitType => By.CssSelector("[type=\"submit\"]");
+            public static By GoToHomePage => By.ClassName("ti-layers-alt");
+        }
+
+        public class Kickstart
+        {
+            public static By CurrentApp => By.CssSelector("select[ng-model='header.currentAppName']");
+            public static By Option => By.TagName("option");
         }
     }
 }

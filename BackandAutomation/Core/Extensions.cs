@@ -27,10 +27,10 @@ namespace Core
             IEnumerable<T> array = Enum.GetValues(typeof(T)).Cast<T>();
             return array.FirstOrDefault(value => (value as Enum).ToText() == stringValue);
         }
-        
+
         public static bool TryFindElement(this ISearchContext searcher, By findBy, out IWebElement element)
         {
-            var elements = searcher.FindElements(findBy);
+            ReadOnlyCollection<IWebElement> elements = searcher.FindElements(findBy);
             element = elements.FirstOrDefault();
             return element != null;
         }
@@ -40,6 +40,18 @@ namespace Core
             Actions builder = new Actions(driver);
             builder.MoveToElement(element).Perform();
             return element;
+        }
+
+        public static void TryClick(this IWebElement element)
+        {
+            try
+            {
+                element.Click();
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         public static IWebElement GetParent(this ISearchContext element)
