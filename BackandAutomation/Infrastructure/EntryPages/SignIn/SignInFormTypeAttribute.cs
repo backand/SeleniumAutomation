@@ -5,11 +5,11 @@ namespace Infrastructure.EntryPages.SignIn
     [AttributeUsage(AttributeTargets.Class)]
     public class SignInFormTypeAttribute : Attribute
     {
-        public SignInFormTypeAttribute(SignInFormType signInFormType)
+        public SignInFormTypeAttribute(SignFormType signFormType)
         {
-            SignInFormType = signInFormType;
+            SignFormType = signFormType;
         }
 
-        public SignInFormType SignInFormType { get; }
+        public SignFormType SignFormType { get; }
     }
 }

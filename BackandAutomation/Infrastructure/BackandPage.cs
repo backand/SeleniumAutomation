@@ -1,4 +1,5 @@
-﻿using Infrastructure.Base;
+﻿using Core;
+using Infrastructure.Base;
 using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
 using OpenQA.Selenium;
@@ -16,6 +17,7 @@ namespace Infrastructure
         public IWebDriver CurrentDriver { get; set; }
 
         private IWebElement SignInElement => CurrentDriver.FindElement(By.CssSelector(".navbar-nav .login"));
+        private IWebElement SignUpElement => CurrentDriver.FindElement(By.CssSelector(".navbar-nav .login"));
 
         public SignInPage SignIn()
         {
@@ -23,9 +25,21 @@ namespace Infrastructure
             return new SignInPage(Driver);
         }
 
-        public UserMainPage QuickSignIn(SignInFormType signInFormType, string email, string password)
+        public SignUpPage SignUp()
         {
-            UserMainPage mainPage = SignIn().QuickSignIn(signInFormType, email, password);
+            SignUpElement.Click();
+            return new SignUpPage(Driver);
+        }
+
+        public UserMainPage QuickSignIn(SignFormType signFormType, string email, string password)
+        {
+            UserMainPage mainPage = SignIn().QuickSignIn(signFormType, email, password);
+            return mainPage;
+        }
+
+        public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)
+        {
+            UserMainPage mainPage = SignUp().QuickSignUp(signFormType, userName, email, password);
             return mainPage;
         }
     }

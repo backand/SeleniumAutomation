@@ -1,6 +1,7 @@
 ﻿using Core;
 using Infrastructure.Apps;
 using Infrastructure.Base;
+using Infrastructure.EntryPages.SignIn;
 using OpenQA.Selenium;
 
 namespace Infrastructure

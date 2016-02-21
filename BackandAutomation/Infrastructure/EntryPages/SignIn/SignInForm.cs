@@ -1,9 +1,8 @@
-using Infrastructure.Base;
 using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn
 {
-    public abstract class SignInForm : BasePage
+    public abstract class SignInForm : SignForm
     {
         protected SignInForm(IWebDriver driver, string originalWindowHandle) : base(driver)
         {

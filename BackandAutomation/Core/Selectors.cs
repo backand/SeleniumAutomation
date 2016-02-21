@@ -9,7 +9,7 @@ namespace Core
             public static By Name
                 => new OrCondition(By.Name("appName"), By.CssSelector(".panel-heading.text-center"));
 
-            public static By Title=>
+            public static By Title =>
                     new OrCondition(By.CssSelector("[placeholder='app title']"),
                         By.CssSelector(".app-panel-body .body-height"));
 
@@ -44,6 +44,15 @@ namespace Core
         {
             public static By CurrentApp => By.CssSelector("select[ng-model='header.currentAppName']");
             public static By Option => By.TagName("option");
+        }
+
+        public class Login
+        {
+            public static By Submit => Common.SubmitType;
+            public static By Password => By.Name("uPassword");
+            public static By Email => By.Name("uEmail");
+            public static By FullName => By.Name("uFullFirst");
+            public static By ConfirmPassword => By.Name("confirm_password");
         }
     }
 }

@@ -2,7 +2,7 @@ using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn.Types
 {
-    [SignInFormType(SignInFormType.GitHub)]
+    [SignInFormType(SignFormType.GitHub)]
     public class GitHubForm : SignInForm
     {
         public GitHubForm(IWebDriver driver, string originalWindowHandle) : base(driver, originalWindowHandle)

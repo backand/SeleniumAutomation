@@ -7,13 +7,22 @@ namespace Infrastructure.EntryPages
     {
         public SignInPage(IWebDriver driver) : base(driver)
         {
+            SignInFactory = new SignInFormsFactory(Driver);
         }
 
-        public UserMainPage QuickSignIn(SignInFormType signInFormType, string email, string password)
+        public SignInFormsFactory SignInFactory { get; set; }
+
+        public SignInForm SpecifySignForm(SignFormType signFormType)
+        {
+            OpenSignForm(signFormType);
+            return SignInFactory.Create(signFormType, OriginalHandle);
+        }
+
+        public UserMainPage QuickSignIn(SignFormType signFormType, string email, string password)
         {
             UserMainPage quickSignIn;
-            if (HandleNoSignInForm(signInFormType, email, password, out quickSignIn)) return quickSignIn;
-            SignInForm form = SignIn(signInFormType);
+            if (HandleNoSignInForm(signFormType, email, password, out quickSignIn)) return quickSignIn;
+            SignInForm form = SpecifySignForm(signFormType);
             try
             {
                 form.Email = email;
@@ -28,11 +37,11 @@ namespace Infrastructure.EntryPages
             return form.Submit();
         }
 
-        private bool HandleNoSignInForm(SignInFormType signInFormType, string email, string password,
+        private bool HandleNoSignInForm(SignFormType signFormType, string email, string password,
             out UserMainPage quickSignIn)
         {
             quickSignIn = null;
-            if (signInFormType != SignInFormType.None) return false;
+            if (signFormType != SignFormType.None) return false;
             Email = email;
             Password = password;
             {

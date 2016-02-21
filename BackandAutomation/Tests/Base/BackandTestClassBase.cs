@@ -51,7 +51,7 @@ namespace Tests.Base
             Attribute fastLoginAttribute = GetType().GetCustomAttribute(typeof(InstantLoginAttribute));
             if (fastLoginAttribute != null)
             {
-                Page = EnterancePage.QuickSignIn(SignInFormType.None, Configuration.Instance.LoginCredentials.Email,
+                Page = EnterancePage.QuickSignIn(SignFormType.None, Configuration.Instance.LoginCredentials.Email,
                     Configuration.Instance.LoginCredentials.Password);
             }
         }

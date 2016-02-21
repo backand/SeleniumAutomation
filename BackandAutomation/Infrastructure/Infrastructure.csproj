@@ -64,7 +64,10 @@
     <Compile Include="Base\BasePage.cs" />
     <Compile Include="EntryPages\EntryPage.cs" />
     <Compile Include="EntryPages\LoginPage.cs" />
+    <Compile Include="EntryPages\SignFormsFactory.cs" />
     <Compile Include="EntryPages\SignInPage.cs" />
+    <Compile Include="EntryPages\SignIn\SignFactory.cs" />
+    <Compile Include="EntryPages\SignIn\SignForm.cs" />
     <Compile Include="EntryPages\SignIn\Types\FacebookSignInForm.cs" />
     <Compile Include="EntryPages\SignIn\Types\GitHubForm.cs" />
     <Compile Include="EntryPages\SignIn\SignInForm.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="EntryPages\SignIn\SignInFormTypeAttribute.cs" />
     <Compile Include="EntryPages\SignIn\Types\GoogleSignInForm.cs" />
     <Compile Include="Apps\RibbonType.cs" />
+    <Compile Include="EntryPages\SignUpPage.cs" />
     <Compile Include="UserMainPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntryPages\SignIn\SignInFormType.cs" />

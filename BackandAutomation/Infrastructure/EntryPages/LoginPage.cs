@@ -17,27 +17,31 @@ namespace Infrastructure.EntryPages
 
         public string OriginalHandle { get; set; }
 
-        private SignInFormsFactory SignInFormsFactory => new SignInFormsFactory(Driver);
-
-        public string Email
+        public virtual string Email
         {
             get { return EmailElement.Text; }
             set { EmailElement.SendKeys(value); }
         }
 
-        public string Password
+        public virtual string Password
         {
             get { return PasswordElement.Text; }
             set { PasswordElement.SendKeys(value); }
         }
 
-        private IWebElement EmailElement => Driver.FindElement(By.Name("uEmail"));
-        private IWebElement PasswordElement => Driver.FindElement(By.Name("uPassword"));
-        private IWebElement SubmitElement => Driver.FindElement(By.CssSelector("[type=submit]"));
+        protected IWebElement EmailElement => Driver.FindElement(Selectors.Login.Email);
+        protected IWebElement PasswordElement => Driver.FindElement(Selectors.Login.Password);
+        protected IWebElement SubmitElement => Driver.FindElement(Selectors.Login.Submit);
 
-        public SignInForm SignIn(SignInFormType signInFormType)
+        public UserMainPage Submit()
         {
-            string className = $"btn-{signInFormType.ToText()}";
+            SubmitElement.Click();
+            return new UserMainPage(Driver);
+        }
+
+        protected void OpenSignForm(SignFormType signFormType)
+        {
+            string className = $"btn-{signFormType.ToText()}";
             var signInElement = Driver.FindElement(By.ClassName(className));
 
             // Get the current window handle so you can switch back later
@@ -49,14 +53,6 @@ namespace Infrastructure.EntryPages
             var popupWindowHandle = finder.Click(signInElement);
 
             Driver.SwitchTo().Window(popupWindowHandle);
-
-            return SignInFormsFactory.Create(signInFormType, OriginalHandle);
-        }
-
-        public UserMainPage Submit()
-        {
-            SubmitElement.Click();
-            return new UserMainPage(Driver);
         }
     }
 }

@@ -13,38 +13,38 @@ namespace Tests
         [TestMethod]
         public void SignInRegular()
         {
-            SignInFromExternalAccount(SignInFormType.None);
+            SignInFromExternalAccount(SignFormType.None);
         }
 
         [TestMethod]
         public void SignInFromFacebook()
         {
-            SignInFromExternalAccount(SignInFormType.Facebook);
+            SignInFromExternalAccount(SignFormType.Facebook);
         }
 
         [TestMethod]
         public void SignInFromGitHub()
         {
-            SignInFromExternalAccount(SignInFormType.GitHub);
+            SignInFromExternalAccount(SignFormType.GitHub);
         }
 
         [TestMethod]
         public void SignInFromGoogle()
         {
-            SignInFromExternalAccount(SignInFormType.Google);
+            SignInFromExternalAccount(SignFormType.Google);
         }
 
-        private void SignInFromExternalAccount(SignInFormType signInFormType)
+        private void SignInFromExternalAccount(SignFormType signFormType)
         {
             string email = Configuration.Instance.LoginCredentials.Email;
             string password = Configuration.Instance.LoginCredentials.Password;
 
-            Page = EnterancePage.QuickSignIn(signInFormType, email, password);
+            Page = EnterancePage.QuickSignIn(signFormType, email, password);
             UserSettings settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
 
             SignInPage signInPage = settings.LogOut();
-            Page = signInPage.QuickSignIn(signInFormType, email, password);
+            Page = signInPage.QuickSignIn(signFormType, email, password);
             settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
         }

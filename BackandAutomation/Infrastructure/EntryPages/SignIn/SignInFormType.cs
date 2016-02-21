@@ -2,7 +2,7 @@
 
 namespace Infrastructure.EntryPages.SignIn
 {
-    public enum SignInFormType
+    public enum SignFormType
     {
         [EnumText("github")] GitHub,
         [EnumText("google-plus")] Google,

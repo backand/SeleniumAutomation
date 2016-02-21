@@ -2,7 +2,7 @@ using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn.Types
 {
-    [SignInFormType(SignInFormType.Google)]
+    [SignInFormType(SignFormType.Google)]
     public class GoogleSignInForm : SignInForm
     {
         public GoogleSignInForm(IWebDriver driver, string originalWindowHandle) : base(driver, originalWindowHandle)
