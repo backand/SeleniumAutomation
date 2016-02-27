@@ -1,4 +1,5 @@
 ﻿using Core;
+using Infrastructure.Apps;
 using OpenQA.Selenium;
 
 namespace Infrastructure.Base
@@ -22,5 +23,9 @@ namespace Infrastructure.Base
             TopNav.FindElement(Selectors.Common.GoToHomePage).Click();
             return new UserMainPage(Driver);
         }
+
+
+        public CurrentAppComponent CurrentAppComponent
+            => new CurrentAppComponent(Driver, TopNav.FindElement(Selectors.BackandApplicationBasic.CurrentApp));
     }
 }

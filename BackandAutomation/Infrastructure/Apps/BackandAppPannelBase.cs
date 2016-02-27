@@ -12,15 +12,20 @@ namespace Infrastructure.Apps
         }
 
         internal IWebElement MainElement { get; set; }
-        protected IWebElement NameElement => MainElement.FindElement(Selectors.AppForm.Name);
+        protected IWebElement NameElement => MainElement.FindElement(Selectors.AppForm.AppHead);
         protected IWebElement TitleElement => MainElement.FindElement(Selectors.AppForm.Title);
 
         public RibbonType? RibbonType
-            =>
-                MainElement.FindElement(By.ClassName(Selectors.AppForm.RibbonElementSelector))
+        {
+            get
+            {
+                var ribbonType = MainElement.FindElement(By.ClassName(Selectors.AppForm.RibbonElementSelector))
                     .GetClasses()
                     .FirstOrDefault(c => c != Selectors.AppForm.RibbonElementSelector && c.Contains("ui-ribbon-"))?
                     .TrimStart("ui-ribbon-".ToCharArray())
                     .ToEnum<RibbonType>();
+                return ribbonType;
+            }
+        }
     }
 }

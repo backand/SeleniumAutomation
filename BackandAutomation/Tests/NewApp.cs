@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Infrastructure;
 using Infrastructure.Apps;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests.Base;
@@ -26,6 +28,40 @@ namespace Tests
             Page = kickstartPage.GoToHomePage();
             feed = Page.AppsFeed;
             Assert.IsTrue(feed.AppsPannels.Any(app => app.Name == appName.ToUpper()));
+        }
+
+        [TestMethod]
+        public void DeleteApp()
+        {
+            AppsFeed feed = Page.AppsFeed;
+            string appName;
+            string appTitle;
+            List<BackandAppPannel> backandAppPannels = feed.AppsPannels.ToList();
+            BackandAppPannel appPannel = backandAppPannels.FirstOrDefault(app => app.RibbonType == RibbonType.Connected);
+            AppSettingsPage appSettings;
+            if (appPannel == null)
+            {
+                appName = Utilities.GenerateString("TestName");
+                appTitle = Utilities.GenerateString("TestTitle");
+                appSettings = CreateApp(appName, appTitle);
+                
+            }
+            else
+            {
+                appName = appPannel.Name;
+                appTitle = appPannel.Title;
+                appSettings = appPannel.MoveToAppSettingsPage();
+            }
+            Page = appSettings.Delete();
+            feed = Page.AppsFeed;
+            backandAppPannels = feed.AppsPannels.ToList();
+            appPannel = backandAppPannels.FirstOrDefault(app => app.Name == appName && app.Title == appTitle);
+            Assert.IsNull(appPannel);
+        }
+
+        private AppSettingsPage CreateApp(string name, string title)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

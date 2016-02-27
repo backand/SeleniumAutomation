@@ -13,6 +13,10 @@ namespace Infrastructure.EntryPages.SignIn
             InitClasses();
         }
 
+        protected BasicFactory(DriverUser driverUser) : this(driverUser.Driver)
+        {
+        }
+
         protected abstract void InitClasses();
 
         protected ArrayList RegisteredImplementations { get; }

@@ -10,5 +10,6 @@
   <loginCredentials>
     <email>backandautouser@gmail.com</email>
     <password>backand123</password>
+    <fullName>BackandUser</fullName>
   </loginCredentials>
 </backandConfiguration>

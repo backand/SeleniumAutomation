@@ -9,6 +9,16 @@ namespace Core
             MainElement = mainElement;
         }
 
+        public ModalDialog(DriverUser driver, IWebElement mainElement) : base(driver.Driver)
+        {
+            MainElement = mainElement;
+        }
+
+        public ModalDialog(IWebDriver driver) : base(driver)
+        {
+            MainElement = Driver.FindElement(Selectors.ModalDialog.MainElement);
+        }
+
         public IWebElement MainElement { get; set; }
 
         public string Title => MainElement.FindElement(Selectors.ModalDialog.Title).Text;

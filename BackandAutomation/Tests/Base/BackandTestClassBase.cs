@@ -16,15 +16,7 @@ namespace Tests.Base
         protected UserMainPage Page { get; set; }
 
         public static TestContext TestContext { get; set; }
-
-        [DeploymentItem("Tests/Utils/BackandConfiguration.xml", "Helpers")]
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
-        {
-            string fileContent = File.ReadAllText(@"Helpers\BackandConfiguration.xml");
-
-        }
-
+        
         [TestInitialize]
         public void TestInitialize()
         {

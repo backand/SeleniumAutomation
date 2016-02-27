@@ -14,5 +14,8 @@ namespace Core.ConfigurationElements
 
         [XmlElement("password")]
         public string Password { get; set; }
+
+        [XmlElement("fullName")]
+        public string FullName { get; set; }
     }
 }

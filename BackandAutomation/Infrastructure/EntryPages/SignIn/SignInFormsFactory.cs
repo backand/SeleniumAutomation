@@ -13,6 +13,11 @@ namespace Infrastructure.EntryPages.SignIn
         {
         }
 
+        public SignInFormsFactory(DriverUser driverUser) : base(driverUser)
+        {
+            
+        }
+
         protected override void InitClasses()
         {
             RegisterClass(typeof(GitHubForm));

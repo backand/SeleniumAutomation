@@ -15,7 +15,6 @@ namespace Core
                 Configuration.Instance.Selenium.ChromeDriverPath);
 
             ChromeOptions options = new ChromeOptions();
-            //options.AddArguments("--disable-popup-blocking");
 
             IWebDriver driver = new ChromeDriver(chromeDriverPath, options);
             PrepareDriver(driver);

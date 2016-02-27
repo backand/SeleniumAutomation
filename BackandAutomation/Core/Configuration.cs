@@ -10,13 +10,12 @@ namespace Core
     {
         public static readonly object LockObj = new object();
         private static BackandConfiguration _configuration;
-        private static Configuration _configuratonInstance;
 
         private Configuration()
         {
             var serializer = new XmlSerializer(typeof (BackandConfiguration));
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..", _filePath);
-            using (Stream stream = new FileStream(path, FileMode.Open))
+            
+            using (Stream stream = ResourcesHandler.GetStream(_filePath))
             {
                 var obj = serializer.Deserialize(stream);
                 _configuration = obj as BackandConfiguration;
@@ -34,21 +33,12 @@ namespace Core
                 {
                     if (_configuration == null)
                     {
-                        _configuratonInstance = new Configuration();
+                        // ReSharper disable once ObjectCreationAsStatement
+                        new Configuration();
                     }
                 }
                 return _configuration;
             }
         }
-
-        //public string AppUrl => _configuration.App.Url;
-        //public bool IsLocal => _configuration.Selenium.IsLocal;
-
-        //public string DriverPath
-        //    =>
-        //        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..",
-        //            _configuration.Selenium.ChromeDriverPath);
-
-        //public TimeSpan ProtractorTimeOut => TimeSpan.FromSeconds(_configuration.Selenium.ProtractorTimeOut);
     }
 }

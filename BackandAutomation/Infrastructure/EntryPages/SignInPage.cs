@@ -44,10 +44,9 @@ namespace Infrastructure.EntryPages
             if (signFormType != SignFormType.None) return false;
             Email = email;
             Password = password;
-            {
-                quickSignIn = Submit();
-                return true;
-            }
+
+            quickSignIn = Submit();
+            return true;
         }
     }
 }

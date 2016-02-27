@@ -1,4 +1,5 @@
 ﻿using Core;
+using Infrastructure.Apps;
 using Infrastructure.Base;
 using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
@@ -12,6 +13,10 @@ namespace Infrastructure
         public BackandPage(IWebDriver driver) : base(driver)
         {
             CurrentDriver = (driver as NgWebDriver)?.WrappedDriver;
+        }
+
+        public BackandPage(DriverUser driverUser) : this(driverUser.Driver)
+        {
         }
 
         public IWebDriver CurrentDriver { get; set; }
@@ -37,9 +42,9 @@ namespace Infrastructure
             return mainPage;
         }
 
-        public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)
+        public UserMainPage QuickSignUp(SignFormType signFormType, string fullName, string email, string password)
         {
-            UserMainPage mainPage = SignUp().QuickSignUp(signFormType, userName, email, password);
+            UserMainPage mainPage = SignUp().QuickSignUp(signFormType, fullName, email, password);
             return mainPage;
         }
     }

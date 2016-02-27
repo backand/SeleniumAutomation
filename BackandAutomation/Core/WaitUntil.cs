@@ -43,10 +43,9 @@ namespace Core
 
         public ModalDialog UntilDialogPopUp()
         {
-            IWebElement dialogElement = UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
+            UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
                 exceptionTypes: typeof (NoSuchWindowException));
-            return new ModalDialog(Driver, dialogElement);
-
+            return new ModalDialog(Driver);
         }
     }
 }

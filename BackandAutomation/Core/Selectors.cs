@@ -6,7 +6,7 @@ namespace Core
     {
         public class AppForm
         {
-            public static By Name
+            public static By AppHead
                 => new OrCondition(By.Name("appName"), By.CssSelector(".panel-heading.text-center"));
 
             public static By Title =>
@@ -40,7 +40,7 @@ namespace Core
             public static By GoToHomePage => By.ClassName("ti-layers-alt");
         }
 
-        public class Kickstart
+        public class BackandApplicationBasic
         {
             public static By CurrentApp => By.CssSelector("select[ng-model='header.currentAppName']");
             public static By Option => By.TagName("option");
@@ -49,10 +49,16 @@ namespace Core
         public class Login
         {
             public static By Submit => Common.SubmitType;
-            public static By Password => By.Name("uPassword");
+            public static By Password => By.CssSelector("[placeholder='Password']");
             public static By Email => By.Name("uEmail");
             public static By FullName => By.Name("uFullFirst");
             public static By ConfirmPassword => By.Name("confirm_password");
+            public static By SignUp => By.CssSelector("[ui-sref='sign_up']");
+        }
+
+        public class ManageAppSettings
+        {
+            public static By Delete => By.CssSelector("[title='Delete the App']");
         }
     }
 }
