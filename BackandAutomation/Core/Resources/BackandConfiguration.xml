@@ -12,4 +12,5 @@
     <password>backand123</password>
     <fullName>BackandUser</fullName>
   </loginCredentials>
+  <screenshotsFolder>c:\Screenshots</screenshotsFolder>
 </backandConfiguration>

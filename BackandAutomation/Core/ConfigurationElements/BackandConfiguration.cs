@@ -18,5 +18,8 @@ namespace Core.ConfigurationElements
 
         [XmlElement("loginCredentials")]
         public LoginCredentials LoginCredentials { get; set; }
+
+        [XmlElement("screenshotsFolder")]
+        public string ScreenshotsFolder { get; set; }
     }
 }

@@ -35,27 +35,25 @@ namespace Tests
         {
             AppsFeed feed = Page.AppsFeed;
             string appName;
-            string appTitle;
             List<BackandAppPannel> backandAppPannels = feed.AppsPannels.ToList();
             BackandAppPannel appPannel = backandAppPannels.FirstOrDefault(app => app.RibbonType == RibbonType.Connected);
             AppSettingsPage appSettings;
             if (appPannel == null)
             {
                 appName = Utilities.GenerateString("TestName");
-                appTitle = Utilities.GenerateString("TestTitle");
+                string appTitle = Utilities.GenerateString("TestTitle");
                 appSettings = CreateApp(appName, appTitle);
                 
             }
             else
             {
                 appName = appPannel.Name;
-                appTitle = appPannel.Title;
                 appSettings = appPannel.MoveToAppSettingsPage();
             }
             Page = appSettings.Delete();
             feed = Page.AppsFeed;
             backandAppPannels = feed.AppsPannels.ToList();
-            appPannel = backandAppPannels.FirstOrDefault(app => app.Name == appName && app.Title == appTitle);
+            appPannel = backandAppPannels.FirstOrDefault(app => app.Name == appName);
             Assert.IsNull(appPannel);
         }
 

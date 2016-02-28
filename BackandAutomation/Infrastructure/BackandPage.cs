@@ -1,5 +1,4 @@
-﻿using Core;
-using Infrastructure.Apps;
+﻿using Core; 
 using Infrastructure.Base;
 using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
@@ -21,8 +20,8 @@ namespace Infrastructure
 
         public IWebDriver CurrentDriver { get; set; }
 
-        private IWebElement SignInElement => CurrentDriver.FindElement(By.CssSelector(".navbar-nav .login"));
-        private IWebElement SignUpElement => CurrentDriver.FindElement(By.CssSelector(".navbar-nav .login"));
+        private IWebElement SignInElement => CurrentDriver.FindElement(Selectors.LoginPageButtons.SignIn);
+        private IWebElement SignUpElement => CurrentDriver.FindElement(Selectors.LoginPageButtons.SignUp);
 
         public SignInPage SignIn()
         {

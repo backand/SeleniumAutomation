@@ -68,6 +68,7 @@
     <Compile Include="OrCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcesHandler.cs" />
+    <Compile Include="ScreenshotsContainer.cs" />
     <Compile Include="Selectors.cs" />
     <Compile Include="WaitUntil.cs" />
   </ItemGroup>

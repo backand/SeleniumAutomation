@@ -15,18 +15,33 @@ namespace Tests.Base
         protected BackandPage EnterancePage { get; set; }
         protected UserMainPage Page { get; set; }
 
-        public static TestContext TestContext { get; set; }
-        
+        protected static TestContext TestContext { get; set; }
+
+        [ClassInitialize]
+        public static void SetupTests(TestContext testContext)
+        {
+            TestContext = testContext;
+        }
+
         [TestInitialize]
         public void TestInitialize()
         {
-            EnterancePage = new BackandPage(GetDriver());
-            TestInitializeExtension();
+            try
+            {
+                EnterancePage = new BackandPage(GetDriver());
+                TestInitializeExtension();
+            }
+            catch (Exception)
+            {
+                ClassCleanup();
+                throw;
+            }
         }
 
         [TestCleanup]
         public void ClassCleanup()
         {
+            TestCleanupExtension();
             Driver.Close();
         }
 
@@ -50,6 +65,12 @@ namespace Tests.Base
 
         public void TestCleanupExtension()
         {
+            //if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed ||
+            //    TestContext.CurrentTestOutcome == UnitTestOutcome.Aborted ||
+            //    TestContext.CurrentTestOutcome == UnitTestOutcome.Error)
+            {
+                DirectoryInfo screenshots = Page.ScreenshotsContainer.GetScreenshotsFolder();
+            }
         }
     }
 }

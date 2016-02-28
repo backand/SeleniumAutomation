@@ -46,8 +46,15 @@ namespace Core
             public static By Option => By.TagName("option");
         }
 
+        public class LoginPageButtons
+        {
+            public static By SignIn => By.CssSelector(".container-fluid a.login");
+            public static By SignUp => By.CssSelector(".container-fluid a.login-raww");
+        }
+
         public class Login
         {
+
             public static By Submit => Common.SubmitType;
             public static By Password => By.CssSelector("[placeholder='Password']");
             public static By Email => By.Name("uEmail");
