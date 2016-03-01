@@ -1,0 +1,16 @@
+﻿<backandConfiguration>
+  <app>
+    <url>https://www.backand.com/</url>
+  </app>
+  <selenium>
+    <isLocal>true</isLocal>
+    <chromeDriverPath>Tests\Utils</chromeDriverPath>
+    <protractorTimeOut>20</protractorTimeOut>
+  </selenium>
+  <loginCredentials>
+    <email>backandautouser@gmail.com</email>
+    <password>backand123</password>
+    <fullName>BackandUser</fullName>
+  </loginCredentials>
+  <screenshotsFolder>c:\Screenshots</screenshotsFolder>
+</backandConfiguration>
