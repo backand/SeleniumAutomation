@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Infrastructure;
 using Infrastructure.Apps;
@@ -17,16 +18,12 @@ namespace Tests
             string appName = Utilities.GenerateString("TestName");
             string appTitle = Utilities.GenerateString("TestTitle");
 
-            AppsFeed feed = Page.AppsFeed;
-            NewAppForm newAppForm = feed.New();
-            newAppForm.Name = appName;
-            newAppForm.Title = appTitle;
-            KickstartPage kickstartPage = newAppForm.Submit();
+            KickstartPage kickstartPage = CreateApp(appName, appTitle);
             string current = kickstartPage.CurrentAppComponent.Name;
             Assert.AreEqual(appName.ToLower(), current);
 
             Page = kickstartPage.GoToHomePage();
-            feed = Page.AppsFeed;
+            AppsFeed feed = Page.AppsFeed;
             Assert.IsTrue(feed.AppsPannels.Any(app => app.Name == appName.ToUpper()));
         }
 
@@ -37,19 +34,20 @@ namespace Tests
             string appName;
             List<BackandAppPannel> backandAppPannels = feed.AppsPannels.ToList();
             BackandAppPannel appPannel = backandAppPannels.FirstOrDefault(app => app.RibbonType == RibbonType.Connected);
-            AppSettingsPage appSettings;
             if (appPannel == null)
             {
                 appName = Utilities.GenerateString("TestName");
                 string appTitle = Utilities.GenerateString("TestTitle");
-                appSettings = CreateApp(appName, appTitle);
-                
+                var kickstarterPAge = CreateApp(appName, appTitle);
+                Page = kickstarterPAge.GoToHomePage();
+                appPannel = backandAppPannels.FirstOrDefault(app => app.Name == appName);
             }
             else
             {
                 appName = appPannel.Name;
-                appSettings = appPannel.MoveToAppSettingsPage();
             }
+            Assert.IsNotNull(appPannel, "appPannel != null");
+            var appSettings = appPannel.MoveToAppSettingsPage();
             Page = appSettings.Delete();
             feed = Page.AppsFeed;
             backandAppPannels = feed.AppsPannels.ToList();
@@ -57,9 +55,13 @@ namespace Tests
             Assert.IsNull(appPannel);
         }
 
-        private AppSettingsPage CreateApp(string name, string title)
+        private KickstartPage CreateApp(string name, string title)
         {
-            throw new System.NotImplementedException();
+            AppsFeed feed = Page.AppsFeed;
+            NewAppForm newAppForm = feed.New();
+            newAppForm.Name = name;
+            newAppForm.Title = title;
+            return newAppForm.Submit();
         }
     }
 }

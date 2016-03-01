@@ -12,10 +12,10 @@ namespace Tests.Base
     [TestClass]
     public class BackandTestClassBase
     {
-        protected BackandPage EnterancePage { get; set; }
+        protected BackandPage EnterancePage { get; private set; }
         protected UserMainPage Page { get; set; }
 
-        protected static TestContext TestContext { get; set; }
+        public static TestContext TestContext { get; set; }
 
         [ClassInitialize]
         public static void SetupTests(TestContext testContext)
@@ -31,7 +31,7 @@ namespace Tests.Base
                 EnterancePage = new BackandPage(GetDriver());
                 TestInitializeExtension();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ClassCleanup();
                 throw;
@@ -45,15 +45,15 @@ namespace Tests.Base
             Driver.Close();
         }
 
-        protected IWebDriver GetDriver()
+        private IWebDriver GetDriver()
         {
             Driver = DriversPool.GetWebDriver(false);
             return Driver;
         }
 
-        public IWebDriver Driver { get; set; }
+        private IWebDriver Driver { get; set; }
 
-        public void TestInitializeExtension()
+        protected void TestInitializeExtension()
         {
             Attribute fastLoginAttribute = GetType().GetCustomAttribute(typeof(InstantLoginAttribute));
             if (fastLoginAttribute != null)
@@ -63,11 +63,11 @@ namespace Tests.Base
             }
         }
 
-        public void TestCleanupExtension()
+        protected void TestCleanupExtension()
         {
-            //if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed ||
-            //    TestContext.CurrentTestOutcome == UnitTestOutcome.Aborted ||
-            //    TestContext.CurrentTestOutcome == UnitTestOutcome.Error)
+            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed ||
+                TestContext.CurrentTestOutcome == UnitTestOutcome.Aborted ||
+                TestContext.CurrentTestOutcome == UnitTestOutcome.Error)
             {
                 DirectoryInfo screenshots = Page.ScreenshotsContainer.GetScreenshotsFolder();
             }
