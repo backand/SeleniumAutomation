@@ -13,7 +13,7 @@ namespace Infrastructure.EntryPages.SignIn.Types
         protected override By PasswordFindBy => By.Name("password");
         protected override By SubmitFindBy => By.Name("commit");
 
-        protected override void CompleteFormLogic()
+        protected override void CompleteFormLogin()
         {
             try
             {

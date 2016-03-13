@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using Infrastructure;
 using Infrastructure.Apps;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests.Base;
@@ -47,7 +45,7 @@ namespace Tests
                 appName = appPannel.Name;
             }
             Assert.IsNotNull(appPannel, "appPannel != null");
-            var appSettings = appPannel.MoveToAppSettingsPage();
+            AppSettingsPage appSettings = appPannel.MoveToAppSettingsPage();
             Page = appSettings.Delete();
             feed = Page.AppsFeed;
             backandAppPannels = feed.AppsPannels.ToList();

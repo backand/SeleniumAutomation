@@ -1,4 +1,4 @@
-﻿using Core; 
+﻿using Core;
 using Infrastructure.Base;
 using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
@@ -18,20 +18,17 @@ namespace Infrastructure
         {
         }
 
-        public IWebDriver CurrentDriver { get; set; }
+        private IWebDriver CurrentDriver { get; }
 
-        private IWebElement SignInElement => CurrentDriver.FindElement(Selectors.LoginPageButtons.SignIn);
-        private IWebElement SignUpElement => CurrentDriver.FindElement(Selectors.LoginPageButtons.SignUp);
-
-        public SignInPage SignIn()
+        private SignInPage SignIn()
         {
-            SignInElement.Click();
+            CurrentDriver.JavascriptClick(Selectors.LoginPageButtons.SignInSelector);
             return new SignInPage(Driver);
         }
 
-        public SignUpPage SignUp()
+        private SignUpPage SignUp()
         {
-            SignUpElement.Click();
+            CurrentDriver.JavascriptClick(Selectors.LoginPageButtons.SignUpSelector);
             return new SignUpPage(Driver);
         }
 

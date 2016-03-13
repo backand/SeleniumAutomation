@@ -1,3 +1,4 @@
+using Core;
 using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn
@@ -19,9 +20,9 @@ namespace Infrastructure.EntryPages.SignIn
         protected abstract By PasswordFindBy { get; }
         protected abstract By SubmitFindBy { get; }
 
-        protected IWebElement EmailElement => Driver.FindElement(EmailFindBy);
-        protected IWebElement PasswordElement => Driver.FindElement(PasswordFindBy);
-        protected IWebElement SubmitElement => Driver.FindElement(SubmitFindBy);
+        protected IWebElement EmailElement => Driver.TryFindElement(EmailFindBy);
+        protected IWebElement PasswordElement => Driver.TryFindElement(PasswordFindBy);
+        protected IWebElement SubmitElement => Driver.TryFindElement(SubmitFindBy);
 
         public virtual string Email
         {
@@ -37,15 +38,17 @@ namespace Infrastructure.EntryPages.SignIn
 
         public UserMainPage Submit()
         {
+            string email = Email;
+            string password = Password;
             SubmitElement.Click();
-            CompleteFormLogic();
+            CompleteFormLogin();
             if (!string.IsNullOrEmpty(OriginalWindowHandle))
                 SwitchToOriginalWindow();
             WaitUntil.UntilElementDoesntExist(By.ClassName("spinner"));
             return new UserMainPage(Driver);
         }
 
-        protected virtual void CompleteFormLogic()
+        protected virtual void CompleteFormLogin()
         {
         }
 

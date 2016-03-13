@@ -1,3 +1,4 @@
+using Core;
 using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn.Types
@@ -19,7 +20,7 @@ namespace Infrastructure.EntryPages.SignIn.Types
             set
             {
                 EmailElement.SendKeys(value);
-                Driver.FindElement(By.Id("next"))?.Click();
+                Driver.TryFindElement(By.Id("next"))?.Click();
             }
         }
     }

@@ -48,8 +48,8 @@ namespace Core
 
         public class LoginPageButtons
         {
-            public static By SignIn => By.CssSelector(".container-fluid a.login");
-            public static By SignUp => By.CssSelector(".container-fluid a.login-raww");
+            public static string SignInSelector = ".header-raww a.login";
+            public static string SignUpSelector = ".header-raww .login-raww";
         }
 
         public class Login

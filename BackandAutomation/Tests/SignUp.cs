@@ -17,7 +17,7 @@ namespace Tests
             SignInFromExternalAccount(SignFormType.None);
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void SignUpFromGoogle()
         {
             SignInFromExternalAccount(SignFormType.Google);

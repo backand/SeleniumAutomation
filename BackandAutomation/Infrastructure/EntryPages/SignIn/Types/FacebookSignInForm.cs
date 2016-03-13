@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using System;
 
 namespace Infrastructure.EntryPages.SignIn.Types
 {
@@ -11,9 +12,9 @@ namespace Infrastructure.EntryPages.SignIn.Types
 
         protected override By EmailFindBy => By.Id("email");
         protected override By PasswordFindBy => By.Id("pass");
-        protected override By SubmitFindBy => By.Id("u_0_2");
+        protected override By SubmitFindBy => By.Id("loginbutton");
 
-        protected override void CompleteFormLogic()
+        protected override void CompleteFormLogin()
         {
             try
             {

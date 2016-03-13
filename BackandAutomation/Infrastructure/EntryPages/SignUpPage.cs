@@ -14,7 +14,7 @@ namespace Infrastructure.EntryPages
 
         public SignInFormsFactory SignInFactory { get; set; }
 
-        private bool HandleNoSignInForm(SignFormType signFormType, string userName, string email, string password,
+        private bool HandleNoSignUpForm(SignFormType signFormType, string userName, string email, string password,
             out UserMainPage quickSignUp)
         {
             quickSignUp = null;
@@ -56,9 +56,9 @@ namespace Infrastructure.EntryPages
 
         public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)
         {
-            SignUpElement.Click();
+            //SignUpElement.Click();
             UserMainPage signInForm;
-            if (HandleNoSignInForm(signFormType, userName, email, password, out signInForm)) return signInForm;
+            if (HandleNoSignUpForm(signFormType, userName, email, password, out signInForm)) return signInForm;
             var form = SpecifySignForm(signFormType);
             try
             {

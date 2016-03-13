@@ -20,7 +20,7 @@ namespace Core
             UntilActionFinishes(driver => driver.TryFindElement(findBy, out element), timeOut, exceptionTypes);
             return element;
         }
-        
+
         public IWebElement UntilElementDoesntExist(By findBy, int timeOut = TimeOut, params Type[] exceptionTypes)
         {
             IWebElement element = null;
@@ -28,9 +28,28 @@ namespace Core
             return element;
         }
 
+        public void ElementIsClickable(IWebElement element, int timeOut = TimeOut)
+        {
+            UntilActionFinishes(driver =>
+            {
+                try
+                {
+                    element.Click();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    if (ex is ElementNotVisibleException || ex is StaleElementReferenceException)
+                        return false;
+                    else
+                        throw ex;
+                }
+            }, timeOut, typeof(ElementNotVisibleException), typeof(StaleElementReferenceException));
+        }
+
         public IAlert UntilAlertPoppesUp(int timeOut = TimeOut)
         {
-            return UntilActionFinishes(driver => driver.SwitchTo().Alert(), timeOut, typeof (NoAlertPresentException));
+            return UntilActionFinishes(driver => driver.SwitchTo().Alert(), timeOut, typeof(NoAlertPresentException));
         }
 
         public T UntilActionFinishes<T>(Func<IWebDriver, T> funcToWait, int timeOut = TimeOut, params Type[] exceptionTypes)
@@ -44,7 +63,7 @@ namespace Core
         public ModalDialog UntilDialogPopUp()
         {
             UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
-                exceptionTypes: typeof (NoSuchWindowException));
+                exceptionTypes: typeof(NoSuchWindowException));
             return new ModalDialog(Driver);
         }
     }

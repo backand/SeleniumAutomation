@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 
 namespace Core
 {
@@ -30,16 +31,48 @@ namespace Core
 
         public static bool TryFindElement(this ISearchContext searcher, By findBy, out IWebElement element)
         {
-            ReadOnlyCollection<IWebElement> elements = searcher.FindElements(findBy);
-            element = elements.FirstOrDefault();
+            element = searcher.TryFindElement(findBy);
             return element != null;
+        }
+
+        public static IWebElement TryFindElement(this ISearchContext searcher, By findBy)
+        {
+            ReadOnlyCollection<IWebElement> elements = searcher.FindElements(findBy);
+            return elements.FirstOrDefault();
+        }
+
+        public static void JavascriptClick(this IWebDriver driver, string cssSelector)
+        {
+            var jsExecuter = (driver as IJavaScriptExecutor);
+            jsExecuter.ExecuteScript($"$('{cssSelector}')[0].click()");
         }
 
         public static IWebElement Hover(this IWebDriver driver, IWebElement element)
         {
-            Actions builder = new Actions(driver);
-            builder.MoveToElement(element).Perform();
+            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            //element = wait.Until(ExpectedConditions.ElementIsVisible(element));
+
+            Actions action = new Actions(driver);
+            action.MoveToElement(element).Perform();
             return element;
+        }
+
+        public static IWebElement Hover(this IWebDriver driver, By locator)
+        {
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                IWebElement element = wait.Until(ExpectedConditions.ElementIsVisible(locator));
+
+                Actions action = new Actions(driver);
+
+                action.MoveToElement(element).Perform();
+                return element;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                throw;
+            }
         }
 
         public static void TryClick(this IWebElement element)
@@ -50,7 +83,7 @@ namespace Core
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 

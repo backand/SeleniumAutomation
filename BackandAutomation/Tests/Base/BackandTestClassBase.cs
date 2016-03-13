@@ -41,7 +41,7 @@ namespace Tests.Base
         [TestCleanup]
         public void ClassCleanup()
         {
-            TestCleanupExtension();
+            //TestCleanupExtension();
             Driver.Close();
         }
 
