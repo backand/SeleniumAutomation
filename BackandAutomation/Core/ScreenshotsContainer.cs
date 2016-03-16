@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using OpenQA.Selenium;
@@ -11,10 +10,20 @@ namespace Core
         public ScreenshotsContainer(IWebDriver driver)
         {
             Driver = driver;
-            FolderPath = DateTime.Now.ToShortDateString();
+            FolderPath = MakeFolderPath();
 
-            ScreenshotsFolder =
-                Directory.CreateDirectory(Path.Combine(Configuration.Instance.ScreenshotsFolder, FolderPath));
+            string screenshotsDir = Path.Combine(Configuration.Instance.ScreenshotsFolder, FolderPath);
+
+            ScreenshotsFolder = Directory.CreateDirectory(screenshotsDir);
+        }
+
+        private string MakeFolderPath()
+        {
+            DateTime datetimeNow = DateTime.Now;
+            string time = datetimeNow.ToLongTimeString().Replace(':', '-');
+            string date = datetimeNow.ToShortDateString().Replace('/', '.');
+            string folderName = $"Results - {date} {time}";
+            return folderName;
         }
 
         public string FolderPath { get; set; }

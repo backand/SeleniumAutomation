@@ -1,7 +1,6 @@
 ﻿using Core;
 using Infrastructure.Apps;
 using Infrastructure.Base;
-using Infrastructure.EntryPages.SignIn;
 using OpenQA.Selenium;
 
 namespace Infrastructure
@@ -13,6 +12,7 @@ namespace Infrastructure
             IWebElement intercomElement;
             if(Driver.TryFindElement(By.ClassName("intercom-launcher-preview-close"),out intercomElement));
                 intercomElement.TryClick();
+            SubmitScreenshot();
         }
 
         public AppsFeed AppsFeed => new AppsFeed(Driver, PageElement);

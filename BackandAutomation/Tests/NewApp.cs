@@ -21,6 +21,7 @@ namespace Tests
             Assert.AreEqual(appName.ToLower(), current);
 
             Page = kickstartPage.GoToHomePage();
+            Assert.Fail();
             AppsFeed feed = Page.AppsFeed;
             Assert.IsTrue(feed.AppsPannels.Any(app => app.Name == appName.ToUpper()));
         }

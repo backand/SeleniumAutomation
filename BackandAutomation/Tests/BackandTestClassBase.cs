@@ -1,27 +1,34 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using Core;
+﻿using Core;
 using Infrastructure;
 using Infrastructure.EntryPages.SignIn;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using System;
+using System.IO;
+using System.Reflection;
+using Tests.Base;
 
-namespace Tests.Base
+namespace Tests
 {
     [TestClass]
     public class BackandTestClassBase
     {
+        private TestContext testContextInstance;
+
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
+        }
+        
         protected BackandPage EnterancePage { get; private set; }
         protected UserMainPage Page { get; set; }
-
-        public static TestContext TestContext { get; set; }
-
-        [ClassInitialize]
-        public static void SetupTests(TestContext testContext)
-        {
-            TestContext = testContext;
-        }
 
         [TestInitialize]
         public void TestInitialize()
@@ -41,7 +48,7 @@ namespace Tests.Base
         [TestCleanup]
         public void ClassCleanup()
         {
-            //TestCleanupExtension();
+            TestCleanupExtension();
             Driver.Close();
         }
 

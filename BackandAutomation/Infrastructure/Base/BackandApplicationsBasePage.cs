@@ -8,6 +8,7 @@ namespace Infrastructure.Base
     {
         public BackandApplicationsBasePage(IWebDriver driver) : base(driver)
         {
+            SubmitScreenshot();
         }
 
         private IWebElement SettingsElement => TopNav.FindElement(Selectors.BackandApplicationsBasePage.Settings);
@@ -17,15 +18,14 @@ namespace Infrastructure.Base
         protected IWebElement PageElement => Driver.FindElement(Selectors.BackandApplicationsBasePage.Page);
         protected IWebElement LeftMenuElement => Driver.FindElement(Selectors.BackandApplicationsBasePage.LeftMenu);
         protected IWebElement TopNav => Driver.FindElement(Selectors.BackandApplicationsBasePage.TopNav);
-        
+
         public UserMainPage GoToHomePage()
         {
             TopNav.FindElement(Selectors.Common.GoToHomePage).Click();
             return new UserMainPage(Driver);
         }
 
-
-        public CurrentAppComponent CurrentAppComponent
-            => new CurrentAppComponent(Driver, TopNav.FindElement(Selectors.BackandApplicationBasic.CurrentApp));
+        public CurrentAppComponent CurrentAppComponent => 
+            new CurrentAppComponent(Driver, TopNav.FindElement(Selectors.BackandApplicationBasic.CurrentApp));
     }
 }
