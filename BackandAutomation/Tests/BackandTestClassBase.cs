@@ -26,7 +26,7 @@ namespace Tests
                 testContextInstance = value;
             }
         }
-        
+
         protected BackandPage EnterancePage { get; private set; }
         protected UserMainPage Page { get; set; }
 
@@ -35,6 +35,7 @@ namespace Tests
         {
             try
             {
+                FolderPathProvider provider = new FolderPathProvider();
                 EnterancePage = new BackandPage(GetDriver());
                 TestInitializeExtension();
             }
@@ -76,7 +77,15 @@ namespace Tests
                 TestContext.CurrentTestOutcome == UnitTestOutcome.Aborted ||
                 TestContext.CurrentTestOutcome == UnitTestOutcome.Error)
             {
-                DirectoryInfo screenshots = Page.ScreenshotsContainer.GetScreenshotsFolder();
+            }
+            else
+            {
+                DirectoryInfo directory = new DirectoryInfo(FolderPathProvider.FullPath);
+
+                foreach (FileInfo file in directory.GetFiles()) file.Delete();
+                foreach (DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
+
+                directory.Delete();
             }
         }
     }

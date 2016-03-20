@@ -2,6 +2,7 @@ using System;
 using System.Drawing.Imaging;
 using System.IO;
 using OpenQA.Selenium;
+using Protractor;
 
 namespace Core
 {
@@ -10,11 +11,8 @@ namespace Core
         public ScreenshotsContainer(IWebDriver driver)
         {
             Driver = driver;
-            FolderPath = MakeFolderPath();
-
-            string screenshotsDir = Path.Combine(Configuration.Instance.ScreenshotsFolder, FolderPath);
-
-            ScreenshotsFolder = Directory.CreateDirectory(screenshotsDir);
+            ScreenshotsDir = Path.Combine(Configuration.Instance.ScreenshotsFolder, FolderPathProvider.FullPath);
+            ScreenshotsFolder = Directory.CreateDirectory(ScreenshotsDir);
         }
 
         private string MakeFolderPath()
@@ -26,20 +24,38 @@ namespace Core
             return folderName;
         }
 
-        public string FolderPath { get; set; }
+        public string ScreenshotsDir { get; set; }
         public DirectoryInfo ScreenshotsFolder { get; set; }
         private IWebDriver Driver { get; }
 
         public void AddScreenshot()
         {
-            ITakesScreenshot screenshotTaker = Driver as ITakesScreenshot;
-            Screenshot screenshot = screenshotTaker?.GetScreenshot();
-            screenshot?.SaveAsFile(Path.Combine(FolderPath, Driver.Url), ImageFormat.Bmp);
+            IWebDriver driver = (Driver as NgWebDriver).WrappedDriver;
+            ITakesScreenshot screenshotTake = driver as ITakesScreenshot;
+            Screenshot screenshot = screenshotTake.GetScreenshot();
+
+            string fileName = DateTime.Now.ToLongTimeString().Replace(':', '-');
+            string filePath = Path.Combine(ScreenshotsDir, fileName) + ".bmp";
+
+            screenshot.SaveAsFile(filePath, ImageFormat.Bmp);
         }
 
         public DirectoryInfo GetScreenshotsFolder()
         {
             return ScreenshotsFolder;
         }
+    }
+
+    public class FolderPathProvider
+    {
+        public FolderPathProvider()
+        {
+            DateTime datetimeNow = DateTime.Now;
+            string time = datetimeNow.ToLongTimeString().Replace(':', '-');
+            string date = datetimeNow.ToShortDateString().Replace('/', '.');
+            FullPath = Path.Combine(Configuration.Instance.ScreenshotsFolder, $"Results - {date} {time}");
+        }
+
+        public static string FullPath { get; set; }
     }
 }

@@ -7,6 +7,7 @@ namespace Infrastructure.Apps
     {
         public BackandAppPannel(IWebDriver driver, IWebElement mainElement) : base(driver, mainElement)
         {
+            
         }
 
         private IWebElement SettingsElement => MainElement.FindElement(Selectors.AppForm.Settings);

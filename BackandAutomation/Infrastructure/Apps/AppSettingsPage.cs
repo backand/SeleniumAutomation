@@ -1,12 +1,14 @@
 using Core;
+using Infrastructure.Base;
 using OpenQA.Selenium;
 
 namespace Infrastructure.Apps
 {
-    public class AppSettingsPage : DriverUser
+    public class AppSettingsPage : BasePage
     {
         public AppSettingsPage(IWebDriver driver) : base(driver)
         {
+            SubmitScreenshot();
         }
 
         public UserMainPage Delete()

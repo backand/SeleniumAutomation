@@ -45,6 +45,7 @@ namespace Tests
             {
                 appName = appPannel.Name;
             }
+
             Assert.IsNotNull(appPannel, "appPannel != null");
             AppSettingsPage appSettings = appPannel.MoveToAppSettingsPage();
             Page = appSettings.Delete();
