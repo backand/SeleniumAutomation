@@ -7,7 +7,7 @@ namespace Infrastructure
 {
     public class UserMainPage : BackandApplicationsBasePage
     {
-        public UserMainPage(IWebDriver driver) : base(driver)
+        public UserMainPage(DriverUser driverUser) : base(driverUser)
         {
             IWebElement intercomElement;
             if(Driver.TryFindElement(By.ClassName("intercom-launcher-preview-close"),out intercomElement));

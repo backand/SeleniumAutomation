@@ -5,12 +5,12 @@ namespace Infrastructure.EntryPages.SignIn
 {
     public abstract class SignInForm : SignForm
     {
-        protected SignInForm(IWebDriver driver, string originalWindowHandle) : base(driver)
+        protected SignInForm(DriverUser driver, string originalWindowHandle) : base(driver)
         {
             OriginalWindowHandle = originalWindowHandle;
         }
 
-        protected SignInForm(IWebDriver driver) : base(driver)
+        protected SignInForm(DriverUser driver) : base(driver)
         {
         }
 
@@ -45,7 +45,7 @@ namespace Infrastructure.EntryPages.SignIn
             if (!string.IsNullOrEmpty(OriginalWindowHandle))
                 SwitchToOriginalWindow();
             WaitUntil.UntilElementDoesntExist(By.ClassName("spinner"));
-            return new UserMainPage(Driver);
+            return new UserMainPage(this);
         }
 
         protected virtual void CompleteFormLogin()

@@ -1,3 +1,4 @@
+using Core;
 using Infrastructure.EntryPages.SignIn;
 using OpenQA.Selenium;
 
@@ -5,7 +6,7 @@ namespace Infrastructure.EntryPages
 {
     public class SignInPage : LoginPage
     {
-        public SignInPage(IWebDriver driver) : base(driver)
+        public SignInPage(DriverUser driverUser) : base(driverUser)
         {
             SignInFactory = new SignInFormsFactory(Driver);
         }
@@ -31,7 +32,7 @@ namespace Infrastructure.EntryPages
             {
                 // That's an exception that been thrown when the form has already been filled.
                 Driver.SwitchTo().Window(OriginalHandle);
-                return new UserMainPage(Driver);
+                return new UserMainPage(this);
             }
             form.Password = password;
             return form.Submit();

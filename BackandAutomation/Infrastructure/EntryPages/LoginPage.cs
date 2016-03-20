@@ -9,7 +9,7 @@ namespace Infrastructure.EntryPages
 {
     public abstract class LoginPage : BasePage
     {
-        protected LoginPage(IWebDriver driver) : base(driver)
+        protected LoginPage(DriverUser driver) : base(driver)
         {
             //WaitUntil.UntilElementExists(By.ClassName("page-signin"));
             Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
@@ -36,7 +36,7 @@ namespace Infrastructure.EntryPages
         public UserMainPage Submit()
         {
             SubmitElement.Click();
-            return new UserMainPage(Driver);
+            return new UserMainPage(this);
         }
 
         protected void OpenSignForm(SignFormType signFormType)

@@ -9,13 +9,9 @@ namespace Infrastructure
 {
     public class BackandPage : BasePage
     {
-        public BackandPage(IWebDriver driver) : base(driver)
+        public BackandPage(IWebDriver driverUser) : base(driverUser)
         {
-            CurrentDriver = (driver as NgWebDriver)?.WrappedDriver;
-        }
-
-        public BackandPage(DriverUser driverUser) : this(driverUser.Driver)
-        {
+            CurrentDriver = (Driver as NgWebDriver)?.WrappedDriver;
         }
 
         private IWebDriver CurrentDriver { get; }
@@ -23,13 +19,13 @@ namespace Infrastructure
         private SignInPage SignIn()
         {
             CurrentDriver.JavascriptClick(Selectors.LoginPageButtons.SignInSelector);
-            return new SignInPage(Driver);
+            return new SignInPage(this);
         }
 
         private SignUpPage SignUp()
         {
             CurrentDriver.JavascriptClick(Selectors.LoginPageButtons.SignUpSelector);
-            return new SignUpPage(Driver);
+            return new SignUpPage(this);
         }
 
         public UserMainPage QuickSignIn(SignFormType signFormType, string email, string password)

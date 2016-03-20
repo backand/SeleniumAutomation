@@ -6,7 +6,7 @@ namespace Infrastructure.Apps
 {
     public class AppSettingsPage : BasePage
     {
-        public AppSettingsPage(IWebDriver driver) : base(driver)
+        public AppSettingsPage(DriverUser driver) : base(driver)
         {
             SubmitScreenshot();
         }
@@ -16,7 +16,7 @@ namespace Infrastructure.Apps
             DeleteElement.Click();
             ModalDialog dialog = WaitUntil.UntilDialogPopUp();
             dialog.Ok();
-            return new UserMainPage(Driver);
+            return new UserMainPage(this);
         }
 
         public IWebElement DeleteElement => Driver.FindElement(Selectors.ManageAppSettings.Delete);

@@ -26,7 +26,7 @@ namespace Infrastructure.Apps
             MainElement.FindElement(Selectors.AppForm.SubmitNew).Click();
             ModalDialog dialog = WaitUntil.UntilDialogPopUp();
             dialog.Ok();
-            return new KickstartPage(Driver);
+            return new KickstartPage(this);
         }
     }
 }

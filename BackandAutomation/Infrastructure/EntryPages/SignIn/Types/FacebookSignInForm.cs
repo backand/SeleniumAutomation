@@ -1,3 +1,4 @@
+using Core;
 using OpenQA.Selenium;
 using System;
 
@@ -6,7 +7,7 @@ namespace Infrastructure.EntryPages.SignIn.Types
     [SignInFormType(SignFormType.Facebook)]
     public class FacebookSignInForm : SignInForm
     {
-        public FacebookSignInForm(IWebDriver driver, string originalWindowHandle) : base(driver, originalWindowHandle)
+        public FacebookSignInForm(DriverUser driver, string originalWindowHandle) : base(driver, originalWindowHandle)
         {
         }
 

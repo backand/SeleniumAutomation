@@ -59,6 +59,8 @@
     <Compile Include="Apps\KickstartPage.cs" />
     <Compile Include="Apps\ManageAppPage.cs" />
     <Compile Include="Apps\NewAppForm.cs" />
+    <Compile Include="Apps\TopBar.cs" />
+    <Compile Include="Apps\DatabaseTopBar.cs" />
     <Compile Include="Base\BackandApplicationsBasePage.cs" />
     <Compile Include="Apps\AppsFeed.cs" />
     <Compile Include="Apps\BackandAppPannel.cs" />

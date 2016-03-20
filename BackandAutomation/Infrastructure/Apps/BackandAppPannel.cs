@@ -18,13 +18,13 @@ namespace Infrastructure.Apps
         public AppSettingsPage MoveToAppSettingsPage()
         {
             SettingsElement.Click();
-            return new AppSettingsPage(Driver);
+            return new AppSettingsPage(this);
         }
 
         public ManageAppPage ManageApp()
         {
             ManageAppElement.Click();
-            return new ManageAppPage(Driver);
+            return new ManageAppPage(this);
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using Infrastructure.EntryPages.SignIn;
+﻿using Core;
+using Infrastructure.EntryPages.SignIn;
 using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages
 {
     public class EntryPage : SignInForm
     {
-        public EntryPage(IWebDriver driver) : base(driver)
+        public EntryPage(DriverUser driverUser) : base(driverUser)
         {
         }
 

@@ -7,7 +7,7 @@ namespace Infrastructure.EntryPages
 {
     public class SignUpPage : LoginPage
     {
-        public SignUpPage(IWebDriver driver) : base(driver)
+        public SignUpPage(DriverUser driverUser) : base(driverUser)
         {
             SignInFactory = new SignInFormsFactory(this);
         }
@@ -68,7 +68,7 @@ namespace Infrastructure.EntryPages
             {
                 // That's an exception that been thrown when the form has already been filled.
                 Driver.SwitchTo().Window(OriginalHandle);
-                return new UserMainPage(Driver);
+                return new UserMainPage(this);
             }
             form.Password = password;
             return form.Submit();
@@ -77,7 +77,7 @@ namespace Infrastructure.EntryPages
 
     public class SignUpForm : SignForm
     {
-        public SignUpForm(IWebDriver driver) : base(driver)
+        public SignUpForm(DriverUser driverUser) : base(driverUser)
         {
         }
     }

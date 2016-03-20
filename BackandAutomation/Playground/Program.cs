@@ -8,19 +8,26 @@ namespace Playground
     {
         private static void Main(string[] args)
         {
-            string fileName = "https://www.backand.com/apps/#/";
-            //string fileName = Path.Combine(@"C:\Screenshots\Results - 20.03.2016 02-07-02", "https://www.backand.com/apps/#/");
-            int startIndex = "https://www.backand.com/".Length;
-            int endIndex = fileName.IndexOf('/', startIndex);
-            fileName= fileName.Substring(startIndex, endIndex - startIndex);
+            string active = "{active : dbedit.dataName === 'mysql'}";
+            Array array = Enum.GetValues(typeof(DatabaseType));
+            foreach (var type in array)
+            {
+                string enumtext = type.ToString().ToLower();
+                if (active.Contains(enumtext))
+                {
+                    var typee =  enumtext.ToEnum<DatabaseType>();
+                }
+            }
+        }
 
-            string filePath = Path.Combine(@"C:\Screenshots\Results - 20.03.2016 02-07-02", fileName);
-
-            string FolderPath = MakeFolderPath();
-
-            string screenshotsDir = Path.Combine(Configuration.Instance.ScreenshotsFolder, FolderPath);
-
-            Directory.CreateDirectory(screenshotsDir);
+        public enum DatabaseType
+        {
+            [EnumText("mysql")]
+            MySql,
+            [EnumText("postgresql")]
+            PostgreSql,
+            [EnumText("sqlserver")]
+            SqlServer
         }
 
         private static string MakeFolderPath()

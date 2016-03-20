@@ -6,7 +6,7 @@ namespace Infrastructure.Base
 {
     public class BackandApplicationsBasePage : BasePage
     {
-        public BackandApplicationsBasePage(IWebDriver driver) : base(driver)
+        public BackandApplicationsBasePage(DriverUser driverUser) : base(driverUser)
         {
             SubmitScreenshot();
         }
@@ -22,7 +22,7 @@ namespace Infrastructure.Base
         public UserMainPage GoToHomePage()
         {
             TopNav.FindElement(Selectors.Common.GoToHomePage).Click();
-            return new UserMainPage(Driver);
+            return new UserMainPage(this);
         }
 
         public CurrentAppComponent CurrentAppComponent => 

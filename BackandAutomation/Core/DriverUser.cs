@@ -11,6 +11,10 @@ namespace Core
             ScreenshotsContainer = new ScreenshotsContainer(Driver);
         }
 
+        public DriverUser(DriverUser driverUser) : this(driverUser.Driver)
+        {
+        }
+
         public ScreenshotsContainer ScreenshotsContainer { get; set; }
         public IWebDriver Driver { get; set; }
         public WaitUntil WaitUntil { get; set; }

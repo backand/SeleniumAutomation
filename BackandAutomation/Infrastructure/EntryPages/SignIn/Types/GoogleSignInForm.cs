@@ -6,7 +6,7 @@ namespace Infrastructure.EntryPages.SignIn.Types
     [SignInFormType(SignFormType.Google)]
     public class GoogleSignInForm : SignInForm
     {
-        public GoogleSignInForm(IWebDriver driver, string originalWindowHandle) : base(driver, originalWindowHandle)
+        public GoogleSignInForm(DriverUser driverUser, string originalWindowHandle) : base(driverUser, originalWindowHandle)
         {
         }
 
