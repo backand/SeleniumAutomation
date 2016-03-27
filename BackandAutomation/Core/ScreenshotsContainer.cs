@@ -35,7 +35,7 @@ namespace Core
             Screenshot screenshot = screenshotTake.GetScreenshot();
 
             string fileName = DateTime.Now.ToLongTimeString().Replace(':', '-');
-            string filePath = Path.Combine(ScreenshotsDir, fileName) + ".bmp";
+            string filePath = $"{Path.Combine(ScreenshotsDir, fileName)}.bmp";
 
             screenshot.SaveAsFile(filePath, ImageFormat.Bmp);
         }

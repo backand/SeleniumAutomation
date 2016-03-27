@@ -112,9 +112,14 @@ namespace Core
             return element.GetAttribute("href");
         }
 
-        public static string[] GetClasses(this IWebElement element)
+        public static IEnumerable<string> GetClasses(this IWebElement element)
         {
             return element.GetClass().Split(' ');
+        }
+
+        public static string GenerateString(this string str)
+        {
+            return string.Concat(str, Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10));
         }
     }
 }

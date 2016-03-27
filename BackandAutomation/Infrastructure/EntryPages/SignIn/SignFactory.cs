@@ -5,7 +5,8 @@ using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn
 {
-    public abstract class BasicFactory : DriverUser
+    public abstract class BasicFactory<T> : DriverUser 
+        where T : class
     {
         protected BasicFactory(IWebDriver driver) : base(driver)
         {
@@ -21,9 +22,9 @@ namespace Infrastructure.EntryPages.SignIn
 
         protected ArrayList RegisteredImplementations { get; }
 
-        protected void RegisterClass(Type requestStrategyImpl)
+        protected void RegisterClass(Type requestStrategyImpl) 
         {
-            if (!requestStrategyImpl.IsSubclassOf(typeof(SignInForm)))
+            if (!requestStrategyImpl.IsSubclassOf(typeof(T)))
                 throw new Exception("Class must inherit from the abstract Class");
 
             RegisteredImplementations.Add(requestStrategyImpl);

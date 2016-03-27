@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages
 {
-    public class SignFormsFactory : BasicFactory
+    public class SignFormsFactory : BasicFactory<SignInForm>
     {
         private IWebDriver driver;
 

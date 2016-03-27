@@ -9,6 +9,7 @@ using Tests.Utils;
 namespace Tests
 {
     [TestClass]
+    [DecomposedLogin]
     public class SignUp : BackandTestClassBase
     {
         [TestMethod]

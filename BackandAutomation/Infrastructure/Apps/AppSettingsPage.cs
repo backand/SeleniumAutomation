@@ -14,11 +14,11 @@ namespace Infrastructure.Apps
         public UserMainPage Delete()
         {
             DeleteElement.Click();
-            ModalDialog dialog = WaitUntil.UntilDialogPopUp();
+            OkDialog dialog = WaitUntil.UntilOkDialogPopUp();
             dialog.Ok();
             return new UserMainPage(this);
         }
 
-        public IWebElement DeleteElement => Driver.FindElement(Selectors.ManageAppSettings.Delete);
+        private IWebElement DeleteElement => Driver.FindElement(Selectors.ManageAppSettings.Delete);
     }
 }

@@ -8,6 +8,7 @@ using Tests.Base;
 namespace Tests
 {
     [TestClass]
+    [DecomposedLogin]
     public class SignIn : BackandTestClassBase
     {
         [TestMethod]

@@ -5,7 +5,7 @@ namespace Infrastructure.Apps
 {
     public class TopBar : DriverUser
     {
-        public TopBar(DriverUser driverUser) : base(driverUser)
+        public TopBar(DriverUser driver) : base(driver)
         {
 
         }

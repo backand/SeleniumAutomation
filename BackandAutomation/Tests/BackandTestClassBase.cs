@@ -4,9 +4,13 @@ using Infrastructure.EntryPages.SignIn;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using Infrastructure.Apps;
 using Tests.Base;
+using Tests.Utils;
 
 namespace Tests
 {
@@ -15,7 +19,7 @@ namespace Tests
     {
         private TestContext testContextInstance;
 
-        public TestContext TestContext
+        protected TestContext TestContext
         {
             get
             {
@@ -49,7 +53,7 @@ namespace Tests
         [TestCleanup]
         public void ClassCleanup()
         {
-            TestCleanupExtension();
+            //TestCleanupExtension();
             Driver.Close();
         }
 
@@ -61,7 +65,7 @@ namespace Tests
 
         private IWebDriver Driver { get; set; }
 
-        protected void TestInitializeExtension()
+        protected virtual void TestInitializeExtension()
         {
             Attribute fastLoginAttribute = GetType().GetCustomAttribute(typeof(InstantLoginAttribute));
             if (fastLoginAttribute != null)
@@ -71,7 +75,40 @@ namespace Tests
             }
         }
 
-        protected void TestCleanupExtension()
+        private void AttributesHandler()
+        {
+            Attribute[] attributes = GetAllAttributes();
+            if (!attributes.OfType<DecomposedLoginAttribute>().Any())
+            {
+                Page = EnterancePage.QuickSignIn(SignFormType.None, Configuration.Instance.LoginCredentials.Email,
+                    Configuration.Instance.LoginCredentials.Password);
+            }
+
+            CreateAppAttribute createAppAttribute = attributes.OfType<CreateAppAttribute>().FirstOrDefault();
+            if (createAppAttribute != null)
+            {
+                AppsFeed feed = Page.AppsFeed;
+                NewAppForm newAppForm = feed.New();
+                newAppForm.Name = createAppAttribute.Name;
+                newAppForm.Title = createAppAttribute.Title;
+                ApplicationsPage = newAppForm.Submit();
+            }
+        }
+
+        private Attribute[] GetAllAttributes()
+        {
+            IEnumerable<Attribute> classAttributes = GetType().GetCustomAttributes();
+            IEnumerable<Attribute> testAttributes = GetType().GetMethod(TestContext.TestName).GetCustomAttributes();
+
+            IEnumerable<Attribute> attributes = classAttributes.Union(testAttributes);
+
+            Attribute[] enumerable = attributes as Attribute[] ?? attributes.ToArray();
+            return enumerable;
+        }
+
+        public KickstartPage ApplicationsPage { get; set; }
+
+        protected virtual void TestCleanupExtension()
         {
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed ||
                 TestContext.CurrentTestOutcome == UnitTestOutcome.Aborted ||

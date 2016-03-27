@@ -7,7 +7,7 @@ namespace Core
     public class WaitUntil
     {
         private const int TimeOut = 20;
-        public IWebDriver Driver { get; set; }
+        private IWebDriver Driver { get; set; }
 
         public WaitUntil(IWebDriver driver)
         {
@@ -52,7 +52,7 @@ namespace Core
             return UntilActionFinishes(driver => driver.SwitchTo().Alert(), timeOut, typeof(NoAlertPresentException));
         }
 
-        public T UntilActionFinishes<T>(Func<IWebDriver, T> funcToWait, int timeOut = TimeOut, params Type[] exceptionTypes)
+        private T UntilActionFinishes<T>(Func<IWebDriver, T> funcToWait, int timeOut = TimeOut, params Type[] exceptionTypes)
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeOut));
             wait.IgnoreExceptionTypes(exceptionTypes);
@@ -60,11 +60,44 @@ namespace Core
             return result;
         }
 
-        public ModalDialog UntilDialogPopUp()
+        //public T UntilDialogPopUp<T>() where T : ModalDialog
+        //{
+        //    UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
+        //        exceptionTypes: typeof(NoSuchWindowException));
+        //    ModalDialog dialog = new ModalDialog(Driver);
+        //    return dialog as T;
+        //}
+
+        public OkDialog UntilOkDialogPopUp()
         {
             UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
                 exceptionTypes: typeof(NoSuchWindowException));
-            return new ModalDialog(Driver);
+            OkDialog dialog = new OkDialog(Driver);
+            return dialog;
         }
+
+        public NewRowDialog UntilNewRowDialogPopUp()
+        {
+            UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
+                exceptionTypes: typeof(NoSuchWindowException));
+            NewRowDialog dialog = new NewRowDialog(Driver);
+            return dialog;
+        }
+    }
+
+    public class DialogFactory : DriverUser
+    {
+        public DialogFactory(IWebDriver driver) : base(driver)
+        {
+        }
+
+        public DialogFactory(DriverUser driver) : base(driver)
+        {
+        }
+
+        //public T Create<T>() where T : ModalDialog
+        //{
+        //    if()
+        //}
     }
 }

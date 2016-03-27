@@ -9,7 +9,7 @@ namespace Infrastructure.Apps
 {
     public class DatabaseTopBar : TopBar
     {
-        public DatabaseTopBar(DriverUser driverUser) : base(driverUser)
+        public DatabaseTopBar(DriverUser driver) : base(driver)
         {
 
         }
@@ -37,7 +37,7 @@ namespace Infrastructure.Apps
 
     public class DatabaseSelect : BackandApplicationsBasePage
     {
-        public DatabaseSelect(DriverUser driverUser) : base(driverUser)
+        public DatabaseSelect(DriverUser driver) : base(driver)
         {
 
         }
@@ -62,7 +62,7 @@ namespace Infrastructure.Apps
 
     public class DatabaseConfiguration : BackandApplicationsBasePage
     {
-        public DatabaseConfiguration(DriverUser driverUser) : base(driverUser)
+        public DatabaseConfiguration(DriverUser driver) : base(driver)
         {
         }
 
@@ -117,7 +117,7 @@ namespace Infrastructure.Apps
 
     public class DatabaseInfo : DriverUser
     {
-        public DatabaseInfo(DriverUser driverUser, IWebElement element) : base(driverUser)
+        public DatabaseInfo(DriverUser driver, IWebElement element) : base(driver)
         {
             MainElement = element;
             IWebElement typeElement = MainElement.FindElement(InfoTypeSelector);
@@ -141,7 +141,7 @@ namespace Infrastructure.Apps
 
     public class EditableDatabaseInfo : DatabaseInfo
     {
-        public EditableDatabaseInfo(DriverUser driverUser, IWebElement element) : base(driverUser, element)
+        public EditableDatabaseInfo(DriverUser driver, IWebElement element) : base(driver, element)
         {
         }
 

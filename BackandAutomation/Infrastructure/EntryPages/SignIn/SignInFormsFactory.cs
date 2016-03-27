@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn
 {
-    public class SignInFormsFactory : BasicFactory
+    public class SignInFormsFactory : BasicFactory<SignInForm>
     {
         public SignInFormsFactory(IWebDriver driver) : base(driver)
         {
@@ -27,7 +27,7 @@ namespace Infrastructure.EntryPages.SignIn
 
         public SignInForm Create(SignFormType signFormType, string originalWindowHandle)
         {
-            foreach (var impl in from Type impl in RegisteredImplementations
+            foreach (Type impl in from Type impl in RegisteredImplementations
                                  let attrlist = impl.GetCustomAttributes(true)
                                  where attrlist.OfType<SignInFormTypeAttribute>().Any(attr => attr.SignFormType.Equals(signFormType))
                                  select impl)
