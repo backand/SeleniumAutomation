@@ -1,35 +1,22 @@
-﻿using Core;
-using Infrastructure;
-using Infrastructure.EntryPages.SignIn;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Core;
+using Infrastructure;
 using Infrastructure.Apps;
-using Tests.Base;
-using Tests.Utils;
+using Infrastructure.EntryPages.SignIn;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using Tests.Attributes;
 
-namespace Tests
+namespace Tests.Base
 {
     [TestClass]
     public class BackandTestClassBase
     {
-        private TestContext testContextInstance;
-
-        protected TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
+        public TestContext TestContext { get; set; }
 
         protected BackandPage EnterancePage { get; private set; }
         protected UserMainPage Page { get; set; }
@@ -53,7 +40,7 @@ namespace Tests
         [TestCleanup]
         public void ClassCleanup()
         {
-            //TestCleanupExtension();
+            TestCleanupExtension();
             Driver.Close();
         }
 
@@ -67,46 +54,44 @@ namespace Tests
 
         protected virtual void TestInitializeExtension()
         {
-            Attribute fastLoginAttribute = GetType().GetCustomAttribute(typeof(InstantLoginAttribute));
-            if (fastLoginAttribute != null)
-            {
-                Page = EnterancePage.QuickSignIn(SignFormType.None, Configuration.Instance.LoginCredentials.Email,
-                    Configuration.Instance.LoginCredentials.Password);
-            }
+            AttributesHandler();
         }
 
         private void AttributesHandler()
         {
-            Attribute[] attributes = GetAllAttributes();
-            if (!attributes.OfType<DecomposedLoginAttribute>().Any())
+            GetAllAttributes();
+            if (!TestAttributes.OfType<DecomposedLoginAttribute>().Any())
             {
                 Page = EnterancePage.QuickSignIn(SignFormType.None, Configuration.Instance.LoginCredentials.Email,
                     Configuration.Instance.LoginCredentials.Password);
             }
 
-            CreateAppAttribute createAppAttribute = attributes.OfType<CreateAppAttribute>().FirstOrDefault();
-            if (createAppAttribute != null)
+            CreateAppDetails = TestAttributes.OfType<CreateAppAttribute>().FirstOrDefault();
+            if (CreateAppDetails != null)
             {
                 AppsFeed feed = Page.AppsFeed;
                 NewAppForm newAppForm = feed.New();
-                newAppForm.Name = createAppAttribute.Name;
-                newAppForm.Title = createAppAttribute.Title;
+                newAppForm.Name = CreateAppDetails.Name;
+                newAppForm.Title = CreateAppDetails.Title;
                 ApplicationsPage = newAppForm.Submit();
             }
         }
 
-        private Attribute[] GetAllAttributes()
+        protected CreateAppAttribute CreateAppDetails { get; set; }
+
+        private void GetAllAttributes()
         {
             IEnumerable<Attribute> classAttributes = GetType().GetCustomAttributes();
             IEnumerable<Attribute> testAttributes = GetType().GetMethod(TestContext.TestName).GetCustomAttributes();
 
             IEnumerable<Attribute> attributes = classAttributes.Union(testAttributes);
 
-            Attribute[] enumerable = attributes as Attribute[] ?? attributes.ToArray();
-            return enumerable;
+            TestAttributes = attributes as Attribute[] ?? attributes.ToArray();
         }
 
-        public KickstartPage ApplicationsPage { get; set; }
+        private Attribute[] TestAttributes { get; set; }
+
+        protected KickstartPage ApplicationsPage { get; private set; }
 
         protected virtual void TestCleanupExtension()
         {
@@ -123,6 +108,20 @@ namespace Tests
                 foreach (DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
 
                 directory.Delete();
+            }
+            if (!TestAttributes.OfType<DontDeleteAppAttribute>().Any() && CreateAppDetails != null)
+            {
+                try
+                {
+                    AppsFeed appsFeed = Page.GoToHomePage().AppsFeed;
+                    BackandAppPannel appPannel =
+                        appsFeed.AppsPannels.FirstOrDefault(app => app.Name == CreateAppDetails.Name.ToUpper());
+                    appPannel?.MoveToAppSettingsPage().Delete();
+                }
+                catch
+                {
+                    // ignored
+                }
             }
         }
     }

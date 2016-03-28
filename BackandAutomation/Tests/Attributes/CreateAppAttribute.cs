@@ -1,7 +1,7 @@
 ﻿using System;
 using Core;
 
-namespace Tests.Base
+namespace Tests.Attributes
 {
     public class CreateAppAttribute : Attribute
     {

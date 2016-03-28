@@ -1,67 +1,49 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Infrastructure.Apps;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tests.Attributes;
 using Tests.Base;
-using Tests.Utils;
 
 namespace Tests
 {
-    [TestClass, InstantLogin]
+    [TestClass]
+    [CreateApp]
     public class NewApp : BackandTestClassBase
     {
         [TestMethod]
         public void NewAppValidation()
         {
-            string appName = Utilities.GenerateString("TestName");
-            string appTitle = Utilities.GenerateString("TestTitle");
+            string current = ApplicationsPage.CurrentAppComponent.Name;
+            Assert.AreEqual(CreateAppDetails.Name.ToLower(), current);
 
-            KickstartPage kickstartPage = CreateApp(appName, appTitle);
-            string current = kickstartPage.CurrentAppComponent.Name;
-            Assert.AreEqual(appName.ToLower(), current);
-
-            Page = kickstartPage.GoToHomePage();
-            Assert.Fail();
+            Page = ApplicationsPage.GoToHomePage();
             AppsFeed feed = Page.AppsFeed;
-            Assert.IsTrue(feed.AppsPannels.Any(app => app.Name == appName.ToUpper()));
+            Assert.IsTrue(feed.AppsPannels.Any(app => app.Name == CreateAppDetails.Name.ToUpper()));
         }
 
         [TestMethod]
+        [DontDeleteApp]
         public void DeleteApp()
         {
-            AppsFeed feed = Page.AppsFeed;
-            string appName;
-            List<BackandAppPannel> backandAppPannels = feed.AppsPannels.ToList();
-            BackandAppPannel appPannel = backandAppPannels.FirstOrDefault(app => app.RibbonType == RibbonType.Connected);
-            if (appPannel == null)
-            {
-                appName = Utilities.GenerateString("TestName");
-                string appTitle = Utilities.GenerateString("TestTitle");
-                var kickstarterPAge = CreateApp(appName, appTitle);
-                Page = kickstarterPAge.GoToHomePage();
-                appPannel = backandAppPannels.FirstOrDefault(app => app.Name == appName);
-            }
-            else
-            {
-                appName = appPannel.Name;
-            }
+            AppSettingsPage settingsPage = ApplicationsPage.LeftMenu.Create<AppSettingsPage>();
 
-            Assert.IsNotNull(appPannel, "appPannel != null");
-            AppSettingsPage appSettings = appPannel.MoveToAppSettingsPage();
-            Page = appSettings.Delete();
-            feed = Page.AppsFeed;
-            backandAppPannels = feed.AppsPannels.ToList();
-            appPannel = backandAppPannels.FirstOrDefault(app => app.Name == appName);
-            Assert.IsNull(appPannel);
+            Page = settingsPage.Delete();
+
+            AppsFeed feed = Page.AppsFeed;
+            bool result = feed.AppsPannels.Any(
+                app => app.Name == CreateAppDetails.Name.ToUpper() && app.Title == CreateAppDetails.Title);
+
+            Assert.IsFalse(result);
         }
 
-        private KickstartPage CreateApp(string name, string title)
+        [TestMethod, Ignore]
+        public void DeleteAll()
         {
-            AppsFeed feed = Page.AppsFeed;
-            NewAppForm newAppForm = feed.New();
-            newAppForm.Name = name;
-            newAppForm.Title = title;
-            return newAppForm.Submit();
+            BackandAppPannel appPannel;
+            while ((appPannel = Page.AppsFeed.AppsPannels.FirstOrDefault(app => app.RibbonType == RibbonType.Connected)) != null)
+            {
+                appPannel.MoveToAppSettingsPage().Delete();
+            }
         }
     }
 }

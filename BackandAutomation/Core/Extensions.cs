@@ -101,7 +101,7 @@ namespace Core
         {
             return element.GetAttribute("class");
         }
-
+        
         public static string GetId(this IWebElement element)
         {
             return element.GetAttribute("id");
@@ -115,6 +115,11 @@ namespace Core
         public static IEnumerable<string> GetClasses(this IWebElement element)
         {
             return element.GetClass().Split(' ');
+        }
+
+        public static bool IsOpen(this IWebElement element)
+        {
+            return element.GetClasses().Contains("open");
         }
 
         public static string GenerateString(this string str)

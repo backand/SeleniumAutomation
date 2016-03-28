@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tests.Base
+namespace Tests.Attributes
 {
     public class InstantLoginAttribute : Attribute
     {

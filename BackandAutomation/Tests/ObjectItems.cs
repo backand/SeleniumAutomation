@@ -1,18 +1,13 @@
-﻿using System;
-using System.Linq;
-using Core;
-using Infrastructure;
-using Infrastructure.Apps;
+﻿using System.Linq;
 using Infrastructure.Base;
 using Infrastructure.Object;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tests.Attributes;
 using Tests.Base;
-using Tests.Utils;
 
 namespace Tests
 {
     [TestClass]
-    [InstantLogin]
     public class ObjectItems : BackandTestClassBase
     {
         private const string Name = "NewRow";
@@ -22,8 +17,7 @@ namespace Tests
         protected override void TestInitializeExtension()
         {
             base.TestInitializeExtension();
-            BackandApplicationsBasePage page = CreateNewApp();
-            BackandApplicationsBasePage backandPage = page.LeftMenu.Create(LeftMenuOption.Objects, LeftMenuOption.Items);
+            BackandApplicationsBasePage backandPage = ApplicationsPage.LeftMenu.Create(LeftMenuOption.Objects, LeftMenuOption.Items);
             _itemsPage = backandPage as ObjectsItemsPage;
             Assert.IsNotNull(_itemsPage);
             _itemsPage.AddRow(Name, Description);
@@ -64,15 +58,6 @@ namespace Tests
             row = _itemsPage.GetRows().FirstOrDefault(r => r.Id == id);
             Assert.IsNotNull(row);
             Assert.AreEqual(newName, row.Name.Text);
-        }
-
-        private BackandApplicationsBasePage CreateNewApp()
-        {
-            AppsFeed feed = Page.AppsFeed;
-            NewAppForm newAppForm = feed.New();
-            newAppForm.Name = Utilities.GenerateString("TestName");
-            newAppForm.Title = Utilities.GenerateString("TestTitle");
-            return newAppForm.Submit();
         }
     }
 }

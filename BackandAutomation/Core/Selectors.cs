@@ -30,14 +30,16 @@ namespace Core
         {
             public static By Page => By.ClassName("page");
             public static By Settings => By.ClassName("nav-profile");
-            public static By LeftMenu => By.TagName("aside");
+            public static By LeftMenu => By.Id("nav2");
             public static By TopNav => By.ClassName("top-nav");
         }
 
         public class Common
         {
             public static By SubmitType => By.CssSelector("[type=\"submit\"]");
-            public static By GoToHomePage => By.ClassName("ti-layers-alt");
+            public static By GoToHomePage => new OrCondition(
+                By.ClassName("ti -layers-alt"),
+                By.CssSelector("ui-sref='apps.index'"));
         }
 
         public class BackandApplicationBasic

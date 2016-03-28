@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Core;
 using OpenQA.Selenium;
 
@@ -10,7 +10,6 @@ namespace Infrastructure.EntryPages.SignIn
     {
         protected BasicFactory(IWebDriver driver) : base(driver)
         {
-            RegisteredImplementations = new ArrayList();
             InitClasses();
         }
 
@@ -20,7 +19,7 @@ namespace Infrastructure.EntryPages.SignIn
 
         protected abstract void InitClasses();
 
-        protected ArrayList RegisteredImplementations { get; }
+        protected List<Type> RegisteredImplementations { get; } = new List<Type>();
 
         protected void RegisterClass(Type requestStrategyImpl) 
         {

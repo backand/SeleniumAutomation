@@ -3,6 +3,7 @@ using Infrastructure.Base;
 using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tests.Attributes;
 using Tests.Base;
 using Tests.Utils;
 

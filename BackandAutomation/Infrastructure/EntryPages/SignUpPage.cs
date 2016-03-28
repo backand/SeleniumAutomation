@@ -1,4 +1,3 @@
-using System;
 using Core;
 using Infrastructure.EntryPages.SignIn;
 using OpenQA.Selenium;

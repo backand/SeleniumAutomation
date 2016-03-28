@@ -1,6 +1,5 @@
 using Core;
 using OpenQA.Selenium;
-using System;
 
 namespace Infrastructure.EntryPages.SignIn.Types
 {

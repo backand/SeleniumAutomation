@@ -4,11 +4,11 @@ using OpenQA.Selenium;
 
 namespace Infrastructure.Apps
 {
-    public class AppSettingsPage : BasePage
+    [BackandPageType(LeftMenuOption.Settings, LeftMenuOption.General)]
+    public class AppSettingsPage : BackandApplicationsBasePage
     {
         public AppSettingsPage(DriverUser driver) : base(driver)
         {
-            SubmitScreenshot();
         }
 
         public UserMainPage Delete()

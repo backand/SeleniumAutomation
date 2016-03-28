@@ -1,6 +1,5 @@
 using Core;
 using Infrastructure.Base;
-using OpenQA.Selenium;
 
 namespace Infrastructure.Apps
 {
