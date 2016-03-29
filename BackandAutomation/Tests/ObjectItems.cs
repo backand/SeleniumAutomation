@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Infrastructure.Base;
 using Infrastructure.Object;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests.Attributes;
@@ -17,8 +16,7 @@ namespace Tests
         protected override void TestInitializeExtension()
         {
             base.TestInitializeExtension();
-            BackandApplicationsBasePage backandPage = ApplicationsPage.LeftMenu.Create(LeftMenuOption.Objects, LeftMenuOption.Items);
-            _itemsPage = backandPage as ObjectsItemsPage;
+            _itemsPage = ApplicationsPage.LeftMenu.Create<ObjectsItemsPage>();
             Assert.IsNotNull(_itemsPage);
             _itemsPage.AddRow(Name, Description);
         }

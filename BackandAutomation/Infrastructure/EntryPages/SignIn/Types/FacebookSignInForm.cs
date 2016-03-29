@@ -6,7 +6,7 @@ namespace Infrastructure.EntryPages.SignIn.Types
     [SignInFormType(SignFormType.Facebook)]
     public class FacebookSignInForm : SignInForm
     {
-        public FacebookSignInForm(DriverUser driver, string originalWindowHandle) : base(driver, originalWindowHandle)
+        public FacebookSignInForm(DriverUser driver, object originalWindowHandle) : base(driver, originalWindowHandle)
         {
         }
 
@@ -14,16 +14,22 @@ namespace Infrastructure.EntryPages.SignIn.Types
         protected override By PasswordFindBy => By.Id("pass");
         protected override By SubmitFindBy => By.Id("loginbutton");
 
-        protected override void CompleteFormLogin()
+        public override UserMainPage QuickSubmit(string email, string password)
         {
             try
             {
+                Email = email;
+                Password = password;
+                SubmitElement.Click();
                 WaitUntil.UntilElementExists(By.Name("__CONFIRM__"), 3);
                 (Driver as IJavaScriptExecutor)?.ExecuteScript("document.getElementByName('__CONFIRM__')[0].click()");
             }
-            catch (WebDriverTimeoutException)
+            catch
             {
+                //Ignored
             }
+            SwitchToOriginalWindow();
+            return new UserMainPage(this);
         }
     }
 }

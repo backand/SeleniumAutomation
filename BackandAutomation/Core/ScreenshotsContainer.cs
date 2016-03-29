@@ -30,14 +30,21 @@ namespace Core
 
         public void AddScreenshot()
         {
-            IWebDriver driver = (Driver as NgWebDriver).WrappedDriver;
-            ITakesScreenshot screenshotTake = driver as ITakesScreenshot;
-            Screenshot screenshot = screenshotTake.GetScreenshot();
+            try
+            {
+                IWebDriver driver = (Driver as NgWebDriver).WrappedDriver;
+                ITakesScreenshot screenshotTake = driver as ITakesScreenshot;
+                Screenshot screenshot = screenshotTake.GetScreenshot();
 
-            string fileName = DateTime.Now.ToLongTimeString().Replace(':', '-');
-            string filePath = $"{Path.Combine(ScreenshotsDir, fileName)}.bmp";
+                string fileName = DateTime.Now.ToLongTimeString().Replace(':', '-');
+                string filePath = $"{Path.Combine(ScreenshotsDir, fileName)}.bmp";
 
-            screenshot.SaveAsFile(filePath, ImageFormat.Bmp);
+                screenshot.SaveAsFile(filePath, ImageFormat.Bmp);
+            }
+            catch
+            {
+                //Ignored
+            }
         }
 
         public DirectoryInfo GetScreenshotsFolder()

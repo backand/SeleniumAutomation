@@ -36,7 +36,7 @@ namespace Infrastructure.EntryPages
             set { FullNameElement.SendKeys(value); }
         }
 
-        public override string Password
+        public virtual string Password
         {
             get { return PasswordElement.Text; }
             set
@@ -47,31 +47,31 @@ namespace Infrastructure.EntryPages
         }
 
 
-        public SignInForm SpecifySignForm(SignFormType signFormType)
-        {
-            OpenSignForm(signFormType);
-            return SignInFactory.Create(signFormType, OriginalHandle);
-        }
+        //public SignInForm SpecifySignForm(SignFormType signFormType)
+        //{
+        //    OpenSignForm(signFormType);
+        //    return SignInFactory.Create(signFormType, OriginalHandle);
+        //}
 
-        public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)
-        {
-            //SignUpElement.Click();
-            UserMainPage signInForm;
-            if (HandleNoSignUpForm(signFormType, userName, email, password, out signInForm)) return signInForm;
-            var form = SpecifySignForm(signFormType);
-            try
-            {
-                form.Email = email;
-            }
-            catch (NoSuchWindowException)
-            {
-                // That's an exception that been thrown when the form has already been filled.
-                Driver.SwitchTo().Window(OriginalHandle);
-                return new UserMainPage(this);
-            }
-            form.Password = password;
-            return form.Submit();
-        }
+        //public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)
+        //{
+        //    //SignUpElement.Click();
+        //    UserMainPage signInForm;
+        //    if (HandleNoSignUpForm(signFormType, userName, email, password, out signInForm)) return signInForm;
+        //    var form = SpecifySignForm(signFormType);
+        //    try
+        //    {
+        //        form.Email = email;
+        //    }
+        //    catch (NoSuchWindowException)
+        //    {
+        //        // That's an exception that been thrown when the form has already been filled.
+        //        Driver.SwitchTo().Window(OriginalHandle);
+        //        return new UserMainPage(this);
+        //    }
+        //    form.Password = password;
+        //    return form.Submit();
+        //}
     }
 
     public class SignUpForm : SignForm

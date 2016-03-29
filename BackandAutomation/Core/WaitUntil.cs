@@ -7,7 +7,7 @@ namespace Core
     public class WaitUntil
     {
         private const int TimeOut = 20;
-        private IWebDriver Driver { get; set; }
+        private IWebDriver Driver { get; }
 
         public WaitUntil(IWebDriver driver)
         {

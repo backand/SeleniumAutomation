@@ -2,6 +2,7 @@
 using Infrastructure.Base;
 using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
+using Infrastructure.EntryPages.SignIn.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests.Attributes;
 using Tests.Base;
@@ -15,38 +16,38 @@ namespace Tests
         [TestMethod]
         public void SignInRegular()
         {
-            SignInFromExternalAccount(SignFormType.None);
+            SignInFromExternalAccount<RegularSignInForm>();
         }
 
         [TestMethod]
         public void SignInFromFacebook()
         {
-            SignInFromExternalAccount(SignFormType.Facebook);
+            SignInFromExternalAccount<FacebookSignInForm>(); ;
         }
 
         [TestMethod]
         public void SignInFromGitHub()
         {
-            SignInFromExternalAccount(SignFormType.GitHub);
+            SignInFromExternalAccount<GitHubSignInForm>();
         }
 
         [TestMethod]
         public void SignInFromGoogle()
         {
-            SignInFromExternalAccount(SignFormType.Google);
+            SignInFromExternalAccount<GoogleSignInForm>();
         }
 
-        private void SignInFromExternalAccount(SignFormType signFormType)
+        private void SignInFromExternalAccount<T>() where T : SignInForm
         {
             string email = Configuration.Instance.LoginCredentials.Email;
             string password = Configuration.Instance.LoginCredentials.Password;
 
-            Page = EnterancePage.QuickSignIn(signFormType, email, password);
+            Page = EnterancePage.QuickSignIn<T>(email, password);
             UserSettings settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
 
             SignInPage signInPage = settings.LogOut();
-            Page = signInPage.QuickSignIn(signFormType, email, password);
+            Page = signInPage.QuickSignIn<T>(email, password);
             settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
         }

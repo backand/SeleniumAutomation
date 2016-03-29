@@ -6,7 +6,7 @@ using System.Reflection;
 using Core;
 using Infrastructure;
 using Infrastructure.Apps;
-using Infrastructure.EntryPages.SignIn;
+using Infrastructure.EntryPages.SignIn.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using Tests.Attributes;
@@ -16,6 +16,7 @@ namespace Tests.Base
     [TestClass]
     public class BackandTestClassBase
     {
+        // ReSharper disable once MemberCanBePrivate.Global
         public TestContext TestContext { get; set; }
 
         protected BackandPage EnterancePage { get; private set; }
@@ -62,7 +63,7 @@ namespace Tests.Base
             GetAllAttributes();
             if (!TestAttributes.OfType<DecomposedLoginAttribute>().Any())
             {
-                Page = EnterancePage.QuickSignIn(SignFormType.None, Configuration.Instance.LoginCredentials.Email,
+                Page = EnterancePage.QuickSignIn<RegularSignInForm>(Configuration.Instance.LoginCredentials.Email,
                     Configuration.Instance.LoginCredentials.Password);
             }
 
@@ -77,7 +78,7 @@ namespace Tests.Base
             }
         }
 
-        protected CreateAppAttribute CreateAppDetails { get; set; }
+        protected CreateAppAttribute CreateAppDetails { get; private set; }
 
         private void GetAllAttributes()
         {
@@ -93,7 +94,7 @@ namespace Tests.Base
 
         protected KickstartPage ApplicationsPage { get; private set; }
 
-        protected virtual void TestCleanupExtension()
+        public void TestCleanupExtension()
         {
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed ||
                 TestContext.CurrentTestOutcome == UnitTestOutcome.Aborted ||

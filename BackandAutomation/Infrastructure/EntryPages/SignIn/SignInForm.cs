@@ -5,54 +5,45 @@ namespace Infrastructure.EntryPages.SignIn
 {
     public abstract class SignInForm : SignForm
     {
-        protected SignInForm(DriverUser driver, string originalWindowHandle) : base(driver)
+        protected SignInForm(DriverUser driverUser, object originalWindowHandle) : base(driverUser)
         {
-            OriginalWindowHandle = originalWindowHandle;
+            OriginalWindowHandle = originalWindowHandle.ToString();
         }
 
         protected SignInForm(DriverUser driver) : base(driver)
         {
         }
 
-        protected string OriginalWindowHandle { get; set; }
+        private string OriginalWindowHandle { get; }
 
         protected abstract By EmailFindBy { get; }
         protected abstract By PasswordFindBy { get; }
         protected abstract By SubmitFindBy { get; }
 
         protected IWebElement EmailElement => Driver.TryFindElement(EmailFindBy);
-        protected IWebElement PasswordElement => Driver.TryFindElement(PasswordFindBy);
+        private IWebElement PasswordElement => Driver.TryFindElement(PasswordFindBy);
         protected IWebElement SubmitElement => Driver.TryFindElement(SubmitFindBy);
 
-        public virtual string Email
+        protected void Submit()
         {
-            get { return EmailElement.Text; }
+            SubmitElement.Click();
+        }
+
+        public abstract UserMainPage QuickSubmit(string email, string password);
+
+        protected virtual string Email
+        {
+            private get { return EmailElement.Text; }
             set { EmailElement.SendKeys(value); }
         }
 
-        public virtual string Password
+        protected string Password
         {
-            get { return PasswordElement.Text; }
+            private get { return PasswordElement.Text; }
             set { PasswordElement.SendKeys(value); }
         }
 
-        public UserMainPage Submit()
-        {
-            string email = Email;
-            string password = Password;
-            SubmitElement.Click();
-            CompleteFormLogin();
-            if (!string.IsNullOrEmpty(OriginalWindowHandle))
-                SwitchToOriginalWindow();
-            WaitUntil.UntilElementDoesntExist(By.ClassName("spinner"));
-            return new UserMainPage(this);
-        }
-
-        protected virtual void CompleteFormLogin()
-        {
-        }
-
-        private void SwitchToOriginalWindow()
+        protected void SwitchToOriginalWindow()
         {
             Driver.SwitchTo().Window(OriginalWindowHandle);
         }

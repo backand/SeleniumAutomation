@@ -6,17 +6,34 @@ namespace Infrastructure.EntryPages.SignIn.Types
     [SignInFormType(SignFormType.Google)]
     public class GoogleSignInForm : SignInForm
     {
-        public GoogleSignInForm(DriverUser driverUser, string originalWindowHandle) : base(driverUser, originalWindowHandle)
+        public GoogleSignInForm(DriverUser driverUser, object originalWindowHandle)
+            : base(driverUser, originalWindowHandle)
         {
         }
 
-        protected override By EmailFindBy => By.Id("Email");
+        protected override By EmailFindBy => new OrCondition(By.Id("Email"), By.Id("next"));
         protected override By PasswordFindBy => By.Id("Passwd");
         protected override By SubmitFindBy => By.Id("signIn");
 
-        public override string Email
+        public override UserMainPage QuickSubmit(string email, string password)
         {
-            get { return EmailElement.Text; }
+            try
+            {
+                Email = email;
+                //SubmitElement.Click();
+                Password = password;
+                SubmitElement.Click();
+            }
+            catch
+            {
+                //Ignored
+            }
+            SwitchToOriginalWindow();
+            return new UserMainPage(this);
+        }
+
+        protected override string Email
+        {
             set
             {
                 EmailElement.SendKeys(value);

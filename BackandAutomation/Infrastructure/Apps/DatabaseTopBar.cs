@@ -133,10 +133,10 @@ namespace Infrastructure.Apps
 
         protected virtual By InfoTypeSelector { get; set; } = By.ClassName("form-control-static");
 
-        public InfoType InfoType { get; private set; }
+        public InfoType InfoType { get; }
 
         public string Value { get; set; }
-        protected IWebElement MainElement { get; private set; }
+        protected IWebElement MainElement { get; }
     }
 
     public class EditableDatabaseInfo : DatabaseInfo

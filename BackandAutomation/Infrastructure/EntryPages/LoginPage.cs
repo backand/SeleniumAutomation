@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Core;
 using Infrastructure.Base;
 using Infrastructure.EntryPages.SignIn;
@@ -11,41 +12,38 @@ namespace Infrastructure.EntryPages
     {
         protected LoginPage(DriverUser driver) : base(driver)
         {
-            //WaitUntil.UntilElementExists(By.ClassName("page-signin"));
             Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
         }
 
-        public string OriginalHandle { get; set; }
+        protected string OriginalHandle { get; private set; }
 
-        public virtual string Email
+        protected string Email
         {
             get { return EmailElement.Text; }
             set { EmailElement.SendKeys(value); }
         }
 
-        public virtual string Password
-        {
-            get { return PasswordElement.Text; }
-            set { PasswordElement.SendKeys(value); }
-        }
-
-        protected IWebElement EmailElement => Driver.FindElement(Selectors.Login.Email);
+        private IWebElement EmailElement => Driver.FindElement(Selectors.Login.Email);
         protected IWebElement PasswordElement => Driver.FindElement(Selectors.Login.Password);
-        protected IWebElement SubmitElement => Driver.FindElement(Selectors.Login.Submit);
+        private IWebElement SubmitElement => Driver.FindElement(Selectors.Login.Submit);
 
-        public UserMainPage Submit()
+        protected UserMainPage Submit()
         {
             SubmitElement.Click();
             return new UserMainPage(this);
         }
 
-        protected void OpenSignForm(SignFormType signFormType)
+        protected void OpenSignForm<T>() where T : SignInForm
         {
-            string className = $"btn-{signFormType.ToText()}";
-            var signInElement = Driver.FindElement(By.ClassName(className));
-
             // Get the current window handle so you can switch back later
             OriginalHandle = Driver.CurrentWindowHandle;
+
+            SignInFormTypeAttribute formTypeAttribute = typeof(T).GetCustomAttribute<SignInFormTypeAttribute>();
+            SignFormType signFormType = formTypeAttribute.SignFormType;
+            if (signFormType == SignFormType.None)
+                return;
+            string className = $"btn-{signFormType.ToText()}";
+            var signInElement = Driver.FindElement(By.ClassName(className));
 
             // Displayed by the popup window
             var finder = new PopupWindowFinder(Driver);

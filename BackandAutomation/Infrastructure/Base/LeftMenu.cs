@@ -15,11 +15,6 @@ namespace Infrastructure.Base
         private IWebElement MainElement => Driver.FindElement(Selectors.BackandApplicationsBasePage.LeftMenu);
         private readonly FeedFactory _feedFactory;
 
-        public BackandApplicationsBasePage Create(params LeftMenuOption[] options)
-        {
-            return _feedFactory.Create(options);
-        }
-
         public T Create<T>() where T : BackandApplicationsBasePage
         {
             IEnumerable<IWebElement> elements =

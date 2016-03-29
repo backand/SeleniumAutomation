@@ -1,17 +1,11 @@
-using System;
-using System.Linq;
 using Core;
+using Infrastructure.Base;
 using Infrastructure.EntryPages.SignIn.Types;
-using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn
 {
     public class SignInFormsFactory : BasicFactory<SignInForm>
     {
-        public SignInFormsFactory(IWebDriver driver) : base(driver)
-        {
-        }
-
         public SignInFormsFactory(DriverUser driverUser) : base(driverUser)
         {
             
@@ -19,21 +13,15 @@ namespace Infrastructure.EntryPages.SignIn
 
         protected override void InitClasses()
         {
-            RegisterClass(typeof(GitHubForm));
+            RegisterClass(typeof(GitHubSignInForm));
             RegisterClass(typeof(GoogleSignInForm));
             RegisterClass(typeof(FacebookSignInForm));
+            RegisterClass(typeof(RegularSignInForm));
         }
-
-        public SignInForm Create(SignFormType signFormType, string originalWindowHandle)
+        
+        public T Create<T>(string originalWindowHandle) where T : SignInForm
         {
-            foreach (Type impl in from Type impl in RegisteredImplementations
-                                 let attrlist = impl.GetCustomAttributes(true)
-                                 where attrlist.OfType<SignInFormTypeAttribute>().Any(attr => attr.SignFormType.Equals(signFormType))
-                                 select impl)
-            {
-                return (SignInForm)Activator.CreateInstance(impl, Driver, originalWindowHandle);
-            }
-            throw new Exception("Could not find a SignInForm implementation for this SignInFormType");
+            return base.Create<T>(originalWindowHandle);
         }
     }
 }

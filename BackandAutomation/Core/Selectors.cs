@@ -36,10 +36,10 @@ namespace Core
 
         public class Common
         {
-            public static By SubmitType => By.CssSelector("[type=\"submit\"]");
+            public static By SubmitType => By.CssSelector("[type='submit']");
             public static By GoToHomePage => new OrCondition(
-                By.ClassName("ti -layers-alt"),
-                By.CssSelector("ui-sref='apps.index'"));
+                By.ClassName("ti-layers-alt"),
+                By.CssSelector("]ui-sref='apps.index']"));
         }
 
         public class BackandApplicationBasic
