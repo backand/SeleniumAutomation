@@ -1,4 +1,5 @@
 using Core;
+using Core.Dialogs;
 using OpenQA.Selenium;
 
 namespace Infrastructure.Object
@@ -39,7 +40,7 @@ namespace Infrastructure.Object
         {
             IWebElement editElement = MainElement.FindElement(By.CssSelector("[ng-click*='editRow']"));
             editElement.Click();
-            return WaitUntil.UntilNewRowDialogPopUp();
+            return WaitUntil.UntilDialogPopUp<NewRowDialog>();
         }
     }
 }

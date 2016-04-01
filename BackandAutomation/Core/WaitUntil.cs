@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using Core.Dialogs;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -59,45 +61,13 @@ namespace Core
             T result = wait.Until(funcToWait);
             return result;
         }
-
-        //public T UntilDialogPopUp<T>() where T : ModalDialog
-        //{
-        //    UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
-        //        exceptionTypes: typeof(NoSuchWindowException));
-        //    ModalDialog dialog = new ModalDialog(Driver);
-        //    return dialog as T;
-        //}
-
-        public OkDialog UntilOkDialogPopUp()
+        
+        public TDialog UntilDialogPopUp<TDialog>() where TDialog : ModalDialog
         {
+            DialogFactory factory = new DialogFactory(Driver);
             UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
-                exceptionTypes: typeof(NoSuchWindowException));
-            OkDialog dialog = new OkDialog(Driver);
-            return dialog;
+                exceptionTypes: typeof (NoSuchWindowException));
+            return factory.Create<TDialog>();
         }
-
-        public NewRowDialog UntilNewRowDialogPopUp()
-        {
-            UntilActionFinishes(driver => driver.FindElement(Selectors.ModalDialog.MainElement),
-                exceptionTypes: typeof(NoSuchWindowException));
-            NewRowDialog dialog = new NewRowDialog(Driver);
-            return dialog;
-        }
-    }
-
-    public class DialogFactory : DriverUser
-    {
-        public DialogFactory(IWebDriver driver) : base(driver)
-        {
-        }
-
-        public DialogFactory(DriverUser driver) : base(driver)
-        {
-        }
-
-        //public T Create<T>() where T : ModalDialog
-        //{
-        //    if()
-        //}
     }
 }

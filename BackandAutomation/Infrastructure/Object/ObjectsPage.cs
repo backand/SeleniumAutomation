@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Core;
+using Core.Dialogs;
 using Infrastructure.Base;
 using OpenQA.Selenium;
 
@@ -30,7 +31,7 @@ namespace Infrastructure.Object
         private NewRowDialog AddRow()
         {
             PageElement.FindElement(By.CssSelector("[ng-click*='newRow']")).Click();
-            return WaitUntil.UntilNewRowDialogPopUp();
+            return WaitUntil.UntilDialogPopUp<NewRowDialog>();
         }
 
         public void AddRow(string name, string description)
@@ -45,7 +46,7 @@ namespace Infrastructure.Object
         {
             IWebElement deleteElement = PageElement.FindElement(Selectors.ItemsPage.Delete);
             deleteElement.Click();
-            WaitUntil.UntilOkDialogPopUp().Ok();
+            WaitUntil.UntilDialogPopUp<OkDialog>().Ok();
         }
 
         public void Refresh()

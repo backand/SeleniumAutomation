@@ -1,4 +1,5 @@
 using Core;
+using Core.Dialogs;
 using Infrastructure.Base;
 using OpenQA.Selenium;
 
@@ -14,7 +15,7 @@ namespace Infrastructure.Apps
         public UserMainPage Delete()
         {
             DeleteElement.Click();
-            OkDialog dialog = WaitUntil.UntilOkDialogPopUp();
+            OkDialog dialog = WaitUntil.UntilDialogPopUp<OkDialog>();
             dialog.Ok();
             return new UserMainPage(this);
         }

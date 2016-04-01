@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace Core
+namespace Core.Dialogs
 {
     public class NewRowDialog : ModalDialog
     {
@@ -26,18 +26,18 @@ namespace Core
 
         public void Save()
         {
-            MainElement.FindElement(By.CssSelector("[ng-click*='saveRow']")).Click();
+            SubmitAction("saveRow");
         }
 
         public NewRowDialog SaveAndNew()
         {
-            MainElement.FindElement(By.CssSelector("[ng-click*='saveAndNew']")).Click();
-            return WaitUntil.UntilNewRowDialogPopUp();
+            SubmitAction("saveAndNew");
+            return WaitUntil.UntilDialogPopUp<NewRowDialog>();
         }
 
         public void Cancel()
         {
-            MainElement.FindElement(By.CssSelector("[ng-click*='cancelEditRow']")).Click();
+            SubmitAction("cancelEditRow");
         }
     }
 }

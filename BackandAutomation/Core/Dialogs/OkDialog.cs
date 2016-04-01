@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace Core
+namespace Core.Dialogs
 {
     public class OkDialog : ModalDialog
     {
@@ -9,7 +9,7 @@ namespace Core
         }
         
         public string Title => MainElement.FindElement(Selectors.ModalDialog.Title).Text;
-
+        
         public void Ok()
         {
             MainElement.FindElement(Selectors.ModalDialog.Ok).Click();
