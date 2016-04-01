@@ -50,7 +50,7 @@ namespace Infrastructure.EntryPages
         //public SignInForm SpecifySignForm(SignFormType signFormType)
         //{
         //    OpenSignForm(signFormType);
-        //    return SignInFactory.Create(signFormType, OriginalHandle);
+        //    return SignInFactory.FetchPage(signFormType, OriginalHandle);
         //}
 
         //public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)

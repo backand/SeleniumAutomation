@@ -25,7 +25,7 @@ namespace Tests
         [DontDeleteApp]
         public void DeleteApp()
         {
-            AppSettingsPage settingsPage = ApplicationsPage.LeftMenu.Create<AppSettingsPage>();
+            AppSettingsPage settingsPage = ApplicationsPage.LeftMenu.FetchPage<AppSettingsPage>();
 
             Page = settingsPage.Delete();
 

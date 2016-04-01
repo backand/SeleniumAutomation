@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Core;
 using Infrastructure.Base;
@@ -6,13 +7,13 @@ using OpenQA.Selenium;
 
 namespace Infrastructure.Object
 {
-    [BackandPageType(LeftMenuOption.Objects, LeftMenuOption.Items)]
-    public class ObjectsItemsPage : BackandApplicationsBasePage
+    [BackandPageType(LeftMenuOption.Objects, LeftMenuOption.DynamicObject)]
+    public class ObjectsPage : BackandApplicationsBasePage
     {
-        public ObjectsItemsPage(DriverUser driver) : base(driver)
+        public ObjectsPage(DriverUser driver) : base(driver)
         {
         }
-        
+
         public IEnumerable<GridRow> GetRows()
         {
             ReadOnlyCollection<IWebElement> elements = PageElement.FindElements(By.CssSelector(".ui-grid-viewport .ui-grid-row"));

@@ -87,7 +87,7 @@
     <Compile Include="Apps\RibbonType.cs" />
     <Compile Include="EntryPages\SignUpPage.cs" />
     <Compile Include="Object\GridRow.cs" />
-    <Compile Include="Object\ObjectsItemsPage.cs" />
+    <Compile Include="Object\ObjectsPage.cs" />
     <Compile Include="UserMainPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntryPages\SignIn\SignInFormType.cs" />

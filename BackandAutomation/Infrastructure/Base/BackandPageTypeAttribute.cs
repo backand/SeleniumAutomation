@@ -8,7 +8,7 @@ namespace Infrastructure.Base
         {
             ConcatedOptions = option;
         }
-
+        
         public LeftMenuOption[] ConcatedOptions { get; set; }
     }
 }

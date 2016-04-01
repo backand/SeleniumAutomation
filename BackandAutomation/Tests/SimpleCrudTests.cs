@@ -7,16 +7,16 @@ using Tests.Base;
 namespace Tests
 {
     [TestClass]
-    public class ObjectItems : BackandTestClassBase
+    public class SimpleCrudTests : BackandTestClassBase
     {
         private const string Name = "NewRow";
         private const string Description = "NewDescription";
-        private ObjectsItemsPage _itemsPage;
+        private ObjectsPage _itemsPage;
 
         protected override void TestInitializeExtension()
         {
             base.TestInitializeExtension();
-            _itemsPage = ApplicationsPage.LeftMenu.Create<ObjectsItemsPage>();
+            _itemsPage = ApplicationsPage.LeftMenu.FetchPage<ObjectsPage>("items");
             Assert.IsNotNull(_itemsPage);
             _itemsPage.AddRow(Name, Description);
         }

@@ -15,7 +15,7 @@ namespace Infrastructure.Base
         private IWebElement MainElement => Driver.FindElement(Selectors.BackandApplicationsBasePage.LeftMenu);
         private readonly FeedFactory _feedFactory;
 
-        public T Create<T>() where T : BackandApplicationsBasePage
+        public T FetchPage<T>(string pageName = null) where T : BackandApplicationsBasePage
         {
             IEnumerable<IWebElement> elements =
                 MainElement.GetChildren().Where(element => element.TagName == "li");
@@ -28,7 +28,7 @@ namespace Infrastructure.Base
             {
                 expandedOption.FindElement(By.TagName("a")).Click();
             }
-            return _feedFactory.Create<T>();
+            return _feedFactory.Create<T>(pageName);
         }
     }
 }
