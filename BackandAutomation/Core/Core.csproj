@@ -61,8 +61,10 @@
     <Compile Include="ConfigurationElements\LoginCredentials.cs" />
     <Compile Include="Dialogs\AddFieldDialog.cs" />
     <Compile Include="Dialogs\DialogFactory.cs" />
+    <Compile Include="Dialogs\FieldRowEditDialog.cs" />
     <Compile Include="Dialogs\FieldType.cs" />
     <Compile Include="Dialogs\NewObjectDialog.cs" />
+    <Compile Include="Dialogs\YesNoDialog.cs" />
     <Compile Include="DriversPool.cs" />
     <Compile Include="DriverUser.cs" />
     <Compile Include="EnumFindByAttribute.cs" />

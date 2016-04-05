@@ -27,6 +27,7 @@ namespace Infrastructure.Base
 
         protected TInstance Create<TInstance>(params object[] parameters) where TInstance : TEntity
         {
+            //typeof (TInstance)
             Type type = RegisteredImplementations.FirstOrDefault(impl => impl == typeof(TInstance));
             CreationExtraLogic(type);
             if (type == null)

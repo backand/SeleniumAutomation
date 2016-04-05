@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core;
 using Core.Dialogs;
 using Infrastructure.Base;
 
 namespace Infrastructure.Object
 {
-    [BackandPageType(LeftMenuOption.Objects, LeftMenuOption.DynamicObject)]
+    [BackandPageType(LeftMenuOption.Objects, LeftMenuOption.NewObject)]
     public class NewObjectPage : BackandApplicationsBasePage
     {
         public NewObjectPage(DriverUser driver) : base(driver)
         {
         }
 
-        public ModelPage SubmitObject(string objectName, List<KeyValuePair<string, FieldType>> fields)
+        public ModelPage SubmitObject(string objectName, IEnumerable<KeyValuePair<string, FieldType>> fields)
         {
             Func<AddFieldDialog, KeyValuePair<string, FieldType>, AddFieldDialog> submitField =
                 (dialog, pair) => dialog.Name(pair.Key).Type(pair.Value).Add();

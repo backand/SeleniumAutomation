@@ -86,8 +86,10 @@
     <Compile Include="EntryPages\SignIn\Types\GoogleSignInForm.cs" />
     <Compile Include="Apps\RibbonType.cs" />
     <Compile Include="EntryPages\SignUpPage.cs" />
+    <Compile Include="Object\FieldRow.cs" />
     <Compile Include="Object\GridRow.cs" />
     <Compile Include="Object\ModelPage.cs" />
+    <Compile Include="Object\ModelRectangle.cs" />
     <Compile Include="Object\NewObjectPage.cs" />
     <Compile Include="Object\ObjectsPage.cs" />
     <Compile Include="UserMainPage.cs" />

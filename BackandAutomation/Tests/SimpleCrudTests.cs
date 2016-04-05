@@ -6,6 +6,7 @@ using Tests.Base;
 
 namespace Tests
 {
+    [CreateApp]
     [TestClass]
     public class SimpleCrudTests : BackandTestClassBase
     {
@@ -22,7 +23,6 @@ namespace Tests
         }
 
         [TestMethod]
-        [CreateApp]
         public void CreateDataRow()
         {
             GridRow row =
@@ -31,7 +31,6 @@ namespace Tests
         }
 
         [TestMethod]
-        [CreateApp]
         public void DeleteDataRow()
         {
             GridRow row = _itemsPage.GetRows().First();
@@ -42,7 +41,6 @@ namespace Tests
         }
 
         [TestMethod]
-        [CreateApp]
         public void UpdateDataRow()
         {
             GridRow row = _itemsPage.GetRows().First();

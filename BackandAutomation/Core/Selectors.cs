@@ -22,7 +22,9 @@ namespace Core
         public class ModalDialog
         {
             public static By MainElement => By.ClassName("modal-dialog");
-            public static By Ok => By.TagName("button");
+            public static By Ok => new OrCondition(
+                By.CssSelector("[ng-if*='Ok']"), 
+                By.CssSelector("[ng-if*='ok']"));
             public static By Title => By.ClassName("modal-header");
         }
 

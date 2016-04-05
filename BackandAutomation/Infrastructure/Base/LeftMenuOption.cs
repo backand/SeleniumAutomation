@@ -8,14 +8,16 @@ namespace Infrastructure.Base
         Dashboard,
         [MenuOption(".ba-icon-objects", "Objects", ExpandableFlag.Yes, DynamicFlag.No)]
         Objects,
-        [MenuOption(".ba-icon-todo", "items", ExpandableFlag.No, DynamicFlag.No)]
-        Items,
         [MenuOption(".ba-icon-settings", "Settings", ExpandableFlag.Yes, DynamicFlag.No)]
         Settings,
         [MenuOption(".ba-icon-general", "General", ExpandableFlag.No, DynamicFlag.No)]
         General,
         [MenuOption(".ba-icon-todo", ExpandableFlag.No, DynamicFlag.Yes)]
-        DynamicObject
+        DynamicObject,
+        [MenuOption(".ba-icon-model", "Model", ExpandableFlag.No, DynamicFlag.No)]
+        Model,
+        [MenuOption(".ba-icon-new-query", "New Object", ExpandableFlag.No, DynamicFlag.No)]
+        NewObject
     }
 
     public static class ExpandableFlag
