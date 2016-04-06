@@ -36,7 +36,7 @@ namespace Tests
             Assert.IsFalse(result);
         }
 
-        [TestMethod, Ignore]
+        //[TestMethod, Ignore]
         public void DeleteAll()
         {
             BackandAppPannel appPannel;
