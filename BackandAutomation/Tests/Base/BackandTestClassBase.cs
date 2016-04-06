@@ -43,6 +43,7 @@ namespace Tests.Base
         {
             TestCleanupExtension();
             Driver.Close();
+            Driver.Dispose();
         }
 
         private IWebDriver GetDriver()
