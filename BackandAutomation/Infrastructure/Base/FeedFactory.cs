@@ -17,16 +17,7 @@ namespace Infrastructure.Base
         {
 
         }
-
-        protected override void InitClasses()
-        {
-            RegisterClass(typeof (DashbordPage));
-            RegisterClass(typeof (ObjectsPage));
-            RegisterClass(typeof (NewObjectPage));
-            RegisterClass(typeof (AppSettingsPage));
-            RegisterClass(typeof (ModelPage));
-        }
-
+        
         public T Create<T>(string pageName) where T : BackandApplicationsBasePage
         {
             _pageName = pageName;

@@ -33,17 +33,5 @@ namespace Infrastructure
             UserMainPage mainPage = SignIn().QuickSignIn<T>(email, password);
             return mainPage;
         }
-
-        //public UserMainPage QuickSignIn(SignFormType signFormType, string email, string password)
-        //{
-        //    UserMainPage mainPage = SignIn().QuickSignIn(signFormType, email, password);
-        //    return mainPage;
-        //}
-
-        //public UserMainPage QuickSignUp(SignFormType signFormType, string fullName, string email, string password)
-        //{
-        //    UserMainPage mainPage = SignUp().QuickSignUp(signFormType, fullName, email, password);
-        //    return mainPage;
-        //}
     }
 }

@@ -7,7 +7,7 @@ namespace Core
 {
     public class Configuration
     {
-        public static readonly object LockObj = new object();
+        private static readonly object LockObj = new object();
         private static BackandConfiguration _configuration;
 
         private Configuration()

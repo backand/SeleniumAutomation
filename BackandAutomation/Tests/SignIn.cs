@@ -37,6 +37,12 @@ namespace Tests
             SignInFromExternalAccount<GoogleSignInForm>();
         }
 
+        [TestMethod, Ignore]
+        public void SignInFromTwitter()
+        {
+            SignInFromExternalAccount<TwitterSignInForm>();
+        }
+
         private void SignInFromExternalAccount<T>() where T : SignInForm
         {
             string email = Configuration.Instance.LoginCredentials.Email;

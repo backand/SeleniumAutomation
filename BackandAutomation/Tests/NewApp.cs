@@ -36,11 +36,12 @@ namespace Tests
             Assert.IsFalse(result);
         }
 
-        [TestMethod, Ignore]
+        //[TestMethod, Ignore]
         public void DeleteAll()
         {
             BackandAppPannel appPannel;
-            while ((appPannel = Page.AppsFeed.AppsPannels.FirstOrDefault(app => app.RibbonType == RibbonType.Connected)) != null)
+            while ((appPannel = Page.AppsFeed.AppsPannels.FirstOrDefault(app => app.RibbonType == RibbonType.Connected)) !=
+                   null)
             {
                 appPannel.MoveToAppSettingsPage().Delete();
             }

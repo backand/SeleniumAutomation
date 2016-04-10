@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Core;
 using Infrastructure;
 using Infrastructure.Apps;
@@ -25,9 +27,11 @@ namespace Tests.Base
         [TestInitialize]
         public void TestInitialize()
         {
+            StartRunTimoutWatch();
             try
             {
-                FolderPathProvider provider = new FolderPathProvider();
+                // ReSharper disable once ObjectCreationAsStatement
+                new ScreenshotsProvider(TestContext.TestName);
                 EnterancePage = new BackandPage(GetDriver());
                 TestInitializeExtension();
             }
@@ -38,16 +42,34 @@ namespace Tests.Base
             }
         }
 
+        private void StartRunTimoutWatch()
+        {
+            TimeoutTask = Task.Factory.StartNew(() =>
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                while (sw.Elapsed < TimeSpan.FromSeconds(Configuration.Instance.App.TestTimeOut))
+                {
+                }
+                Assert.Fail("Test aborted due to timeout.");
+            });
+            //TimeoutTask.Start();
+        }
+
+        private Task TimeoutTask { get; set; }
+
         [TestCleanup]
         public void ClassCleanup()
         {
             TestCleanupExtension();
             Driver.Close();
+            if(!TimeoutTask.IsCompleted)
+                TimeoutTask.Dispose();
         }
 
         private IWebDriver GetDriver()
         {
-            Driver = DriversPool.GetWebDriver(false);
+            Driver = DriversPool.GetWebDriver();
             return Driver;
         }
 
@@ -65,6 +87,7 @@ namespace Tests.Base
             {
                 Page = EnterancePage.QuickSignIn<RegularSignInForm>(Configuration.Instance.LoginCredentials.Email,
                     Configuration.Instance.LoginCredentials.Password);
+                // Add log
             }
 
             CreateAppDetails = TestAttributes.OfType<CreateAppAttribute>().FirstOrDefault();
@@ -75,6 +98,7 @@ namespace Tests.Base
                 newAppForm.Name = CreateAppDetails.Name;
                 newAppForm.Title = CreateAppDetails.Title;
                 ApplicationsPage = newAppForm.Submit();
+                // Add log
             }
         }
 
@@ -94,7 +118,7 @@ namespace Tests.Base
 
         protected KickstartPage ApplicationsPage { get; private set; }
 
-        public void TestCleanupExtension()
+        private void TestCleanupExtension()
         {
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed ||
                 TestContext.CurrentTestOutcome == UnitTestOutcome.Aborted ||
@@ -103,7 +127,7 @@ namespace Tests.Base
             }
             else
             {
-                DirectoryInfo directory = new DirectoryInfo(FolderPathProvider.FullPath);
+                DirectoryInfo directory = new DirectoryInfo(ScreenshotsProvider.FolderFullPath);
 
                 foreach (FileInfo file in directory.GetFiles()) file.Delete();
                 foreach (DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);

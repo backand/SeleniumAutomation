@@ -4,9 +4,15 @@ namespace Infrastructure.EntryPages.SignIn
 {
     public enum SignFormType
     {
-        [EnumText("github")] GitHub,
-        [EnumText("google-plus")] Google,
-        [EnumText("facebook")] Facebook,
-        [EnumText("")] None
+        [EnumText("github")]
+        GitHub,
+        [EnumText("google-plus")]
+        Google,
+        [EnumText("facebook")]
+        Facebook,
+        [EnumText("twitter")]
+        Twitter,
+        [EnumText("")]
+        None
     }
 }

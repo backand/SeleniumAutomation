@@ -1,15 +1,17 @@
 ﻿<backandConfiguration>
   <app>
     <url>https://www.backand.com/</url>
+    <testTimeOut>15</testTimeOut>
   </app>
   <selenium>
     <isLocal>true</isLocal>
     <chromeDriverPath>Tests\Utils</chromeDriverPath>
     <protractorTimeOut>20</protractorTimeOut>
+    <remoteGridHub>http://localhost:4444/wd/hub</remoteGridHub>
   </selenium>
   <loginCredentials>
     <email>backandautouser@gmail.com</email>
-    <password>backand123</password>
+    <password>backandpass123</password>
     <fullName>BackandUser</fullName>
   </loginCredentials>
   <screenshotsFolder>c:\Screenshots</screenshotsFolder>

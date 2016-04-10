@@ -11,58 +11,50 @@ namespace Core
         public ScreenshotsContainer(IWebDriver driver)
         {
             Driver = driver;
-            ScreenshotsDir = Path.Combine(Configuration.Instance.ScreenshotsFolder, FolderPathProvider.FullPath);
+            ScreenshotsDir = Path.Combine(Configuration.Instance.ScreenshotsFolder, ScreenshotsProvider.FolderFullPath);
             ScreenshotsFolder = Directory.CreateDirectory(ScreenshotsDir);
         }
 
-        private string MakeFolderPath()
-        {
-            DateTime datetimeNow = DateTime.Now;
-            string time = datetimeNow.ToLongTimeString().Replace(':', '-');
-            string date = datetimeNow.ToShortDateString().Replace('/', '.');
-            string folderName = $"Results - {date} {time}";
-            return folderName;
-        }
-
-        public string ScreenshotsDir { get; set; }
-        public DirectoryInfo ScreenshotsFolder { get; set; }
+        private string ScreenshotsDir { get; }
+        private DirectoryInfo ScreenshotsFolder { get; }
         private IWebDriver Driver { get; }
 
         public void AddScreenshot()
         {
             try
             {
-                IWebDriver driver = (Driver as NgWebDriver).WrappedDriver;
-                ITakesScreenshot screenshotTake = driver as ITakesScreenshot;
-                Screenshot screenshot = screenshotTake.GetScreenshot();
+                NgWebDriver ngWebDriver = Driver as NgWebDriver;
+                if (ngWebDriver != null)
+                {
+                    IWebDriver driver = ngWebDriver.WrappedDriver;
+                    ITakesScreenshot screenshotTake = driver as ITakesScreenshot;
+                    Screenshot screenshot = screenshotTake?.GetScreenshot();
 
-                string fileName = DateTime.Now.ToLongTimeString().Replace(':', '-');
-                string filePath = $"{Path.Combine(ScreenshotsDir, fileName)}.bmp";
+                    string fileName = ScreenshotsProvider.TestName + DateTime.Now.ToLongTimeString().Replace(':', '-');
+                    string filePath = $"{Path.Combine(ScreenshotsDir, fileName)}.bmp";
 
-                screenshot.SaveAsFile(filePath, ImageFormat.Bmp);
+                    screenshot?.SaveAsFile(filePath, ImageFormat.Bmp);
+                }
             }
             catch
             {
                 //Ignored
             }
         }
-
-        public DirectoryInfo GetScreenshotsFolder()
-        {
-            return ScreenshotsFolder;
-        }
     }
 
-    public class FolderPathProvider
+    public class ScreenshotsProvider
     {
-        public FolderPathProvider()
+        public ScreenshotsProvider(string testName)
         {
             DateTime datetimeNow = DateTime.Now;
             string time = datetimeNow.ToLongTimeString().Replace(':', '-');
             string date = datetimeNow.ToShortDateString().Replace('/', '.');
-            FullPath = Path.Combine(Configuration.Instance.ScreenshotsFolder, $"Results - {date} {time}");
+            FolderFullPath = Path.Combine(Configuration.Instance.ScreenshotsFolder, $"Results - {date} {time}");
+            TestName = testName;
         }
 
-        public static string FullPath { get; set; }
+        public static string FolderFullPath { get; private set; }
+        public static string TestName { get; private set; }
     }
 }

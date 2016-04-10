@@ -72,6 +72,7 @@
     <Compile Include="Base\LeftMenu.cs" />
     <Compile Include="Base\LeftMenuOption.cs" />
     <Compile Include="EntryPages\SignIn\Types\RegularSignInForm.cs" />
+    <Compile Include="EntryPages\SignIn\Types\TwitterSignInForm.cs" />
     <Compile Include="Object\EditableField.cs" />
     <Compile Include="Object\EditPopup.cs" />
     <Compile Include="EntryPages\LoginPage.cs" />

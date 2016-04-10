@@ -46,9 +46,9 @@ namespace Infrastructure.EntryPages
             var signInElement = Driver.FindElement(By.ClassName(className));
 
             // Displayed by the popup window
-            var finder = new PopupWindowFinder(Driver);
+            PopupWindowFinder finder = new PopupWindowFinder(Driver);
             Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
-            var popupWindowHandle = finder.Click(signInElement);
+            string popupWindowHandle = finder.Click(signInElement);
 
             Driver.SwitchTo().Window(popupWindowHandle);
         }

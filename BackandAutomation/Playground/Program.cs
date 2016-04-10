@@ -1,5 +1,8 @@
 ﻿using Core;
 using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Playground
 {
@@ -7,35 +10,46 @@ namespace Playground
     {
         private static void Main(string[] args)
         {
-            string active = "{active : dbedit.dataName === 'mysql'}";
-            Array array = Enum.GetValues(typeof(DatabaseType));
-            foreach (var type in array)
+            Task task = Task.Factory.StartNew(() =>
             {
-                string enumtext = type.ToString().ToLower();
-                if (active.Contains(enumtext))
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                while (sw.Elapsed < TimeSpan.FromSeconds(10))
                 {
-                    var typee =  enumtext.ToEnum<DatabaseType>();
                 }
-            }
-        }
+                Console.WriteLine("Test aborted due to timeout.");
+            });
 
-        public enum DatabaseType
-        {
-            [EnumText("mysql")]
-            MySql,
-            [EnumText("postgresql")]
-            PostgreSql,
-            [EnumText("sqlserver")]
-            SqlServer
-        }
+            Task task2 = Task.Factory.StartNew(() =>
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                while (true)
+                {
+                    Thread.Sleep(2000);
+                    Console.WriteLine(sw.Elapsed);
+                }
+            });
 
-        private static string MakeFolderPath()
-        {
-            DateTime datetimeNow = DateTime.Now;
-            string time = datetimeNow.ToLongTimeString().Replace(':', '-');
-            string date = datetimeNow.ToShortDateString().Replace('/', '.');
-            string folderName = $"Results - {date} {time}";
-            return folderName;
+            Task.WaitAny(task, task2);
+            if(task.Status == TaskStatus.RanToCompletion)
+                throw new TimeoutException();
+            Console.ReadKey();
         }
+    }
+
+    public class A
+    {
+        
+    }
+
+    public class B : A
+    {
+        
+    }
+
+    public class C : B
+    {
+        
     }
 }

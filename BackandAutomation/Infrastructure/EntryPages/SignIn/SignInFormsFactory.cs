@@ -1,6 +1,5 @@
 using Core;
 using Infrastructure.Base;
-using Infrastructure.EntryPages.SignIn.Types;
 
 namespace Infrastructure.EntryPages.SignIn
 {
@@ -9,14 +8,6 @@ namespace Infrastructure.EntryPages.SignIn
         public SignInFormsFactory(DriverUser driverUser) : base(driverUser)
         {
             
-        }
-
-        protected override void InitClasses()
-        {
-            RegisterClass(typeof(GitHubSignInForm));
-            RegisterClass(typeof(GoogleSignInForm));
-            RegisterClass(typeof(FacebookSignInForm));
-            RegisterClass(typeof(RegularSignInForm));
         }
         
         public T Create<T>(string originalWindowHandle) where T : SignInForm

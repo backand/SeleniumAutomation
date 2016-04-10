@@ -1,3 +1,4 @@
+using System.Linq;
 using Core;
 using OpenQA.Selenium;
 
@@ -7,13 +8,9 @@ namespace Infrastructure.EntryPages.SignIn
     {
         protected SignInForm(DriverUser driverUser, object originalWindowHandle) : base(driverUser)
         {
-            OriginalWindowHandle = originalWindowHandle.ToString();
+            OriginalWindowHandle = (originalWindowHandle as object[])?.First().ToString();
         }
-
-        protected SignInForm(DriverUser driver) : base(driver)
-        {
-        }
-
+        
         private string OriginalWindowHandle { get; }
 
         protected abstract By EmailFindBy { get; }
@@ -45,7 +42,8 @@ namespace Infrastructure.EntryPages.SignIn
 
         protected void SwitchToOriginalWindow()
         {
-            Driver.SwitchTo().Window(OriginalWindowHandle);
+            var originalWindowHandle = OriginalWindowHandle;
+            Driver.SwitchTo().Window(originalWindowHandle);
         }
     }
 }
