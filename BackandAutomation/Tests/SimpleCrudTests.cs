@@ -22,7 +22,7 @@ namespace Tests
             _itemsPage.AddRow(Name, Description);
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(360)]
         public void CreateDataRow()
         {
             GridRow row =
@@ -30,7 +30,7 @@ namespace Tests
             Assert.IsNotNull(row);
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(360)]
         public void DeleteDataRow()
         {
             GridRow row = _itemsPage.GetRows().First();
@@ -40,7 +40,7 @@ namespace Tests
             Assert.IsFalse(_itemsPage.GetRows().Any(r => r.Id == id));
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(360)]
         public void UpdateDataRow()
         {
             GridRow row = _itemsPage.GetRows().First();

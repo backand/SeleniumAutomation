@@ -1,7 +1,7 @@
 ﻿<backandConfiguration>
   <app>
     <url>https://www.backand.com/</url>
-    <testTimeOut>15</testTimeOut>
+    <testTimeOut>10</testTimeOut>
   </app>
   <selenium>
     <isLocal>true</isLocal>

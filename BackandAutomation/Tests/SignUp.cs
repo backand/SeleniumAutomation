@@ -8,13 +8,13 @@ namespace Tests
     [DecomposedLogin]
     public class SignUp : BackandTestClassBase
     {
-        //[TestMethod]
+        //[TestMethod, Timeout(360)]
         //public void SignUpRegular()
         //{
         //    SignInFromExternalAccount(SignFormType.None);
         //}
 
-        //[TestMethod, Ignore]
+        //[TestMethod, Timeout(360), Ignore]
         //public void SignUpFromGoogle()
         //{
         //    SignInFromExternalAccount(SignFormType.Google);

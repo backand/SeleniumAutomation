@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Timers;
+//using System.Windows.Forms;
 using Core;
 using Infrastructure;
 using Infrastructure.Apps;
@@ -18,6 +21,8 @@ namespace Tests.Base
     [TestClass]
     public class BackandTestClassBase
     {
+        private Timer Timer;
+
         // ReSharper disable once MemberCanBePrivate.Global
         public TestContext TestContext { get; set; }
 
@@ -27,9 +32,9 @@ namespace Tests.Base
         [TestInitialize]
         public void TestInitialize()
         {
-            StartRunTimoutWatch();
             try
             {
+                StartRunTimoutWatch();
                 // ReSharper disable once ObjectCreationAsStatement
                 new ScreenshotsProvider(TestContext.TestName);
                 EnterancePage = new BackandPage(GetDriver());
@@ -44,27 +49,26 @@ namespace Tests.Base
 
         private void StartRunTimoutWatch()
         {
-            TimeoutTask = Task.Factory.StartNew(() =>
-            {
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                while (sw.Elapsed < TimeSpan.FromSeconds(Configuration.Instance.App.TestTimeOut))
-                {
-                }
-                Assert.Fail("Test aborted due to timeout.");
-            });
-            //TimeoutTask.Start();
+            Timer = new Timer(TimeSpan.FromSeconds(Configuration.Instance.App.TestTimeOut).TotalMilliseconds);
+            Timer.Elapsed += TimerOnElapsed;
+            Timer.Start();
         }
 
-        private Task TimeoutTask { get; set; }
+        private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            Timer.Dispose();
+            ClassCleanup();
+
+            throw new AssertFailedException("Test aborted due to timeout.");
+
+            throw new TimeoutException("Test aborted due to timeout.");
+        }
 
         [TestCleanup]
         public void ClassCleanup()
         {
             TestCleanupExtension();
             Driver.Close();
-            if(!TimeoutTask.IsCompleted)
-                TimeoutTask.Dispose();
         }
 
         private IWebDriver GetDriver()
