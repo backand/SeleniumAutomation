@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Timers;
-//using System.Windows.Forms;
 using Core;
 using Infrastructure;
 using Infrastructure.Apps;
@@ -15,6 +10,7 @@ using Infrastructure.EntryPages.SignIn.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using Tests.Attributes;
+//using System.Windows.Forms;
 
 namespace Tests.Base
 {
@@ -28,6 +24,14 @@ namespace Tests.Base
 
         protected BackandPage EnterancePage { get; private set; }
         protected UserMainPage Page { get; set; }
+
+        private IWebDriver Driver { get; set; }
+
+        protected CreateAppAttribute CreateAppDetails { get; private set; }
+
+        private Attribute[] TestAttributes { get; set; }
+
+        protected KickstartPage ApplicationsPage { get; private set; }
 
         [TestInitialize]
         public void TestInitialize()
@@ -69,6 +73,7 @@ namespace Tests.Base
         {
             TestCleanupExtension();
             Driver.Close();
+            Driver.Dispose();
         }
 
         private IWebDriver GetDriver()
@@ -76,8 +81,6 @@ namespace Tests.Base
             Driver = DriversPool.GetWebDriver();
             return Driver;
         }
-
-        private IWebDriver Driver { get; set; }
 
         protected virtual void TestInitializeExtension()
         {
@@ -97,8 +100,8 @@ namespace Tests.Base
             CreateAppDetails = TestAttributes.OfType<CreateAppAttribute>().FirstOrDefault();
             if (CreateAppDetails != null)
             {
-                AppsFeed feed = Page.AppsFeed;
-                NewAppForm newAppForm = feed.New();
+                var feed = Page.AppsFeed;
+                var newAppForm = feed.New();
                 newAppForm.Name = CreateAppDetails.Name;
                 newAppForm.Title = CreateAppDetails.Title;
                 ApplicationsPage = newAppForm.Submit();
@@ -106,21 +109,15 @@ namespace Tests.Base
             }
         }
 
-        protected CreateAppAttribute CreateAppDetails { get; private set; }
-
         private void GetAllAttributes()
         {
-            IEnumerable<Attribute> classAttributes = GetType().GetCustomAttributes();
-            IEnumerable<Attribute> testAttributes = GetType().GetMethod(TestContext.TestName).GetCustomAttributes();
+            var classAttributes = GetType().GetCustomAttributes();
+            var testAttributes = GetType().GetMethod(TestContext.TestName).GetCustomAttributes();
 
-            IEnumerable<Attribute> attributes = classAttributes.Union(testAttributes);
+            var attributes = classAttributes.Union(testAttributes);
 
             TestAttributes = attributes as Attribute[] ?? attributes.ToArray();
         }
-
-        private Attribute[] TestAttributes { get; set; }
-
-        protected KickstartPage ApplicationsPage { get; private set; }
 
         private void TestCleanupExtension()
         {
@@ -131,10 +128,10 @@ namespace Tests.Base
             }
             else
             {
-                DirectoryInfo directory = new DirectoryInfo(ScreenshotsProvider.FolderFullPath);
+                var directory = new DirectoryInfo(ScreenshotsProvider.FolderFullPath);
 
-                foreach (FileInfo file in directory.GetFiles()) file.Delete();
-                foreach (DirectoryInfo subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
+                foreach (var file in directory.GetFiles()) file.Delete();
+                foreach (var subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
 
                 directory.Delete();
             }
@@ -142,8 +139,8 @@ namespace Tests.Base
             {
                 try
                 {
-                    AppsFeed appsFeed = Page.GoToHomePage().AppsFeed;
-                    BackandAppPannel appPannel =
+                    var appsFeed = Page.GoToHomePage().AppsFeed;
+                    var appPannel =
                         appsFeed.AppsPannels.FirstOrDefault(app => app.Name == CreateAppDetails.Name.ToUpper());
                     appPannel?.MoveToAppSettingsPage().Delete();
                 }

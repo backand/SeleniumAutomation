@@ -14,14 +14,14 @@ namespace Infrastructure.Object
         {
         }
 
-        public ModelRectangle GetModelRectangle(string modelName)
-        {
-            IWebElement webElement = ModelRectangleElements.FirstOrDefault(element => element.Text.Contains(modelName));
-            return new ModelRectangle(this, webElement.GetParent());
-        }
-
         private IReadOnlyCollection<IWebElement> ModelRectangleElements
             => PageElement.FindElements(By.CssSelector(".draggable-container g[ng-repeat*='chart.nodes'] .node-title"));
+
+        public ModelRectangle GetModelRectangle(string modelName)
+        {
+            var webElement = ModelRectangleElements.FirstOrDefault(element => element.Text.Contains(modelName));
+            return new ModelRectangle(this, webElement.GetParent());
+        }
 
         public ModelPage ValidateAndUpdate()
         {

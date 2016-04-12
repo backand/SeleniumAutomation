@@ -18,8 +18,8 @@ namespace Infrastructure.Object
         {
             Func<AddFieldDialog, KeyValuePair<string, FieldType>, AddFieldDialog> submitField =
                 (dialog, pair) => dialog.Name(pair.Key).Type(pair.Value).Add();
-            
-            AddFieldDialog addFieldDialog = new NewObjectDialog(Driver).SetName(objectName).AddObject();
+
+            var addFieldDialog = new NewObjectDialog(Driver).SetName(objectName).AddObject();
             fields.Aggregate(addFieldDialog, (current, pair) => submitField(current, pair)).Close();
 
             return new ModelPage(this);

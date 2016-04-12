@@ -1,9 +1,9 @@
-﻿using Core;
-using Infrastructure.Base;
-using OpenQA.Selenium;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core;
+using Infrastructure.Base;
+using OpenQA.Selenium;
 
 namespace Infrastructure.Apps
 {
@@ -11,7 +11,6 @@ namespace Infrastructure.Apps
     {
         public DatabaseTopBar(DriverUser driver) : base(driver)
         {
-
         }
 
         protected override IWebElement MainElement => Driver.FindElement(By.ClassName("db-alert"));
@@ -30,7 +29,7 @@ namespace Infrastructure.Apps
 
         private void ClickOnButton(string buttonName)
         {
-            IWebElement buttonElement = MainElement.FindElement(By.CssSelector($"[ui-sref={buttonName}]"));
+            var buttonElement = MainElement.FindElement(By.CssSelector($"[ui-sref={buttonName}]"));
             buttonElement.Click();
         }
     }
@@ -39,7 +38,6 @@ namespace Infrastructure.Apps
     {
         public DatabaseSelect(DriverUser driver) : base(driver)
         {
-
         }
 
         private IEnumerable<DatabaseInfo> RowElements => PageElement
@@ -73,12 +71,12 @@ namespace Infrastructure.Apps
         {
             get
             {
-                IWebElement typeElement = DatabaseTypeElements.Single(element => element.GetClasses().Contains("active"));
-                string active = typeElement.GetAttribute("ng-class");
-                Array array = Enum.GetValues(typeof(DatabaseType));
+                var typeElement = DatabaseTypeElements.Single(element => element.GetClasses().Contains("active"));
+                var active = typeElement.GetAttribute("ng-class");
+                var array = Enum.GetValues(typeof (DatabaseType));
                 foreach (var type in array)
                 {
-                    string enumtext = type.ToString().ToLower();
+                    var enumtext = type.ToString().ToLower();
                     if (active.Contains(enumtext))
                     {
                         return enumtext.ToEnum<DatabaseType>();
@@ -88,11 +86,12 @@ namespace Infrastructure.Apps
             }
             set
             {
-                string expectedType = value.ToText();
-                IWebElement selectType = DatabaseTypeElements.Single(e => e.GetAttribute("ng-class").Contains(expectedType));
+                var expectedType = value.ToText();
+                var selectType = DatabaseTypeElements.Single(e => e.GetAttribute("ng-class").Contains(expectedType));
                 selectType.Click();
             }
         }
+
         public EditableDatabaseInfo EndPoint => RowElements.Single(r => r.InfoType == InfoType.EndPoint);
         public EditableDatabaseInfo DatabaseName => RowElements.Single(r => r.InfoType == InfoType.DatabaseName);
         public EditableDatabaseInfo Username => RowElements.Single(r => r.InfoType == InfoType.UserName);
@@ -102,17 +101,13 @@ namespace Infrastructure.Apps
         private IEnumerable<EditableDatabaseInfo> RowElements => PageElement
             .FindElements(By.CssSelector(".row .form-group label"))
             .Select(element => new EditableDatabaseInfo(this, element.GetParent()));
-
     }
 
     public enum DatabaseType
     {
-        [EnumText("mysql")]
-        MySql,
-        [EnumText("postgresql")]
-        PostgreSql,
-        [EnumText("sqlserver")]
-        SqlServer
+        [EnumText("mysql")] MySql,
+        [EnumText("postgresql")] PostgreSql,
+        [EnumText("sqlserver")] SqlServer
     }
 
     public class DatabaseInfo : DriverUser
@@ -120,8 +115,8 @@ namespace Infrastructure.Apps
         public DatabaseInfo(DriverUser driver, IWebElement element) : base(driver)
         {
             MainElement = element;
-            IWebElement typeElement = MainElement.FindElement(InfoTypeSelector);
-            string id = typeElement.GetId();
+            var typeElement = MainElement.FindElement(InfoTypeSelector);
+            var id = typeElement.GetId();
             if (id == null)
             {
                 typeElement.FindElement(By.TagName("a")).Click();
@@ -152,20 +147,15 @@ namespace Infrastructure.Apps
             get { return TextElement.GetAttribute("value"); }
             set { TextElement.SendKeys(value); }
         }
-
     }
+
     public enum InfoType
     {
-        [EnumText("dbtype")]
-        DatabaseType,
-        [EnumText("server")]
-        EndPoint,
-        [EnumText("database")]
-        DatabaseName,
-        [EnumText("UserName")]
-        UserName,
-        [EnumText("usessh")]
-        UseSSH,
+        [EnumText("dbtype")] DatabaseType,
+        [EnumText("server")] EndPoint,
+        [EnumText("database")] DatabaseName,
+        [EnumText("UserName")] UserName,
+        [EnumText("usessh")] UseSSH,
         Password
     }
 }

@@ -30,7 +30,7 @@ namespace Infrastructure
 
         public UserMainPage QuickSignIn<T>(string email, string password) where T : SignInForm
         {
-            UserMainPage mainPage = SignIn().QuickSignIn<T>(email, password);
+            var mainPage = SignIn().QuickSignIn<T>(email, password);
             return mainPage;
         }
     }

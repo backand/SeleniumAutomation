@@ -9,6 +9,7 @@ namespace Core
         {
             FindBy = findBy;
         }
+
         public By FindBy { get; set; }
     }
 }

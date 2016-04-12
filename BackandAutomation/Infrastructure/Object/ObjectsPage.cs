@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using Core;
 using Core.Dialogs;
 using Infrastructure.Base;
@@ -17,12 +15,12 @@ namespace Infrastructure.Object
 
         public IEnumerable<GridRow> GetRows()
         {
-            ReadOnlyCollection<IWebElement> elements = PageElement.FindElements(By.CssSelector(".ui-grid-viewport .ui-grid-row"));
-            List<GridRow> rows = new List<GridRow>();
-            int realRowPlace = elements.Count / 2;
-            for (int i = 0; i < realRowPlace; i++)
+            var elements = PageElement.FindElements(By.CssSelector(".ui-grid-viewport .ui-grid-row"));
+            var rows = new List<GridRow>();
+            var realRowPlace = elements.Count/2;
+            for (var i = 0; i < realRowPlace; i++)
             {
-                GridRow row = new GridRow(this, elements[realRowPlace + i], elements[i]);
+                var row = new GridRow(this, elements[realRowPlace + i], elements[i]);
                 rows.Add(row);
             }
             return rows;
@@ -36,7 +34,7 @@ namespace Infrastructure.Object
 
         public void AddRow(string name, string description)
         {
-            NewRowDialog dialog = AddRow();
+            var dialog = AddRow();
             dialog.Name = name;
             dialog.Description = description;
             dialog.Save();
@@ -44,14 +42,14 @@ namespace Infrastructure.Object
 
         public void DeleteSelectedRows()
         {
-            IWebElement deleteElement = PageElement.FindElement(Selectors.ItemsPage.Delete);
+            var deleteElement = PageElement.FindElement(Selectors.ItemsPage.Delete);
             deleteElement.Click();
             WaitUntil.UntilDialogPopUp<OkDialog>().Ok();
         }
 
         public void Refresh()
         {
-            IWebElement refreshButton = PageElement.FindElement(Selectors.ItemsPage.Refresh);
+            var refreshButton = PageElement.FindElement(Selectors.ItemsPage.Refresh);
             refreshButton.Click();
         }
     }

@@ -15,7 +15,7 @@ namespace Infrastructure.EntryPages
         public UserMainPage QuickSignIn<T>(string email, string password) where T : SignInForm
         {
             OpenSignForm<T>();
-            T form = SignInFactory.Create<T>(OriginalHandle);
+            var form = SignInFactory.Create<T>(OriginalHandle);
             return form.QuickSubmit(email, password);
         }
     }

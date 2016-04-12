@@ -10,7 +10,7 @@ namespace Infrastructure.EntryPages.SignIn
         {
             OriginalWindowHandle = (originalWindowHandle as object[])?.First().ToString();
         }
-        
+
         private string OriginalWindowHandle { get; }
 
         protected abstract By EmailFindBy { get; }
@@ -20,13 +20,6 @@ namespace Infrastructure.EntryPages.SignIn
         protected IWebElement EmailElement => Driver.TryFindElement(EmailFindBy);
         private IWebElement PasswordElement => Driver.TryFindElement(PasswordFindBy);
         protected IWebElement SubmitElement => Driver.TryFindElement(SubmitFindBy);
-
-        protected void Submit()
-        {
-            SubmitElement.Click();
-        }
-
-        public abstract UserMainPage QuickSubmit(string email, string password);
 
         protected virtual string Email
         {
@@ -39,6 +32,13 @@ namespace Infrastructure.EntryPages.SignIn
             private get { return PasswordElement.Text; }
             set { PasswordElement.SendKeys(value); }
         }
+
+        protected void Submit()
+        {
+            SubmitElement.Click();
+        }
+
+        public abstract UserMainPage QuickSubmit(string email, string password);
 
         protected void SwitchToOriginalWindow()
         {

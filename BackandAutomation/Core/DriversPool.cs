@@ -11,7 +11,7 @@ namespace Core
     {
         public static IWebDriver GetWebDriver()
         {
-            IWebDriver driver = !Configuration.Instance.Selenium.IsLocal ? GetRemoteWebDriver() : GetLocalWebDriver();
+            var driver = !Configuration.Instance.Selenium.IsLocal ? GetRemoteWebDriver() : GetLocalWebDriver();
             PrepareDriver(driver);
             driver = SetAngularProctractorDriver(driver);
             return driver;
@@ -19,10 +19,10 @@ namespace Core
 
         private static IWebDriver GetLocalWebDriver()
         {
-            string chromeDriverPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..",
+            var chromeDriverPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..",
                 Configuration.Instance.Selenium.ChromeDriverPath);
 
-            ChromeOptions options = new ChromeOptions();
+            var options = new ChromeOptions();
 
             return new ChromeDriver(chromeDriverPath, options);
         }
@@ -40,7 +40,9 @@ namespace Core
             driver.Manage()
                 .Timeouts()
                 .SetPageLoadTimeout(TimeSpan.FromSeconds(Configuration.Instance.Selenium.ProtractorTimeOut));
-            driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(Configuration.Instance.Selenium.ProtractorTimeOut));
+            driver.Manage()
+                .Timeouts()
+                .SetScriptTimeout(TimeSpan.FromSeconds(Configuration.Instance.Selenium.ProtractorTimeOut));
             return driver;
         }
 

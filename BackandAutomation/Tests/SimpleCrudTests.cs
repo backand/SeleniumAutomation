@@ -25,7 +25,7 @@ namespace Tests
         [TestMethod, Timeout(360)]
         public void CreateDataRow()
         {
-            GridRow row =
+            var row =
                 _itemsPage.GetRows().FirstOrDefault(r => r.Name.Text == Name && r.Description.Text == Description);
             Assert.IsNotNull(row);
         }
@@ -33,8 +33,8 @@ namespace Tests
         [TestMethod, Timeout(360)]
         public void DeleteDataRow()
         {
-            GridRow row = _itemsPage.GetRows().First();
-            string id = row.Id;
+            var row = _itemsPage.GetRows().First();
+            var id = row.Id;
             row.Select();
             _itemsPage.DeleteSelectedRows();
             Assert.IsFalse(_itemsPage.GetRows().Any(r => r.Id == id));
@@ -43,9 +43,9 @@ namespace Tests
         [TestMethod, Timeout(360)]
         public void UpdateDataRow()
         {
-            GridRow row = _itemsPage.GetRows().First();
-            string id = row.Id;
-            EditPopup edit = row.Name.Edit();
+            var row = _itemsPage.GetRows().First();
+            var id = row.Id;
+            var edit = row.Name.Edit();
             const string newName = "NewEditText";
             edit.Text = newName;
             edit.Ok();

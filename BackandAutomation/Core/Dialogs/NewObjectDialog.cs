@@ -10,7 +10,7 @@ namespace Core.Dialogs
 
         public NewObjectDialog SetName(string name)
         {
-            FindElementAndSendKeys("object-name",name);
+            FindElementAndSendKeys("object-name", name);
             return this;
         }
 

@@ -17,8 +17,8 @@ namespace Core.Dialogs
 
         public AddFieldDialog Type(FieldType type)
         {
-            IWebElement element = FindElement("field-type");
-            SelectElement select = new SelectElement(element);
+            var element = FindElement("field-type");
+            var select = new SelectElement(element);
             select.SelectByValue(type.ToText());
             return this;
         }

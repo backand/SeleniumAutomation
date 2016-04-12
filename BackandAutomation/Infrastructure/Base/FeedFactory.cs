@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Core;
-using Infrastructure.Apps;
-using Infrastructure.Object;
 using OpenQA.Selenium;
 
 namespace Infrastructure.Base
@@ -15,38 +13,37 @@ namespace Infrastructure.Base
 
         public FeedFactory(DriverUser driverUser) : base(driverUser)
         {
-
         }
-        
+
         public T Create<T>(string pageName) where T : BackandApplicationsBasePage
         {
             _pageName = pageName;
             return base.Create<T>();
         }
-        
+
         protected override void CreationExtraLogic(Type type)
         {
-            BackandPageTypeAttribute attribute = type.GetCustomAttribute<BackandPageTypeAttribute>();
-            LeftMenuOption[] leftMenuOptions = attribute.ConcatedOptions;
+            var attribute = type.GetCustomAttribute<BackandPageTypeAttribute>();
+            var leftMenuOptions = attribute.ConcatedOptions;
             CallOptions(leftMenuOptions);
         }
 
         private void CallOptions(IEnumerable<LeftMenuOption> options)
         {
-            foreach (LeftMenuOption option in options)
+            foreach (var option in options)
             {
-                MenuOptionAttribute optionAttribute = (option as Enum).GetAttribute<MenuOptionAttribute>();
-                string cssSelector = optionAttribute.Selector;
-                bool isDynamic = optionAttribute.IsDynamic;
-                string name = isDynamic ? _pageName : optionAttribute.Name;
+                var optionAttribute = (option as Enum).GetAttribute<MenuOptionAttribute>();
+                var cssSelector = optionAttribute.Selector;
+                var isDynamic = optionAttribute.IsDynamic;
+                var name = isDynamic ? _pageName : optionAttribute.Name;
 
-                IEnumerable<IWebElement> webElements =
+                var webElements =
                     Driver.FindElements(By.CssSelector(cssSelector)).Select(element => element.GetParent());
-                IWebElement optionElement = webElements.FirstOrDefault(element => element.Text == name);
+                var optionElement = webElements.FirstOrDefault(element => element.Text == name);
 
                 if (optionAttribute.Expandable)
                 {
-                    IWebElement listItem = optionElement.GetParent();
+                    var listItem = optionElement.GetParent();
                     if (!listItem.IsOpen() || (name == "Objects" && listItem.IsOpen()))
                         optionElement?.Click();
                 }

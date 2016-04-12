@@ -25,7 +25,7 @@ namespace Infrastructure.Apps
         public KickstartPage Submit()
         {
             MainElement.FindElement(Selectors.AppForm.SubmitNew).Click();
-            OkDialog dialog = WaitUntil.UntilDialogPopUp<OkDialog>();
+            var dialog = WaitUntil.UntilDialogPopUp<OkDialog>();
             dialog.Ok();
             return new KickstartPage(this);
         }

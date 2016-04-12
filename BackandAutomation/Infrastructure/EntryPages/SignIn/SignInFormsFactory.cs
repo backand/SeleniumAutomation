@@ -7,9 +7,8 @@ namespace Infrastructure.EntryPages.SignIn
     {
         public SignInFormsFactory(DriverUser driverUser) : base(driverUser)
         {
-            
         }
-        
+
         public T Create<T>(string originalWindowHandle) where T : SignInForm
         {
             return base.Create<T>(originalWindowHandle);

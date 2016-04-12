@@ -12,14 +12,14 @@ namespace Infrastructure.Apps
         {
         }
 
+        private IWebElement DeleteElement => Driver.FindElement(Selectors.ManageAppSettings.Delete);
+
         public UserMainPage Delete()
         {
             DeleteElement.Click();
-            OkDialog dialog = WaitUntil.UntilDialogPopUp<OkDialog>();
+            var dialog = WaitUntil.UntilDialogPopUp<OkDialog>();
             dialog.Ok();
             return new UserMainPage(this);
         }
-
-        private IWebElement DeleteElement => Driver.FindElement(Selectors.ManageAppSettings.Delete);
     }
 }

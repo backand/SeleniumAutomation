@@ -13,7 +13,7 @@ namespace Infrastructure.Base
 
         protected TInstance Create<TInstance>(params object[] parameters) where TInstance : TEntity
         {
-            Type type = typeof (TInstance);
+            var type = typeof (TInstance);
             CreationExtraLogic(type);
             if (parameters.Any())
                 return (TInstance) Activator.CreateInstance(type, this, parameters);

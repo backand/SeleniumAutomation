@@ -10,8 +10,8 @@ namespace Core
                 => new OrCondition(By.Name("appName"), By.CssSelector(".panel-heading.text-center"));
 
             public static By Title =>
-                    new OrCondition(By.CssSelector("[placeholder='app title']"),
-                        By.CssSelector(".app-panel-body .body-height"));
+                new OrCondition(By.CssSelector("[placeholder='app title']"),
+                    By.CssSelector(".app-panel-body .body-height"));
 
             public static string RibbonElementSelector => "ui-ribbon-container";
             public static By SubmitNew => Common.SubmitType;
@@ -22,9 +22,11 @@ namespace Core
         public class ModalDialog
         {
             public static By MainElement => By.ClassName("modal-dialog");
+
             public static By Ok => new OrCondition(
-                By.CssSelector("[ng-if*='Ok']"), 
+                By.CssSelector("[ng-if*='Ok']"),
                 By.CssSelector("[ng-if*='ok']"));
+
             public static By Title => By.ClassName("modal-header");
         }
 
@@ -39,6 +41,7 @@ namespace Core
         public class Common
         {
             public static By SubmitType => By.CssSelector("[type='submit']");
+
             public static By GoToHomePage => new OrCondition(
                 By.ClassName("ti-layers-alt"),
                 By.CssSelector("]ui-sref='apps.index']"));
@@ -73,6 +76,10 @@ namespace Core
 
         public class ItemsPage
         {
+            public static By Delete => By.Id("delete-multiple-rows");
+            public static By Refresh => By.ClassName("refresh-data-button");
+            public static By EditField => By.ClassName("editable-input");
+
             public class GridRow
             {
                 public static By Id => By.ClassName("ui-grid-coluiGrid-006");
@@ -81,10 +88,6 @@ namespace Core
                 public static By User => By.CssSelector("[editable-text*='user']");
                 public static By Select => By.ClassName("ui-grid-selection-row-header-buttons");
             }
-
-            public static By Delete => By.Id("delete-multiple-rows");
-            public static By Refresh => By.ClassName("refresh-data-button");
-            public static By EditField => By.ClassName("editable-input");
         }
     }
 }

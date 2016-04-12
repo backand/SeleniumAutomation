@@ -26,19 +26,19 @@ namespace Infrastructure.Object
 
         public void Ok()
         {
-            IWebElement okElement = MainElement.FindElement(By.CssSelector(".glyphicon-ok")).GetParent();
+            var okElement = MainElement.FindElement(By.CssSelector(".glyphicon-ok")).GetParent();
             okElement.Click();
         }
 
         public void Cancel()
         {
-            IWebElement cancelElement = MainElement.FindElement(By.CssSelector(".glyphicon-remove")).GetParent();
+            var cancelElement = MainElement.FindElement(By.CssSelector(".glyphicon-remove")).GetParent();
             cancelElement.Click();
         }
 
         public NewRowDialog Edit()
         {
-            IWebElement editElement = MainElement.FindElement(By.CssSelector("[ng-click*='editRow']"));
+            var editElement = MainElement.FindElement(By.CssSelector("[ng-click*='editRow']"));
             editElement.Click();
             return WaitUntil.UntilDialogPopUp<NewRowDialog>();
         }

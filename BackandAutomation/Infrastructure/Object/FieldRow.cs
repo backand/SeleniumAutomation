@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Core;
 using Core.Dialogs;
@@ -22,10 +21,10 @@ namespace Infrastructure.Object
         {
             get
             {
-                string typeText = MainElement.FindElement(By.CssSelector("text > :not(.field-name-label)")).Text;
+                var typeText = MainElement.FindElement(By.CssSelector("text > :not(.field-name-label)")).Text;
                 typeText = typeText.Trim('(', ')');
-                IEnumerable<FieldType> fieldTypes = Enum.GetValues(typeof(FieldType)).Cast<FieldType>();
-                FieldType fieldType = fieldTypes.FirstOrDefault(type => type.ToString().ToLower() == typeText);
+                var fieldTypes = Enum.GetValues(typeof (FieldType)).Cast<FieldType>();
+                var fieldType = fieldTypes.FirstOrDefault(type => type.ToString().ToLower() == typeText);
                 return fieldType;
             }
         }

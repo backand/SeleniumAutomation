@@ -38,17 +38,17 @@ namespace Infrastructure.EntryPages
             // Get the current window handle so you can switch back later
             OriginalHandle = Driver.CurrentWindowHandle;
 
-            SignInFormTypeAttribute formTypeAttribute = typeof(T).GetCustomAttribute<SignInFormTypeAttribute>();
-            SignFormType signFormType = formTypeAttribute.SignFormType;
+            var formTypeAttribute = typeof (T).GetCustomAttribute<SignInFormTypeAttribute>();
+            var signFormType = formTypeAttribute.SignFormType;
             if (signFormType == SignFormType.None)
                 return;
             string className = $"btn-{signFormType.ToText()}";
             var signInElement = Driver.FindElement(By.ClassName(className));
 
             // Displayed by the popup window
-            PopupWindowFinder finder = new PopupWindowFinder(Driver);
+            var finder = new PopupWindowFinder(Driver);
             Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
-            string popupWindowHandle = finder.Click(signInElement);
+            var popupWindowHandle = finder.Click(signInElement);
 
             Driver.SwitchTo().Window(popupWindowHandle);
         }

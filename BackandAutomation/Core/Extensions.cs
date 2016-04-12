@@ -12,20 +12,20 @@ namespace Core
     {
         public static TAttribute GetAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
         {
-            Type type = value.GetType();
-            string name = Enum.GetName(type, value);
+            var type = value.GetType();
+            var name = Enum.GetName(type, value);
             return type.GetField(name).GetCustomAttributes(false).OfType<TAttribute>().SingleOrDefault();
         }
 
         public static string ToText(this Enum enumValue)
         {
-            EnumTextAttribute enumTextAttribute = enumValue.GetAttribute<EnumTextAttribute>();
+            var enumTextAttribute = enumValue.GetAttribute<EnumTextAttribute>();
             return enumTextAttribute?.Text;
         }
 
         public static T ToEnum<T>(this string stringValue) where T : struct
         {
-            IEnumerable<T> array = Enum.GetValues(typeof(T)).Cast<T>();
+            var array = Enum.GetValues(typeof (T)).Cast<T>();
             return array.FirstOrDefault(value => (value as Enum).ToText() == stringValue);
         }
 
@@ -37,13 +37,13 @@ namespace Core
 
         public static IWebElement TryFindElement(this ISearchContext searcher, By findBy)
         {
-            ReadOnlyCollection<IWebElement> elements = searcher.FindElements(findBy);
+            var elements = searcher.FindElements(findBy);
             return elements.FirstOrDefault();
         }
 
         public static void JavascriptClick(this IWebDriver driver, string cssSelector)
         {
-            var jsExecuter = (driver as IJavaScriptExecutor);
+            var jsExecuter = driver as IJavaScriptExecutor;
             jsExecuter.ExecuteScript($"$('{cssSelector}')[0].click()");
         }
 
@@ -52,7 +52,7 @@ namespace Core
             //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             //element = wait.Until(ExpectedConditions.ElementIsVisible(element));
 
-            Actions action = new Actions(driver);
+            var action = new Actions(driver);
             action.MoveToElement(element).Perform();
             return element;
         }
@@ -61,10 +61,10 @@ namespace Core
         {
             try
             {
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                IWebElement element = wait.Until(ExpectedConditions.ElementIsVisible(locator));
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                var element = wait.Until(ExpectedConditions.ElementIsVisible(locator));
 
-                Actions action = new Actions(driver);
+                var action = new Actions(driver);
 
                 action.MoveToElement(element).Perform();
                 return element;
@@ -83,7 +83,6 @@ namespace Core
             }
             catch (Exception ex)
             {
-
             }
         }
 
@@ -101,7 +100,7 @@ namespace Core
         {
             return element.GetAttribute("class");
         }
-        
+
         public static string GetId(this IWebElement element)
         {
             return element.GetAttribute("id");

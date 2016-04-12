@@ -14,7 +14,10 @@ namespace Infrastructure.Object
             MainElement = element;
         }
 
-        private IWebElement MainElement { get; set; }
+        private IWebElement MainElement { get; }
+
+        private IEnumerable<IWebElement> RowElements
+            => MainElement.FindElements(By.CssSelector("[ng-repeat*='node.fields']"));
 
         public FieldRow GetFieldRow(Predicate<FieldRow> condition)
         {
@@ -27,9 +30,6 @@ namespace Infrastructure.Object
         {
             return GetFieldRow(row => row.FieldName == fieldName && row.FieldType == fieldType);
         }
-
-        private IEnumerable<IWebElement> RowElements
-            => MainElement.FindElements(By.CssSelector("[ng-repeat*='node.fields']"));
 
         public AddFieldDialog New()
         {

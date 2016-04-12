@@ -7,7 +7,6 @@ namespace Infrastructure.Apps
     {
         public TopBar(DriverUser driver) : base(driver)
         {
-
         }
 
         protected virtual IWebElement MainElement => Driver.FindElement(By.ClassName("top-header"));

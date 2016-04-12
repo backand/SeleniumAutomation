@@ -1,5 +1,4 @@
 using System.Configuration;
-using System.IO;
 using System.Xml.Serialization;
 using Core.ConfigurationElements;
 
@@ -13,8 +12,8 @@ namespace Core
         private Configuration()
         {
             var serializer = new XmlSerializer(typeof (BackandConfiguration));
-            
-            using (Stream stream = ResourcesHandler.GetStream(_filePath))
+
+            using (var stream = ResourcesHandler.GetStream(_filePath))
             {
                 var obj = serializer.Deserialize(stream);
                 _configuration = obj as BackandConfiguration;
@@ -22,7 +21,7 @@ namespace Core
         }
 
         private string _filePath => ConfigurationManager.AppSettings["configurationExtensionPath"];
-        
+
         public static BackandConfiguration Instance
         {
             get

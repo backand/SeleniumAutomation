@@ -7,7 +7,6 @@ namespace Tests.Attributes
     {
         public CreateAppAttribute()
         {
-            
         }
 
         public CreateAppAttribute(string name, string title)

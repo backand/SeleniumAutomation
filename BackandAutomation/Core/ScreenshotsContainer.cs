@@ -23,14 +23,14 @@ namespace Core
         {
             try
             {
-                NgWebDriver ngWebDriver = Driver as NgWebDriver;
+                var ngWebDriver = Driver as NgWebDriver;
                 if (ngWebDriver != null)
                 {
-                    IWebDriver driver = ngWebDriver.WrappedDriver;
-                    ITakesScreenshot screenshotTake = driver as ITakesScreenshot;
-                    Screenshot screenshot = screenshotTake?.GetScreenshot();
+                    var driver = ngWebDriver.WrappedDriver;
+                    var screenshotTake = driver as ITakesScreenshot;
+                    var screenshot = screenshotTake?.GetScreenshot();
 
-                    string fileName = ScreenshotsProvider.TestName + DateTime.Now.ToLongTimeString().Replace(':', '-');
+                    var fileName = ScreenshotsProvider.TestName + DateTime.Now.ToLongTimeString().Replace(':', '-');
                     string filePath = $"{Path.Combine(ScreenshotsDir, fileName)}.bmp";
 
                     screenshot?.SaveAsFile(filePath, ImageFormat.Bmp);
@@ -47,9 +47,9 @@ namespace Core
     {
         public ScreenshotsProvider(string testName)
         {
-            DateTime datetimeNow = DateTime.Now;
-            string time = datetimeNow.ToLongTimeString().Replace(':', '-');
-            string date = datetimeNow.ToShortDateString().Replace('/', '.');
+            var datetimeNow = DateTime.Now;
+            var time = datetimeNow.ToLongTimeString().Replace(':', '-');
+            var date = datetimeNow.ToShortDateString().Replace('/', '.');
             FolderFullPath = Path.Combine(Configuration.Instance.ScreenshotsFolder, $"Results - {date} {time}");
             TestName = testName;
         }

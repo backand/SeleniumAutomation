@@ -1,6 +1,4 @@
 ﻿using Core;
-using Infrastructure.Base;
-using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
 using Infrastructure.EntryPages.SignIn.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,7 +20,8 @@ namespace Tests
         [TestMethod, Timeout(360)]
         public void SignInFromFacebook()
         {
-            SignInFromExternalAccount<FacebookSignInForm>(); ;
+            SignInFromExternalAccount<FacebookSignInForm>();
+            ;
         }
 
         [TestMethod, Timeout(360)]
@@ -45,14 +44,14 @@ namespace Tests
 
         private void SignInFromExternalAccount<T>() where T : SignInForm
         {
-            string email = Configuration.Instance.LoginCredentials.Email;
-            string password = Configuration.Instance.LoginCredentials.Password;
+            var email = Configuration.Instance.LoginCredentials.Email;
+            var password = Configuration.Instance.LoginCredentials.Password;
 
             Page = EnterancePage.QuickSignIn<T>(email, password);
-            UserSettings settings = Page.Settings;
+            var settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
 
-            SignInPage signInPage = settings.LogOut();
+            var signInPage = settings.LogOut();
             Page = signInPage.QuickSignIn<T>(email, password);
             settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);

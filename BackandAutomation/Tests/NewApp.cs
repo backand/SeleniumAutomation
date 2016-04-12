@@ -13,11 +13,11 @@ namespace Tests
         [TestMethod, Timeout(360)]
         public void NewAppValidation()
         {
-            string current = ApplicationsPage.CurrentAppComponent.Name;
+            var current = ApplicationsPage.CurrentAppComponent.Name;
             Assert.AreEqual(CreateAppDetails.Name.ToLower(), current);
 
             Page = ApplicationsPage.GoToHomePage();
-            AppsFeed feed = Page.AppsFeed;
+            var feed = Page.AppsFeed;
             Assert.IsTrue(feed.AppsPannels.Any(app => app.Name == CreateAppDetails.Name.ToUpper()));
         }
 
@@ -25,12 +25,12 @@ namespace Tests
         [DontDeleteApp]
         public void DeleteApp()
         {
-            AppSettingsPage settingsPage = ApplicationsPage.LeftMenu.FetchPage<AppSettingsPage>();
+            var settingsPage = ApplicationsPage.LeftMenu.FetchPage<AppSettingsPage>();
 
             Page = settingsPage.Delete();
 
-            AppsFeed feed = Page.AppsFeed;
-            bool result = feed.AppsPannels.Any(
+            var feed = Page.AppsFeed;
+            var result = feed.AppsPannels.Any(
                 app => app.Name == CreateAppDetails.Name.ToUpper() && app.Title == CreateAppDetails.Title);
 
             Assert.IsFalse(result);

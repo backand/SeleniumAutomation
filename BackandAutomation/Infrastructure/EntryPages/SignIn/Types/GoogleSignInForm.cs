@@ -15,6 +15,15 @@ namespace Infrastructure.EntryPages.SignIn.Types
         protected override By PasswordFindBy => By.Id("Passwd");
         protected override By SubmitFindBy => By.Id("signIn");
 
+        protected override string Email
+        {
+            set
+            {
+                EmailElement.SendKeys(value);
+                Driver.TryFindElement(By.Id("next"))?.Click();
+            }
+        }
+
         public override UserMainPage QuickSubmit(string email, string password)
         {
             try
@@ -30,15 +39,6 @@ namespace Infrastructure.EntryPages.SignIn.Types
             }
             SwitchToOriginalWindow();
             return new UserMainPage(this);
-        }
-
-        protected override string Email
-        {
-            set
-            {
-                EmailElement.SendKeys(value);
-                Driver.TryFindElement(By.Id("next"))?.Click();
-            }
         }
     }
 }

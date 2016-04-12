@@ -13,19 +13,6 @@ namespace Infrastructure.EntryPages
 
         public SignInFormsFactory SignInFactory { get; set; }
 
-        private bool HandleNoSignUpForm(SignFormType signFormType, string userName, string email, string password,
-            out UserMainPage quickSignUp)
-        {
-            quickSignUp = null;
-            if (signFormType != SignFormType.None) return false;
-            FullName = userName;
-            Email = email;
-            Password = password;
-
-            quickSignUp = Submit();
-            return true;
-        }
-
         private IWebElement SignUpElement => Driver.FindElement(Selectors.Login.SignUp);
         private IWebElement FullNameElement => Driver.FindElement(Selectors.Login.FullName);
         private IWebElement ConfirmPasswordElement => Driver.FindElement(Selectors.Login.ConfirmPassword);
@@ -46,16 +33,30 @@ namespace Infrastructure.EntryPages
             }
         }
 
+        private bool HandleNoSignUpForm(SignFormType signFormType, string userName, string email, string password,
+            out UserMainPage quickSignUp)
+        {
+            quickSignUp = null;
+            if (signFormType != SignFormType.None) return false;
+            FullName = userName;
+            Email = email;
+            Password = password;
 
-        //public SignInForm SpecifySignForm(SignFormType signFormType)
+            quickSignUp = Submit();
+            return true;
+        }
+
+        //    //SignUpElement.Click();
         //{
-        //    OpenSignForm(signFormType);
-        //    return SignInFactory.FetchPage(signFormType, OriginalHandle);
-        //}
 
         //public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)
+        //}
+        //    return SignInFactory.FetchPage(signFormType, OriginalHandle);
+        //    OpenSignForm(signFormType);
         //{
-        //    //SignUpElement.Click();
+
+
+        //public SignInForm SpecifySignForm(SignFormType signFormType)
         //    UserMainPage signInForm;
         //    if (HandleNoSignUpForm(signFormType, userName, email, password, out signInForm)) return signInForm;
         //    var form = SpecifySignForm(signFormType);

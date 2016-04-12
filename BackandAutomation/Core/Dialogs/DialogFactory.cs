@@ -15,7 +15,7 @@ namespace Core.Dialogs
 
         public T Create<T>() where T : ModalDialog
         {
-            return Activator.CreateInstance(typeof(T), Driver) as T;
+            return Activator.CreateInstance(typeof (T), Driver) as T;
         }
     }
 }

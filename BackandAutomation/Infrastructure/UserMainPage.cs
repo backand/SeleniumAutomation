@@ -10,8 +10,8 @@ namespace Infrastructure
         public UserMainPage(DriverUser driver) : base(driver)
         {
             IWebElement intercomElement;
-            if(Driver.TryFindElement(By.ClassName("intercom-launcher-preview-close"),out intercomElement));
-                intercomElement.TryClick();
+            if (Driver.TryFindElement(By.ClassName("intercom-launcher-preview-close"), out intercomElement)) ;
+            intercomElement.TryClick();
             SubmitScreenshot();
         }
 
