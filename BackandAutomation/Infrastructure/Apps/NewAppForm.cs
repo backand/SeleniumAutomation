@@ -1,4 +1,5 @@
 using Core;
+using Core.Dialogs;
 using OpenQA.Selenium;
 
 namespace Infrastructure.Apps
@@ -24,9 +25,9 @@ namespace Infrastructure.Apps
         public KickstartPage Submit()
         {
             MainElement.FindElement(Selectors.AppForm.SubmitNew).Click();
-            ModalDialog dialog = WaitUntil.UntilDialogPopUp();
+            var dialog = WaitUntil.UntilDialogPopUp<OkDialog>();
             dialog.Ok();
-            return new KickstartPage(Driver);
+            return new KickstartPage(this);
         }
     }
 }

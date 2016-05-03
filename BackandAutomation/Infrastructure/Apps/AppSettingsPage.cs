@@ -1,22 +1,25 @@
 using Core;
+using Core.Dialogs;
+using Infrastructure.Base;
 using OpenQA.Selenium;
 
 namespace Infrastructure.Apps
 {
-    public class AppSettingsPage : DriverUser
+    [BackandPageType(LeftMenuOption.Settings, LeftMenuOption.General)]
+    public class AppSettingsPage : BackandApplicationsBasePage
     {
-        public AppSettingsPage(IWebDriver driver) : base(driver)
+        public AppSettingsPage(DriverUser driver) : base(driver)
         {
         }
+
+        private IWebElement DeleteElement => Driver.FindElement(Selectors.ManageAppSettings.Delete);
 
         public UserMainPage Delete()
         {
             DeleteElement.Click();
-            ModalDialog dialog = WaitUntil.UntilDialogPopUp();
+            var dialog = WaitUntil.UntilDialogPopUp<OkDialog>();
             dialog.Ok();
-            return new UserMainPage(Driver);
+            return new UserMainPage(this);
         }
-
-        public IWebElement DeleteElement => Driver.FindElement(Selectors.ManageAppSettings.Delete);
     }
 }

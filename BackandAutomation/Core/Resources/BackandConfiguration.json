@@ -1,0 +1,19 @@
+﻿{
+  
+    "App": {
+      "Url": "https://www.backand.com/",
+      "TestTimeOut": "60000"
+    },
+    "Selenium": {
+      "IsLocal": "true",
+      "ChromeDriverPath": "Tests\\Utils",
+      "ProtractorTimeOut": "20",
+      "RemoteGridHub": "http://localhost:4444/wd/hub"
+    },
+    "LoginCredentials": {
+      "Email": "backandautouser@gmail.com",
+      "Password": "backandpass123",
+      "FullName": "BackandUser"
+    },
+    "ScreenshotsFolder": "c:\\Screenshots"
+  }

@@ -1,5 +1,6 @@
 using Core;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace Infrastructure.Apps
 {
@@ -7,6 +8,7 @@ namespace Infrastructure.Apps
     {
         public BackandAppPannel(IWebDriver driver, IWebElement mainElement) : base(driver, mainElement)
         {
+            new Actions(Driver).MoveToElement(MainElement).Perform();
         }
 
         private IWebElement SettingsElement => MainElement.FindElement(Selectors.AppForm.Settings);
@@ -17,13 +19,13 @@ namespace Infrastructure.Apps
         public AppSettingsPage MoveToAppSettingsPage()
         {
             SettingsElement.Click();
-            return new AppSettingsPage(Driver);
+            return new AppSettingsPage(this);
         }
 
         public ManageAppPage ManageApp()
         {
             ManageAppElement.Click();
-            return new ManageAppPage(Driver);
+            return new ManageAppPage(this);
         }
     }
 }

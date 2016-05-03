@@ -15,7 +15,7 @@ namespace Core
 
         public override IWebElement FindElement(ISearchContext context)
         {
-            foreach (By findBy in FindBys)
+            foreach (var findBy in FindBys)
             {
                 IWebElement element;
                 if (context.TryFindElement(findBy, out element))

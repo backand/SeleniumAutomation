@@ -1,28 +1,22 @@
+using Core.ConfigurationElements;
+using Newtonsoft.Json;
 using System.Configuration;
 using System.IO;
-using System.Xml.Serialization;
-using Core.ConfigurationElements;
 
 namespace Core
 {
     public class Configuration
     {
-        public static readonly object LockObj = new object();
+        private static readonly object LockObj = new object();
         private static BackandConfiguration _configuration;
 
         private Configuration()
         {
-            var serializer = new XmlSerializer(typeof (BackandConfiguration));
-            
-            using (Stream stream = ResourcesHandler.GetStream(_filePath))
-            {
-                var obj = serializer.Deserialize(stream);
-                _configuration = obj as BackandConfiguration;
-            }
+            _configuration = JsonConvert.DeserializeObject<BackandConfiguration>(File.ReadAllText(_filePath));
         }
 
         private string _filePath => ConfigurationManager.AppSettings["configurationExtensionPath"];
-        
+
         public static BackandConfiguration Instance
         {
             get

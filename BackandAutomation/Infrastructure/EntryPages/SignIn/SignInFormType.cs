@@ -7,6 +7,7 @@ namespace Infrastructure.EntryPages.SignIn
         [EnumText("github")] GitHub,
         [EnumText("google-plus")] Google,
         [EnumText("facebook")] Facebook,
+        [EnumText("twitter")] Twitter,
         [EnumText("")] None
     }
 }

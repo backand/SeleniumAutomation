@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,12 +58,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Base\BackandTestClassBase.cs" />
-    <Compile Include="Base\InstantLoginAttribute.cs" />
+    <Compile Include="Attributes\DecomposedLoginAttribute.cs" />
+    <Compile Include="Attributes\DontDeleteAppAttribute.cs" />
+    <Compile Include="Attributes\InstantLoginAttribute.cs" />
+    <Compile Include="Attributes\CreateAppAttribute.cs" />
     <Compile Include="NewApp.cs" />
+    <Compile Include="NewObjectTests.cs" />
     <Compile Include="SignIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignUp.cs" />
+    <Compile Include="Base\BackandTestClassBase.cs" />
+    <Compile Include="SimpleCrudTests.cs" />
     <Compile Include="Utils\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>

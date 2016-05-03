@@ -17,5 +17,8 @@ namespace Core.ConfigurationElements
 
         [XmlElement("protractorTimeOut", typeof (int))]
         public int ProtractorTimeOut { get; set; }
+
+        [XmlElement("remoteGridHub")]
+        public string RemoteGridHub { get; set; }
     }
 }

@@ -11,5 +11,8 @@ namespace Core.ConfigurationElements
     {
         [XmlElement("url")]
         public string Url { get; set; }
+
+        [XmlElement("testTimeOut")]
+        public int TestTimeOut { get; set; }
     }
 }

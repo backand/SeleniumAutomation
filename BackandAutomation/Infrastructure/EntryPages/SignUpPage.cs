@@ -1,4 +1,3 @@
-using System;
 using Core;
 using Infrastructure.EntryPages.SignIn;
 using OpenQA.Selenium;
@@ -7,14 +6,34 @@ namespace Infrastructure.EntryPages
 {
     public class SignUpPage : LoginPage
     {
-        public SignUpPage(IWebDriver driver) : base(driver)
+        public SignUpPage(DriverUser driverUser) : base(driverUser)
         {
             SignInFactory = new SignInFormsFactory(this);
         }
 
         public SignInFormsFactory SignInFactory { get; set; }
 
-        private bool HandleNoSignInForm(SignFormType signFormType, string userName, string email, string password,
+        private IWebElement SignUpElement => Driver.FindElement(Selectors.Login.SignUp);
+        private IWebElement FullNameElement => Driver.FindElement(Selectors.Login.FullName);
+        private IWebElement ConfirmPasswordElement => Driver.FindElement(Selectors.Login.ConfirmPassword);
+
+        public string FullName
+        {
+            get { return FullNameElement.Text; }
+            set { FullNameElement.SendKeys(value); }
+        }
+
+        public virtual string Password
+        {
+            get { return PasswordElement.Text; }
+            set
+            {
+                PasswordElement.SendKeys(value);
+                ConfirmPasswordElement.SendKeys(value);
+            }
+        }
+
+        private bool HandleNoSignUpForm(SignFormType signFormType, string userName, string email, string password,
             out UserMainPage quickSignUp)
         {
             quickSignUp = null;
@@ -27,57 +46,38 @@ namespace Infrastructure.EntryPages
             return true;
         }
 
-        private IWebElement SignUpElement => Driver.FindElement(Selectors.Login.SignUp);
-        private IWebElement FullNameElement => Driver.FindElement(Selectors.Login.FullName);
-        private IWebElement ConfirmPasswordElement => Driver.FindElement(Selectors.Login.ConfirmPassword);
+        //    //SignUpElement.Click();
+        //{
 
-        public string FullName
-        {
-            get { return FullNameElement.Text; }
-            set { FullNameElement.SendKeys(value); }
-        }
-
-        public override string Password
-        {
-            get { return PasswordElement.Text; }
-            set
-            {
-                PasswordElement.SendKeys(value);
-                ConfirmPasswordElement.SendKeys(value);
-            }
-        }
+        //public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)
+        //}
+        //    return SignInFactory.FetchPage(signFormType, OriginalHandle);
+        //    OpenSignForm(signFormType);
+        //{
 
 
-        public SignInForm SpecifySignForm(SignFormType signFormType)
-        {
-            OpenSignForm(signFormType);
-            return SignInFactory.Create(signFormType, OriginalHandle);
-        }
-
-        public UserMainPage QuickSignUp(SignFormType signFormType, string userName, string email, string password)
-        {
-            SignUpElement.Click();
-            UserMainPage signInForm;
-            if (HandleNoSignInForm(signFormType, userName, email, password, out signInForm)) return signInForm;
-            var form = SpecifySignForm(signFormType);
-            try
-            {
-                form.Email = email;
-            }
-            catch (NoSuchWindowException)
-            {
-                // That's an exception that been thrown when the form has already been filled.
-                Driver.SwitchTo().Window(OriginalHandle);
-                return new UserMainPage(Driver);
-            }
-            form.Password = password;
-            return form.Submit();
-        }
+        //public SignInForm SpecifySignForm(SignFormType signFormType)
+        //    UserMainPage signInForm;
+        //    if (HandleNoSignUpForm(signFormType, userName, email, password, out signInForm)) return signInForm;
+        //    var form = SpecifySignForm(signFormType);
+        //    try
+        //    {
+        //        form.Email = email;
+        //    }
+        //    catch (NoSuchWindowException)
+        //    {
+        //        // That's an exception that been thrown when the form has already been filled.
+        //        Driver.SwitchTo().Window(OriginalHandle);
+        //        return new UserMainPage(this);
+        //    }
+        //    form.Password = password;
+        //    return form.Submit();
+        //}
     }
 
     public class SignUpForm : SignForm
     {
-        public SignUpForm(IWebDriver driver) : base(driver)
+        public SignUpForm(DriverUser driverUser) : base(driverUser)
         {
         }
     }

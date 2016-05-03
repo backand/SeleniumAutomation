@@ -4,10 +4,11 @@ using OpenQA.Selenium;
 
 namespace Infrastructure.Base
 {
-    public class BackandApplicationsBasePage : BasePage
+    public abstract class BackandApplicationsBasePage : BasePage
     {
-        public BackandApplicationsBasePage(IWebDriver driver) : base(driver)
+        protected BackandApplicationsBasePage(DriverUser driver) : base(driver)
         {
+            SubmitScreenshot();
         }
 
         private IWebElement SettingsElement => TopNav.FindElement(Selectors.BackandApplicationsBasePage.Settings);
@@ -15,17 +16,17 @@ namespace Infrastructure.Base
         public UserSettings Settings => new UserSettings(Driver, SettingsElement);
 
         protected IWebElement PageElement => Driver.FindElement(Selectors.BackandApplicationsBasePage.Page);
-        protected IWebElement LeftMenuElement => Driver.FindElement(Selectors.BackandApplicationsBasePage.LeftMenu);
-        protected IWebElement TopNav => Driver.FindElement(Selectors.BackandApplicationsBasePage.TopNav);
-        
+        private IWebElement TopNav => Driver.FindElement(Selectors.BackandApplicationsBasePage.TopNav);
+
+        public CurrentAppComponent CurrentAppComponent =>
+            new CurrentAppComponent(Driver, TopNav.FindElement(Selectors.BackandApplicationBasic.CurrentApp));
+
+        public LeftMenu LeftMenu => new LeftMenu(this);
+
         public UserMainPage GoToHomePage()
         {
             TopNav.FindElement(Selectors.Common.GoToHomePage).Click();
-            return new UserMainPage(Driver);
+            return new UserMainPage(this);
         }
-
-
-        public CurrentAppComponent CurrentAppComponent
-            => new CurrentAppComponent(Driver, TopNav.FindElement(Selectors.BackandApplicationBasic.CurrentApp));
     }
 }

@@ -1,57 +1,49 @@
+using System.Linq;
+using Core;
 using OpenQA.Selenium;
 
 namespace Infrastructure.EntryPages.SignIn
 {
     public abstract class SignInForm : SignForm
     {
-        protected SignInForm(IWebDriver driver, string originalWindowHandle) : base(driver)
+        protected SignInForm(DriverUser driverUser, object originalWindowHandle) : base(driverUser)
         {
-            OriginalWindowHandle = originalWindowHandle;
+            OriginalWindowHandle = (originalWindowHandle as object[])?.First().ToString();
         }
 
-        protected SignInForm(IWebDriver driver) : base(driver)
-        {
-        }
-
-        protected string OriginalWindowHandle { get; set; }
+        private string OriginalWindowHandle { get; }
 
         protected abstract By EmailFindBy { get; }
         protected abstract By PasswordFindBy { get; }
         protected abstract By SubmitFindBy { get; }
 
-        protected IWebElement EmailElement => Driver.FindElement(EmailFindBy);
-        protected IWebElement PasswordElement => Driver.FindElement(PasswordFindBy);
-        protected IWebElement SubmitElement => Driver.FindElement(SubmitFindBy);
+        protected IWebElement EmailElement => Driver.TryFindElement(EmailFindBy);
+        private IWebElement PasswordElement => Driver.TryFindElement(PasswordFindBy);
+        protected IWebElement SubmitElement => Driver.TryFindElement(SubmitFindBy);
 
-        public virtual string Email
+        protected virtual string Email
         {
-            get { return EmailElement.Text; }
+            private get { return EmailElement.Text; }
             set { EmailElement.SendKeys(value); }
         }
 
-        public virtual string Password
+        protected string Password
         {
-            get { return PasswordElement.Text; }
+            private get { return PasswordElement.Text; }
             set { PasswordElement.SendKeys(value); }
         }
 
-        public UserMainPage Submit()
+        protected void Submit()
         {
             SubmitElement.Click();
-            CompleteFormLogic();
-            if (!string.IsNullOrEmpty(OriginalWindowHandle))
-                SwitchToOriginalWindow();
-            WaitUntil.UntilElementDoesntExist(By.ClassName("spinner"));
-            return new UserMainPage(Driver);
         }
 
-        protected virtual void CompleteFormLogic()
-        {
-        }
+        public abstract UserMainPage QuickSubmit(string email, string password);
 
-        private void SwitchToOriginalWindow()
+        protected void SwitchToOriginalWindow()
         {
-            Driver.SwitchTo().Window(OriginalWindowHandle);
+            var originalWindowHandle = OriginalWindowHandle;
+            Driver.SwitchTo().Window(originalWindowHandle);
         }
     }
 }

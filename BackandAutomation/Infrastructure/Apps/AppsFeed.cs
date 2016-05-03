@@ -21,7 +21,8 @@ namespace Infrastructure.Apps
 
         public NewAppForm New()
         {
-            return new NewAppForm(Driver, AppsPannels.FirstOrDefault(app => app.RibbonType == RibbonType.New)?.MainElement);
+            return new NewAppForm(Driver,
+                AppsPannels.FirstOrDefault(app => app.RibbonType == RibbonType.New)?.MainElement);
         }
     }
 }

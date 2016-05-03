@@ -17,6 +17,7 @@ namespace Infrastructure.Apps
 
         private IWebElement Current => OptionElements.Single(option => option.Selected);
 
-        private IEnumerable<IWebElement> OptionElements => MainElement.FindElements(Selectors.BackandApplicationBasic.Option);
+        private IEnumerable<IWebElement> OptionElements
+            => MainElement.FindElements(Selectors.BackandApplicationBasic.Option);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Core; 
+﻿using Core;
 using Infrastructure.Base;
 using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
@@ -9,41 +9,28 @@ namespace Infrastructure
 {
     public class BackandPage : BasePage
     {
-        public BackandPage(IWebDriver driver) : base(driver)
+        public BackandPage(IWebDriver driverUser) : base(driverUser)
         {
-            CurrentDriver = (driver as NgWebDriver)?.WrappedDriver;
+            CurrentDriver = (Driver as NgWebDriver)?.WrappedDriver;
         }
 
-        public BackandPage(DriverUser driverUser) : this(driverUser.Driver)
+        private IWebDriver CurrentDriver { get; }
+
+        private SignInPage SignIn()
         {
+            CurrentDriver.JavascriptClick(Selectors.LoginPageButtons.SignInSelector);
+            return new SignInPage(this);
         }
 
-        public IWebDriver CurrentDriver { get; set; }
-
-        private IWebElement SignInElement => CurrentDriver.FindElement(Selectors.LoginPageButtons.SignIn);
-        private IWebElement SignUpElement => CurrentDriver.FindElement(Selectors.LoginPageButtons.SignUp);
-
-        public SignInPage SignIn()
+        private SignUpPage SignUp()
         {
-            SignInElement.Click();
-            return new SignInPage(Driver);
+            CurrentDriver.JavascriptClick(Selectors.LoginPageButtons.SignUpSelector);
+            return new SignUpPage(this);
         }
 
-        public SignUpPage SignUp()
+        public UserMainPage QuickSignIn<T>(string email, string password) where T : SignInForm
         {
-            SignUpElement.Click();
-            return new SignUpPage(Driver);
-        }
-
-        public UserMainPage QuickSignIn(SignFormType signFormType, string email, string password)
-        {
-            UserMainPage mainPage = SignIn().QuickSignIn(signFormType, email, password);
-            return mainPage;
-        }
-
-        public UserMainPage QuickSignUp(SignFormType signFormType, string fullName, string email, string password)
-        {
-            UserMainPage mainPage = SignUp().QuickSignUp(signFormType, fullName, email, password);
+            var mainPage = SignIn().QuickSignIn<T>(email, password);
             return mainPage;
         }
     }

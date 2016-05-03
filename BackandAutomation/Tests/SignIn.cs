@@ -1,50 +1,58 @@
 ﻿using Core;
-using Infrastructure.Base;
-using Infrastructure.EntryPages;
 using Infrastructure.EntryPages.SignIn;
+using Infrastructure.EntryPages.SignIn.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tests.Attributes;
 using Tests.Base;
 
 namespace Tests
 {
     [TestClass]
+    [DecomposedLogin]
     public class SignIn : BackandTestClassBase
     {
-        [TestMethod]
+        [TestMethod, Timeout(360000)]
         public void SignInRegular()
         {
-            SignInFromExternalAccount(SignFormType.None);
+            SignInFromExternalAccount<RegularSignInForm>();
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(360000)]
         public void SignInFromFacebook()
         {
-            SignInFromExternalAccount(SignFormType.Facebook);
+            SignInFromExternalAccount<FacebookSignInForm>();
+            ;
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(360000)]
         public void SignInFromGitHub()
         {
-            SignInFromExternalAccount(SignFormType.GitHub);
+            SignInFromExternalAccount<GitHubSignInForm>();
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(360000)]
         public void SignInFromGoogle()
         {
-            SignInFromExternalAccount(SignFormType.Google);
+            SignInFromExternalAccount<GoogleSignInForm>();
         }
 
-        private void SignInFromExternalAccount(SignFormType signFormType)
+        [TestMethod, Timeout(360000), Ignore]
+        public void SignInFromTwitter()
         {
-            string email = Configuration.Instance.LoginCredentials.Email;
-            string password = Configuration.Instance.LoginCredentials.Password;
+            SignInFromExternalAccount<TwitterSignInForm>();
+        }
 
-            Page = EnterancePage.QuickSignIn(signFormType, email, password);
-            UserSettings settings = Page.Settings;
+        private void SignInFromExternalAccount<T>() where T : SignInForm
+        {
+            var email = Configuration.Instance.LoginCredentials.Email;
+            var password = Configuration.Instance.LoginCredentials.Password;
+
+            Page = EnterancePage.QuickSignIn<T>(email, password);
+            var settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
 
-            SignInPage signInPage = settings.LogOut();
-            Page = signInPage.QuickSignIn(signFormType, email, password);
+            var signInPage = settings.LogOut();
+            Page = signInPage.QuickSignIn<T>(email, password);
             settings = Page.Settings;
             Assert.AreEqual(email, settings.LoginEmail);
         }

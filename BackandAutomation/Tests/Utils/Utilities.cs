@@ -12,8 +12,8 @@ namespace Tests.Utils
 
         public static string GenerateEmail()
         {
-            string originalEmail = Configuration.Instance.LoginCredentials.Email;
-            int userMailNameIndex = originalEmail.IndexOf('@');
+            var originalEmail = Configuration.Instance.LoginCredentials.Email;
+            var userMailNameIndex = originalEmail.IndexOf('@');
             string newEmail =
                 $"{originalEmail.Substring(0, userMailNameIndex)}+{Guid.NewGuid().ToString().Substring(0, 5)}{originalEmail.Substring(userMailNameIndex)}";
             return newEmail;

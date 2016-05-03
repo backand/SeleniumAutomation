@@ -28,7 +28,7 @@ namespace Infrastructure.Base
         public SignInPage LogOut()
         {
             LogOutElement.Click();
-            return new SignInPage(Driver);
+            return new SignInPage(this);
         }
     }
 }

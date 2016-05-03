@@ -11,6 +11,7 @@
     <AssemblyName>Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Protractor, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Protractor.0.6.0\lib\net40\Protractor.dll</HintPath>
       <Private>True</Private>
@@ -59,12 +63,21 @@
     <Compile Include="ConfigurationElements\BackandSelenium.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="ConfigurationElements\LoginCredentials.cs" />
+    <Compile Include="Dialogs\AddFieldDialog.cs" />
+    <Compile Include="Dialogs\DialogFactory.cs" />
+    <Compile Include="Dialogs\FieldRowEditDialog.cs" />
+    <Compile Include="Dialogs\FieldType.cs" />
+    <Compile Include="Dialogs\NewObjectDialog.cs" />
+    <Compile Include="Dialogs\YesNoDialog.cs" />
     <Compile Include="DriversPool.cs" />
     <Compile Include="DriverUser.cs" />
     <Compile Include="EnumFindByAttribute.cs" />
     <Compile Include="EnumTextAttribute.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="ModalDialog.cs" />
+    <Compile Include="MenuOptionAttribute.cs" />
+    <Compile Include="Dialogs\ModalDialog.cs" />
+    <Compile Include="Dialogs\NewRowDialog.cs" />
+    <Compile Include="Dialogs\OkDialog.cs" />
     <Compile Include="OrCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourcesHandler.cs" />
@@ -74,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\BackandConfiguration.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\BackandConfiguration.xml">
