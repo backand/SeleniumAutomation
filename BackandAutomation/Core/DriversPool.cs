@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using Protractor;
+using System;
+using System.IO;
 
 namespace Core
 {
@@ -31,6 +31,8 @@ namespace Core
         {
             IWebDriver driver = new RemoteWebDriver(new Uri(Configuration.Instance.Selenium.RemoteGridHub),
                 DesiredCapabilities.Chrome());
+
+
             return driver;
         }
 

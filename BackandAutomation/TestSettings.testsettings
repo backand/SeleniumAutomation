@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-
-<TestSettings name="TestSettings" id="4bfe4282-8344-4935-a629-164d7fb80476"
-              xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+<TestSettings name="TestSettings" id="4bfe4282-8344-4935-a629-164d7fb80476" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>These are default test settings for a local test run.</Description>
   <Deployment enabled="false" />
   <Execution>
-    <Timeouts runTimeout="10000" testTimeout="10000" />
+    <Timeouts testTimeout="0" />
     <TestTypeSpecific>
       <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
         <AssemblyResolution>

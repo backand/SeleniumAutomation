@@ -1,6 +1,7 @@
-using System.Configuration;
-using System.Xml.Serialization;
 using Core.ConfigurationElements;
+using Newtonsoft.Json;
+using System.Configuration;
+using System.IO;
 
 namespace Core
 {
@@ -11,13 +12,7 @@ namespace Core
 
         private Configuration()
         {
-            var serializer = new XmlSerializer(typeof (BackandConfiguration));
-
-            using (var stream = ResourcesHandler.GetStream(_filePath))
-            {
-                var obj = serializer.Deserialize(stream);
-                _configuration = obj as BackandConfiguration;
-            }
+            _configuration = JsonConvert.DeserializeObject<BackandConfiguration>(File.ReadAllText(_filePath));
         }
 
         private string _filePath => ConfigurationManager.AppSettings["configurationExtensionPath"];

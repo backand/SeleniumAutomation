@@ -12,7 +12,7 @@ namespace Tests
     [TestClass]
     public class NewObjectTests : BackandTestClassBase
     {
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void NewObjectAddDeleteFields()
         {
             var modelName = "itai";
@@ -36,7 +36,7 @@ namespace Tests
             ValidateRow(modelPage, modelName, false, field);
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void NewField()
         {
             var modelPage = ApplicationsPage.LeftMenu.FetchPage<ModelPage>();
@@ -48,7 +48,7 @@ namespace Tests
             ValidateRow(modelPage, modelName, true, field);
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void DeleteField()
         {
             var modelName = "users";

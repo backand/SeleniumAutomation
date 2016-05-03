@@ -23,3 +23,4 @@ namespace Core.ConfigurationElements
         public string ScreenshotsFolder { get; set; }
     }
 }
+

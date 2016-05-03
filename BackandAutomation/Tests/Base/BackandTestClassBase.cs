@@ -1,14 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Timers;
-using Core;
+﻿using Core;
 using Infrastructure;
 using Infrastructure.Apps;
 using Infrastructure.EntryPages.SignIn.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Timers;
 using Tests.Attributes;
 //using System.Windows.Forms;
 
@@ -53,7 +53,8 @@ namespace Tests.Base
 
         private void StartRunTimoutWatch()
         {
-            Timer = new Timer(TimeSpan.FromSeconds(Configuration.Instance.App.TestTimeOut).TotalMilliseconds);
+            int t = Configuration.Instance.App.TestTimeOut;
+            Timer = new Timer(TimeSpan.FromSeconds(t).TotalMilliseconds);
             Timer.Elapsed += TimerOnElapsed;
             Timer.Start();
         }
@@ -72,8 +73,14 @@ namespace Tests.Base
         public void ClassCleanup()
         {
             TestCleanupExtension();
-            Driver.Close();
-            Driver.Dispose();
+
+            if (Driver != null)
+            {
+                Driver.Close();
+                Driver.Dispose();
+
+            }
+
         }
 
         private IWebDriver GetDriver()

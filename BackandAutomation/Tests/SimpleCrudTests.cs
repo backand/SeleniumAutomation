@@ -6,6 +6,18 @@ using Tests.Base;
 
 namespace Tests
 {
+    [TestClass]
+    public class MyTestClass
+    {
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            int i = 1;int b = 2;
+
+            Assert.AreEqual(i + b, 3);
+        }
+    }
+
     [CreateApp]
     [TestClass]
     public class SimpleCrudTests : BackandTestClassBase
@@ -22,7 +34,7 @@ namespace Tests
             _itemsPage.AddRow(Name, Description);
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod]
         public void CreateDataRow()
         {
             var row =
@@ -30,7 +42,7 @@ namespace Tests
             Assert.IsNotNull(row);
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void DeleteDataRow()
         {
             var row = _itemsPage.GetRows().First();
@@ -40,7 +52,7 @@ namespace Tests
             Assert.IsFalse(_itemsPage.GetRows().Any(r => r.Id == id));
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void UpdateDataRow()
         {
             var row = _itemsPage.GetRows().First();

@@ -10,7 +10,7 @@ namespace Tests
     [CreateApp]
     public class NewApp : BackandTestClassBase
     {
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void NewAppValidation()
         {
             var current = ApplicationsPage.CurrentAppComponent.Name;
@@ -21,7 +21,7 @@ namespace Tests
             Assert.IsTrue(feed.AppsPannels.Any(app => app.Name == CreateAppDetails.Name.ToUpper()));
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         [DontDeleteApp]
         public void DeleteApp()
         {
@@ -36,7 +36,7 @@ namespace Tests
             Assert.IsFalse(result);
         }
 
-        //[TestMethod, Timeout(360), Ignore]
+        //[TestMethod, Timeout(360000), Ignore]
         public void DeleteAll()
         {
             BackandAppPannel appPannel;

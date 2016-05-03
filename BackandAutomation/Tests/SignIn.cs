@@ -11,32 +11,32 @@ namespace Tests
     [DecomposedLogin]
     public class SignIn : BackandTestClassBase
     {
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void SignInRegular()
         {
             SignInFromExternalAccount<RegularSignInForm>();
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void SignInFromFacebook()
         {
             SignInFromExternalAccount<FacebookSignInForm>();
             ;
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void SignInFromGitHub()
         {
             SignInFromExternalAccount<GitHubSignInForm>();
         }
 
-        [TestMethod, Timeout(360)]
+        [TestMethod, Timeout(360000)]
         public void SignInFromGoogle()
         {
             SignInFromExternalAccount<GoogleSignInForm>();
         }
 
-        [TestMethod, Timeout(360), Ignore]
+        [TestMethod, Timeout(360000), Ignore]
         public void SignInFromTwitter()
         {
             SignInFromExternalAccount<TwitterSignInForm>();
